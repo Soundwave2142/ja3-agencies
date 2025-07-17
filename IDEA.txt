@@ -1,0 +1,18 @@
+Agencies:
+
+Allows player to set up his own agency that fully replaces A.I.M within a game.
+
+Set up your name and description, upload your logo.
+Set up your merc attire (reused component from Final Stand).
+Change colors(?) of UI.
+Change ranks(?) and their pictures.
+
+MSF Agency.
+
+lower rank wearing normal fatigures
+higher rank wearing sneaking suit
+
+Grand Chein Vultures
+
+special forces of grand chien
+adaptive camo
