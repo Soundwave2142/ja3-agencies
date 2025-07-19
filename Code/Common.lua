@@ -1,12 +1,33 @@
 --- ===================================================================================================================
+--- Section 1 | Constants, global function to local overrides.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
-local AGENCIES_MOD_ID = "Agencies"
-local AGENCIES_OPTION = "AgencyChoice"
+AGENCIES_MOD_ID = "Agencies"
+AGENCIES_OPTION = "AgencyChoice"
+
 AGENCIES_DEFAULT = "Default"
 AGENCIES_DEFAULT_LABEL = "A.I.M."
 
+AGENCIES_AGENCY_STORAGE_KEY = "Agency"
+
+local pairs = pairs
+local ipairs = ipairs
+local empty_table = empty_table
+local Msg = Msg
+
+--- ===================================================================================================================
+--- Section 2 | Game start, initial functions.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+--- When mods done loading,  calls for ApplyAgency to ensure current agency is applied to game.
+function OnMsg.ModsReloaded()
+    ApplyAgency()
+end
+
+--- When mod options are applied, calls for ApplyAgency to ensure correct agency is applied.
+--- This function can be redundant if OnApply from CommonLib to be used.
 --- @param modId string
 function OnMsg.ApplyModOptions(modId)
     if modId ~= AGENCIES_MOD_ID then
@@ -20,51 +41,138 @@ function OnMsg.ApplyModOptions(modId)
         local value = options[item.name]
 
         if item.name == AGENCIES_OPTION then
-            Agencies:ChangeAgency(value)
+            ApplyAgency(value)
         end
     end
 end
 
-function OnMsg.ModsReloaded()
-    Msg("AgenciesOptionsLoaded")
+--- Triggers AgenciesApplyAgency to ensure current agency is applied to game and writes it to storage if needed.
+--- @param agency string
+function ApplyAgency(agency)
+    if not agency then
+        agency = GetCurrentAgency()
+    end
+
+    local storage = CurrentModStorageTable or {}
+    local storageAgency = storage[AGENCIES_AGENCY_STORAGE_KEY]
+
+    if not storageAgency or storageAgency ~= agency then
+        storage[AGENCIES_AGENCY_STORAGE_KEY] = agency
+        WriteModPersistentStorageTable()
+    end
+
+    Msg("AgenciesApplyAgency", agency)
 end
 
+--- Checks if passed agency is selected currently selected agency.
+--- @param agency string
+--- @return boolean
 function IsAgency(agency)
-    if agency == AGENCIES_DEFAULT then
-        agency = AGENCIES_DEFAULT_LABEL
-    end
-
-    local mod = Mods[AGENCIES_MOD_ID]
-    local options = mod.options or empty_table
-
-    return options[AGENCIES_OPTION] == agency
+    return GetCurrentAgency() == agency
 end
 
-function GetAgencies()
-    local mod = Mods[AGENCIES_MOD_ID]
+--- Provides current agency id.
+--- @return string
+function GetCurrentAgency()
+    local storage = CurrentModStorageTable or {}
 
-    for _, item in ipairs(mod:GetOptionItems()) do
-        if item.name == AGENCIES_OPTION and item.ChoiceList then
-            return item.ChoiceList
+    return storage[AGENCIES_AGENCY_STORAGE_KEY] or AGENCIES_DEFAULT
+end
+
+--- @param value string
+--- @param agency string
+--- @return (table|string|number|boolean|nil)
+function GetCurrentAgencyValue(value, agency)
+    if not agency then
+        agency = GetCurrentAgency()
+    end
+
+    local agencyObject = Agencies[agency]
+
+    if not agencyObject then
+        return nil
+    end
+
+    return agencyObject:ResolveValue(value)
+end
+
+local AGENCIES_LIST = false
+
+--- Provides sorted list of agencies (ids) without default agency.
+--- @param clearList boolean can be used to empty cached list.
+--- @return table
+function GetAgencies(clearList)
+    if clearList then
+        AGENCIES_LIST = false
+    end
+
+    if AGENCIES_LIST then
+        return AGENCIES_LIST
+    end
+
+    local agenciesMeta = {}
+
+    for agencyId, agencyObj in pairs(Agencies) do
+        table.insert(agenciesMeta, { SortKey = agencyObj.SortKey or 0, Id = agencyId })
+    end
+
+    table.stable_sort(agenciesMeta, function(a, b)
+        return (a.SortKey or 0) < (b.SortKey or 0)
+    end)
+
+    local agenciesSorted = {}
+
+    for key, agencyMeta in ipairs(agenciesMeta) do
+        agenciesSorted[key] = agencyMeta.Id
+    end
+
+    AGENCIES_LIST = agenciesSorted
+    return agenciesSorted;
+end
+
+function OnMsg.ZuluGameLoaded()
+    if not Game then
+        return
+    end
+
+    if Game.Agencies then
+        return
+    end
+
+    Game.Agencies = { id = random_encode64(48) }
+end
+
+--- ===================================================================================================================
+--- Section 3 | Overrides
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+local BaseGetOptionMeta = ModItemOptionChoice.GetOptionMeta
+
+--- Overrides options provider that is used in Options -> Mods -> Agencies section of main menu.
+--- For the purpose of generating a list dynamically from Agencies global map + default agency.
+--- @return table
+function ModItemOptionChoice:GetOptionMeta(...)
+    local name = self.name
+    local meta = BaseGetOptionMeta(self, ...)
+
+    if not name or name ~= AGENCIES_OPTION then
+        return meta
+    end
+
+    meta.items = {
+        { text = T(AGENCIES_DEFAULT_LABEL), value = AGENCIES_DEFAULT }
+    }
+
+    local agencies = GetAgencies()
+
+    for _, agencyId in ipairs(agencies) do
+        local agency = Agencies[agencyId]
+
+        if agency then
+            table.insert(meta.items, { text = agency.display_name, value = agency.id })
         end
     end
 
-    return { AGENCIES_DEFAULT_LABEL }
-end
-
-function ApplyAgency()
-
-end
-
---- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
---- @class Agencies
---- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-DefineClass.Agencies = {}
-
-function Agencies:ChangeAgency(agency)
-    if agency == AGENCIES_DEFAULT_LABEL then
-        agency = AGENCIES_DEFAULT
-    end
-
-    AgenciesUIHandler:ChanceAgencyUI(agency)
+    return meta
 end

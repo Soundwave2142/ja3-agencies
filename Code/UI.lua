@@ -1,16 +1,25 @@
 --- ===================================================================================================================
+--- Section 1 | Constants, global function to local overrides.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
---local starts_with = string.starts_with
+local AGENCIES_DEFAULT = AGENCIES_DEFAULT
+
 local table = table
 local PlaceObj = PlaceObj
+local UIFindControl = UIFindControl
 local IsAgency = IsAgency
+local GetAgencies = GetAgencies
+
+--- ===================================================================================================================
+--- Section 2 | First load actions.
+--- @author Soundwave2142
+--- ===================================================================================================================
 
 if FirstLoad then
     local templatesInserted = false
 
-    function OnMsg.AgenciesOptionsLoaded()
+    function OnMsg.ModsReloaded()
         if not templatesInserted then
             AgenciesUIHandler:InsertAgencyTemplates()
             templatesInserted = true
@@ -42,16 +51,11 @@ function AgenciesUIHandler:InsertAgencyLandingPage()
         '__condition', function(parent1, context1) return IsAgency(AGENCIES_DEFAULT) end
     })
 
-    -- insert additional templates
-    local agencies = GetAgencies()
-
-    for agencyIndex, agency in ipairs(agencies) do
-        if agency ~= AGENCIES_DEFAULT and agency ~= AGENCIES_DEFAULT_LABEL then
-            table.insert(parent, elementIndex + 1, PlaceObj('XTemplateTemplate', {
-                '__template', "PDABrowserLanding" .. agency,
-                '__condition', function(parent1, context1) return IsAgency(agency) end
-            }))
-        end
+    for _, agency in ipairs(GetAgencies()) do
+        table.insert(parent, elementIndex + 1, PlaceObj('XTemplateTemplate', {
+            '__template', "PDABrowserLanding" .. agency,
+            '__condition', function(parent1, context1) return IsAgency(agency) end
+        }))
     end
 end
 
@@ -70,64 +74,22 @@ function AgenciesUIHandler:InsertAgencyPage()
         '__condition', function(parent1, context1) return IsAgency(AGENCIES_DEFAULT) end
     })
 
-    -- insert additional templates
-    local agencies = GetAgencies()
-
-    for agencyIndex, agency in ipairs(agencies) do
-        if agency ~= AGENCIES_DEFAULT and agency ~= AGENCIES_DEFAULT_LABEL then
-            table.insert(parent, elementIndex + 1, PlaceObj('XTemplateTemplate', {
-                'Id', "idBrowserContent",
-                '__template', "PDAAIMBrowser" .. agency,
-                '__condition', function(parent1, context1) return IsAgency(agency) end
-            }))
-        end
+    for agencyIndex, agency in ipairs(GetAgencies()) do
+        table.insert(parent, elementIndex + 1, PlaceObj('XTemplateTemplate', {
+            'Id', "idBrowserContent",
+            '__template', "PDAAIMBrowser" .. agency,
+            '__condition', function(parent1, context1) return IsAgency(agency) end
+        }))
     end
 end
 
---function AgenciesUIHandler:ChanceAgencyUI(agency)
---    local templatesPostfix = agency and agency == AGENCIES_DEFAULT and '' or agency
---
---    -- self:ChanceBrowserLandingPage(templatesPostfix)
---end
---
---function AgenciesUIHandler:ChanceBrowserLandingPage(templatePostfix)
---    local match = { mode = "landing" }
---    local element, parent, idx = UIFindControl("PDABrowser", match)
---
---    if not element then
---        return
---    end
---
---    local baseTemplate = "PDABrowserLanding"
---
---    for subElementIndex, subElement in ipairs(element) do
---        if (subElement["__template"] and starts_with(subElement["__template"], baseTemplate)) then
---            element[subElementIndex] = self:GetTemplateReference(baseTemplate, baseTemplate .. templatePostfix)
---        end
---    end
---
---    -- debug purposes
---    if TutorialHintsState and TutorialHintsState.LandingPageShown then
---        TutorialHintsState.LandingPageShown = false
---    end
---end
---
---function AgenciesUIHandler:GetTemplateReference(baseTemplate, template)
---    local references = self.TemplateReferences[baseTemplate] or {}
---
---    if not references[template] then
---        references[template] = PlaceObj('XTemplateTemplate', {
---            '__template', template,
---        })
---
---        self.TemplateReferences[baseTemplate] = references
---    end
---
---    return references[template]
---end
+--- ===================================================================================================================
+--- SECTION 2 | Non template, but UI related overrides and compatibility changes.
+--- ===================================================================================================================
 
 local BasePDAUrl = TFormat.PDAUrl
 
+--- Override original in order to replace A.I.M. url with whatever agency is current active.
 TFormat.PDAUrl = function(...)
     local result = BasePDAUrl(...)
 

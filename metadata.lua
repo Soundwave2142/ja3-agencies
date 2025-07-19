@@ -3,7 +3,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 74,
+	'version', 106,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -11,14 +11,126 @@ return PlaceObj('ModDef', {
 		"Code/Common.lua",
 		"Code/Appearance.lua",
 		"Code/UI.lua",
+		"Code/Debugger.lua",
 	},
 	'default_options', {
-		AgencyChoice = "A.I.M.",
+		AgencyChoice = "Default",
+		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1752756480,
-	'code_hash', -5169835347639486403,
+	'saved', 1752937335,
+	'code_hash', -1995603889133625191,
 	'affected_resources', {
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Militia",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Rebels",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralExplosives",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaExplosive",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsExplosive",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesApplyAgency",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
 			'Id', "PDABrowserLandingMilitia",
@@ -26,12 +138,7 @@ return PlaceObj('ModDef', {
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
-			'Id', "PDABrowserLandingRebels",
-			'ClassDisplayName', "UI Template (XTemplate)",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "XTemplate",
-			'Id', "PDAAIMBrowserMilitia",
+			'Id', "PDAStartButtonRebels",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -41,7 +148,7 @@ return PlaceObj('ModDef', {
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
-			'Id', "PDAStartButtonRebels",
+			'Id', "PDABrowserLandingRebels",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 	},
