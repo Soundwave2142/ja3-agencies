@@ -320,10 +320,10 @@ function AgencyAttirePool:IsPoolAllowed(unitSpecialization, unitTier)
     return allowedBySpecialization and allowedByTier
 end
 
---- @param unit table
+--- @param unit UnitDataCompositeDef
 --- @return boolean
 function AgencyAttirePool:IsPoolAllowedForUnit(unit)
-    return self:IsPoolAllowed(unit.Specialization, unit.Tier)
+    return self:IsPoolAllowed(unit:ResolveValue("Specialization"), unit:ResolveValue("Tier"))
 end
 
 DefineModItemPreset("AgencyAttirePool", { EditorName = "Agency Attire Pool", EditorSubmenu = "Agencies" })
@@ -343,7 +343,19 @@ DefineClass.AgencyAttirePoolItem = {
             name = "Colors",
             editor = "nested_list",
             default = false,
-            base_class = "ColorizationPropSet",
+            base_class = "ColorizationPropSet"
+        },
+        {
+            category = "Part",
+            id = "ColorDeviation",
+            name = "Color Deviation",
+            editor = "number",
+            default = 100,
+            min = -100,
+            max = 100,
+            default = 0,
+            scale = "%",
+            help = "Some parts have darker skin color. This will help align them.",
         },
         {
             category = "Part",
@@ -358,7 +370,7 @@ DefineClass.AgencyAttirePoolItem = {
             name = "Gender",
             editor = "combo",
             default = "",
-            items = function(self) return { "", "Male", "Female" } end,
+            items = function(self) return { "", "Male", "Female" } end
         }
     }
 }
@@ -366,7 +378,7 @@ DefineClass.AgencyAttirePoolItem = {
 --- @param gender string
 --- @return boolean
 function AgencyAttirePoolItem:IsItemAllowed(gender)
-    local allowedGender = self:ResolveValue('Gender')
+    local allowedGender = self:ResolveValue("Gender")
 
     return allowedGender == '' or allowedGender == gender
 end
@@ -374,7 +386,7 @@ end
 --- @param unit table
 --- @return boolean
 function AgencyAttirePoolItem:IsItemAllowedForUnit(unit)
-    return self:IsItemAllowed(unit:GetGender())
+    return self:IsItemAllowed(unit:ResolveValue("gender"))
 end
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -603,7 +615,7 @@ DefineClass.AgencyAttirePoolBody = {
             category = "Part",
             id = "BodyColorDeviation",
             name = "Body Color Deviation",
-            help = "Some parts have darker skin color. This will help allign them.",
+            help = "Some parts have darker skin color. This will help align them.",
             editor = "text",
             default = "",
         },
@@ -669,7 +681,7 @@ DefineClass.AgencyAttirePoolShirt = {
             category = "Part",
             id = "BodyColorDeviation",
             name = "Body Color Deviation",
-            help = "Some parts have darker skin color. This will help allign them.",
+            help = "Some parts have darker skin color. This will help align them.",
             editor = "text",
             default = "",
         }
@@ -809,13 +821,26 @@ DefineClass.AgencyAttirePoolPants = {
 
     properties = {
         {
+            category = "Part",
+            id = "BodyColorKey",
+            name = "Body Color",
+            editor = "combo",
+            default = "",
+            items = function(self) return { "", "EditableColor1", "EditableColor2", "EditableColor3" } end,
+        },
+        {
+            category = "Part",
             id = "Pants",
             name = "Pants",
             editor = "combo",
             default = false,
             items = function(self) return GetAgencyAttirePoolItems('CharacterPants', self:ResolveValue('Gender')) end,
-        },
+        }
     },
 
     EditorView = Untranslated("<Gender> - <Pants>"),
 }
+
+function AgencyAttirePoolPants:GetBodyColorDeviationAsTable()
+    return false
+end

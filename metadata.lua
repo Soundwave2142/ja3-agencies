@@ -3,7 +3,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 106,
+	'version', 199,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -12,15 +12,21 @@ return PlaceObj('ModDef', {
 		"Code/Appearance.lua",
 		"Code/UI.lua",
 		"Code/Debugger.lua",
+		"UnitData/DummyTESTAGENCIES.lua",
 	},
 	'default_options', {
 		AgencyChoice = "Default",
 		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1752937335,
-	'code_hash', -1995603889133625191,
+	'saved', 1753274314,
+	'code_hash', 7766984456837055231,
 	'affected_resources', {
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Merc",
+			'ClassDisplayName', "Agency",
+		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
 			'Id', "Militia",
@@ -30,6 +36,21 @@ return PlaceObj('ModDef', {
 			'Class', "Agency",
 			'Id', "Rebels",
 			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Army",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "ArmySF",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "General",
+			'ClassDisplayName', "Agency Attire Pool",
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "AgencyAttirePool",
@@ -59,6 +80,11 @@ return PlaceObj('ModDef', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "AgencyAttirePool",
 			'Id', "GeneralMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "Merc",
 			'ClassDisplayName', "Agency Attire Pool",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -150,6 +176,16 @@ return PlaceObj('ModDef', {
 			'Class', "XTemplate",
 			'Id', "PDABrowserLandingRebels",
 			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "UnitDataCompositeDef",
+			'Id', "DummyTESTAGENCIES",
+			'ClassDisplayName', "Unit",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AppearancePreset",
+			'Id', "NewAppearancePreset",
+			'ClassDisplayName', "Appearance preset",
 		}),
 	},
 	'TagGameSettings', true,

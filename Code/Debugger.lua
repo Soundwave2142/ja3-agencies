@@ -7,6 +7,18 @@ function OnMsg.AgenciesApplyAgency(agency)
     print("Agencies: Applying agency", agency)
 end
 
-function AgenciesLocalStorageDebug()
-    print(CurrentModStorageTable or {})
+function AgenciesDebugAppearance()
+    Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
+    Game["AgenciesAppearances"] = {}
+    ReloadUnitsAppearance()
+end
+
+function AgenciesLocalStorageClear()
+    CurrentModStorageTable = {}
+    WriteModPersistentStorageTable()
+end
+
+function AgenciesLocalStorageDebug(key)
+    local storage = CurrentModStorageTable or {}
+    print(key and storage[key] or storage)
 end

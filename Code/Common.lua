@@ -1,20 +1,20 @@
 --- ===================================================================================================================
---- Section 1 | Constants, global function to local overrides.
+--- Section 1 | Global function to local overrides, constants.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
+local pairs = pairs
+local ipairs = ipairs
+local empty_table = empty_table
+
 AGENCIES_MOD_ID = "Agencies"
 AGENCIES_OPTION = "AgencyChoice"
+AGENCIES_PERSISTED_ID = "AgenciesPersistentId"
 
 AGENCIES_DEFAULT = "Default"
 AGENCIES_DEFAULT_LABEL = "A.I.M."
 
 AGENCIES_AGENCY_STORAGE_KEY = "Agency"
-
-local pairs = pairs
-local ipairs = ipairs
-local empty_table = empty_table
-local Msg = Msg
 
 --- ===================================================================================================================
 --- Section 2 | Game start, initial functions.
@@ -135,11 +135,15 @@ function OnMsg.ZuluGameLoaded()
         return
     end
 
-    if Game.Agencies then
+    if Game[AGENCIES_PERSISTED_ID] then
         return
     end
 
-    Game.Agencies = { id = random_encode64(48) }
+    Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
+end
+
+function GenerateAgencyPersistentId()
+    return random_encode64(48)
 end
 
 --- ===================================================================================================================

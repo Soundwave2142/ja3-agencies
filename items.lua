@@ -33,6 +33,41 @@ return {
 		'name', "Agencies",
 	}, {
 		PlaceObj('ModItemAgency', {
+			AttireChanceToRollForHat2 = 80,
+			AttirePools = {
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "General",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "GeneralAllRounder",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "GeneralDoctor",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "GeneralExplosives",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "GeneralLeader",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "GeneralMarksmen",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "GeneralMechanic",
+				}),
+				PlaceObj('AgencyAttireSelector', {
+					'AttirePool', "Merc",
+				}),
+			},
+			NameColor = 4288927487,
+			SortKey = 10,
+			display_name = T(728718674075, --[[ModItemAgency Merc display_name]] "M.E.R.C."),
+			display_name_caps = T(906400444129, --[[ModItemAgency Merc display_name_caps]] "M.E.R.C."),
+			group = "Default",
+			id = "Merc",
+		}),
+		PlaceObj('ModItemAgency', {
 			AttirePools = {
 				PlaceObj('AgencyAttireSelector', {
 					'AttirePool', "GeneralAllRounder",
@@ -74,7 +109,7 @@ return {
 			BrowserLandingTemplate = "PDABrowserLandingMilitia",
 			LandingTemplate = "PDAAIMBrowserMilitia",
 			NameColor = 4284134911,
-			SortKey = 10,
+			SortKey = 20,
 			display_name = T(303667131676, --[[ModItemAgency Militia display_name]] "Militia"),
 			display_name_caps = T(667865737023, --[[ModItemAgency Militia display_name_caps]] "MILITIA"),
 			group = "Default",
@@ -122,23 +157,53 @@ return {
 			BrowserLandingTemplate = "PDABrowserLandingRebels",
 			LandingTemplate = "PDAAIMBrowserRebels",
 			NameColor = 4294918740,
-			SortKey = 20,
+			SortKey = 30,
 			display_name = T(134524822363, --[[ModItemAgency Rebels display_name]] "Maquis Rebels"),
 			display_name_caps = T(590366008526, --[[ModItemAgency Rebels display_name_caps]] "MAQUIS REBELS"),
 			group = "Default",
 			id = "Rebels",
 		}),
+		PlaceObj('ModItemAgency', {
+			NameColor = 4291342989,
+			SortKey = 40,
+			display_name = T(715098551457, --[[ModItemAgency Army display_name]] "Grand Chien Army"),
+			display_name_caps = T(906427891311, --[[ModItemAgency Army display_name_caps]] "GRAND CHIEN ARMY"),
+			group = "Default",
+			id = "Army",
+		}),
+		PlaceObj('ModItemAgency', {
+			NameColor = 4293424074,
+			SortKey = 50,
+			display_name = T(924413382876, --[[ModItemAgency ArmySF display_name]] 'GCASF "Bat Eaters"'),
+			display_name_caps = T(320392044501, --[[ModItemAgency ArmySF display_name_caps]] "BAT EATERS"),
+			group = "Default",
+			id = "ArmySF",
+		}),
 		PlaceObj('ModItemFolder', {
 			'name', "Attire",
 		}, {
+			PlaceObj('ModItemAgencyAttirePool', {
+				group = "General",
+				id = "General",
+			}),
 			PlaceObj('ModItemAgencyAttirePool', {
 				Chest = {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
-								'EditableColor2', RGBA(5, 5, 5, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Chest', "Faction_Acc_Heavy_02",
@@ -146,9 +211,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(6, 6, 6, 255),
-								'EditableColor2', RGBA(5, 5, 5, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Chest', "Faction_Acc_Stormer_02",
@@ -158,9 +233,19 @@ return {
 					PlaceObj('AgencyAttirePoolHip', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(4, 4, 4, 255),
-								'EditableColor2', RGBA(0, 0, 0, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Hip', "Faction_Acc_Heavy",
@@ -168,9 +253,19 @@ return {
 					PlaceObj('AgencyAttirePoolHip', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(6, 6, 6, 255),
-								'EditableColor2', RGBA(5, 5, 5, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Hip', "Faction_Acc_Stormer",
@@ -292,6 +387,26 @@ return {
 						},
 						'Hip', "Faction_Acc_Demolition_Legion",
 					}),
+					PlaceObj('AgencyAttirePoolHip', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
+							}),
+						},
+						'Hip', "Faction_Bag_01",
+					}),
 				},
 				Specialization = "ExplosiveExpert",
 				group = "General",
@@ -302,9 +417,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(11, 19, 8, 255),
-								'EditableColor2', RGBA(11, 19, 8, 255),
-								'EditableColor3', RGBA(11, 19, 8, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(25, 37, 11, 255),
+								'EditableColor2', RGBA(25, 37, 11, 255),
+								'EditableColor3', RGBA(25, 37, 11, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(40, 27, 19, 255),
+								'EditableColor2', RGBA(40, 27, 19, 255),
+								'EditableColor3', RGBA(40, 27, 19, 255),
 							}),
 						},
 						'Gender', "Male",
@@ -313,9 +438,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(11, 19, 8, 255),
-								'EditableColor2', RGBA(11, 19, 8, 255),
-								'EditableColor3', RGBA(11, 19, 8, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(25, 37, 11, 255),
+								'EditableColor2', RGBA(25, 37, 11, 255),
+								'EditableColor3', RGBA(25, 37, 11, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(40, 27, 19, 255),
+								'EditableColor2', RGBA(40, 27, 19, 255),
+								'EditableColor3', RGBA(40, 27, 19, 255),
 							}),
 						},
 						'Gender', "Female",
@@ -327,9 +462,19 @@ return {
 					PlaceObj('AgencyAttirePoolHip', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(0, 0, 0, 255),
-								'EditableColor2', RGBA(2, 2, 2, 255),
-								'EditableColor3', RGBA(2, 2, 2, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Hip', "Faction_Acc_Artilery",
@@ -344,9 +489,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(120, 85, 85, 255),
-								'EditableColor2', RGBA(0, 0, 0, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Gender', "Male",
@@ -355,9 +510,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(120, 85, 85, 255),
-								'EditableColor2', RGBA(0, 0, 0, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Gender', "Female",
@@ -367,9 +532,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(120, 85, 85, 255),
-								'EditableColor2', RGBA(0, 0, 0, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Gender', "Male",
@@ -378,9 +553,19 @@ return {
 					PlaceObj('AgencyAttirePoolChest', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(120, 85, 85, 255),
-								'EditableColor2', RGBA(0, 0, 0, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Gender', "Female",
@@ -392,9 +577,19 @@ return {
 					PlaceObj('AgencyAttirePoolHip', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(5, 4, 4, 255),
-								'EditableColor2', RGBA(22, 22, 22, 255),
-								'EditableColor3', RGBA(61, 61, 61, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Hip', "Faction_Acc_Recon",
@@ -403,8 +598,18 @@ return {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
-								'EditableColor2', RGBA(5, 5, 5, 255),
-								'EditableColor3', RGBA(0, 0, 0, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Hip', "Faction_Acc_Marksman",
@@ -419,9 +624,19 @@ return {
 					PlaceObj('AgencyAttirePoolHip', {
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(0, 0, 0, 255),
-								'EditableColor2', RGBA(2, 2, 2, 255),
-								'EditableColor3', RGBA(2, 2, 2, 255),
+								'EditableColor1', RGBA(7, 7, 7, 255),
+								'EditableColor2', RGBA(7, 7, 7, 255),
+								'EditableColor3', RGBA(7, 7, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(15, 22, 7, 255),
+								'EditableColor2', RGBA(15, 22, 7, 255),
+								'EditableColor3', RGBA(15, 22, 7, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(19, 13, 9, 255),
+								'EditableColor2', RGBA(19, 13, 9, 255),
+								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
 						'Hip', "Faction_Acc_Artilery",
@@ -430,6 +645,582 @@ return {
 				Specialization = "Mechanic",
 				group = "General",
 				id = "GeneralMechanic",
+			}),
+			PlaceObj('ModItemAgencyAttirePool', {
+				Body = {
+					PlaceObj('AgencyAttirePoolBody', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(104, 104, 104, 255),
+								'EditableColor3', RGBA(97, 70, 45, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(97, 70, 45, 255),
+								'EditableColor3', RGBA(27, 24, 24, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(11, 15, 17, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(65, 35, 45, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(39, 84, 107, 255),
+								'EditableColor3', RGBA(52, 55, 61, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(69, 58, 39, 255),
+								'EditableColor3', RGBA(52, 55, 61, 255),
+							}),
+						},
+						'Gender', "Male",
+						'Body', "EquipmentBiff_Top",
+						'BodyColorKey', "EditableColor1",
+					}),
+					PlaceObj('AgencyAttirePoolBody', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(104, 104, 104, 255),
+								'EditableColor3', RGBA(97, 70, 45, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(97, 70, 45, 255),
+								'EditableColor3', RGBA(27, 24, 24, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(11, 15, 17, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(65, 35, 45, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(39, 84, 107, 255),
+								'EditableColor3', RGBA(52, 55, 61, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(95, 45, 25, 255),
+								'EditableColor2', RGBA(69, 58, 39, 255),
+								'EditableColor3', RGBA(52, 55, 61, 255),
+							}),
+						},
+						'ColorDeviation', -50,
+						'Gender', "Female",
+						'Body', "EquipmentIMPTrooper_Top",
+						'BodyColorKey', "EditableColor1",
+					}),
+				},
+				Hat = {
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(23, 23, 23, 255),
+								'EditableColor2', RGBA(23, 23, 23, 255),
+								'EditableColor3', RGBA(23, 23, 23, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(77, 91, 95, 255),
+								'EditableColor2', RGBA(77, 91, 95, 255),
+								'EditableColor3', RGBA(77, 91, 95, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(122, 43, 50, 255),
+								'EditableColor2', RGBA(122, 43, 50, 255),
+								'EditableColor3', RGBA(122, 43, 50, 255),
+							}),
+						},
+						'Hat', "NPCCostumeMale_Hat_01",
+					}),
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(23, 23, 23, 255),
+								'EditableColor2', RGBA(23, 23, 23, 255),
+								'EditableColor3', RGBA(23, 23, 23, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(77, 91, 95, 255),
+								'EditableColor2', RGBA(77, 91, 95, 255),
+								'EditableColor3', RGBA(77, 91, 95, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(122, 43, 50, 255),
+								'EditableColor2', RGBA(122, 43, 50, 255),
+								'EditableColor3', RGBA(122, 43, 50, 255),
+							}),
+						},
+						'Hat', "NPCCostumeMale_Hat_03",
+					}),
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(23, 23, 23, 255),
+								'EditableColor2', RGBA(23, 23, 23, 255),
+								'EditableColor3', RGBA(23, 23, 23, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(77, 91, 95, 255),
+								'EditableColor2', RGBA(77, 91, 95, 255),
+								'EditableColor3', RGBA(77, 91, 95, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(122, 43, 50, 255),
+								'EditableColor2', RGBA(122, 43, 50, 255),
+								'EditableColor3', RGBA(122, 43, 50, 255),
+							}),
+						},
+						'Hat', "FactionMale_Hat_04",
+					}),
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(23, 23, 23, 255),
+								'EditableColor2', RGBA(23, 23, 23, 255),
+								'EditableColor3', RGBA(23, 23, 23, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(77, 91, 95, 255),
+								'EditableColor2', RGBA(77, 91, 95, 255),
+								'EditableColor3', RGBA(77, 91, 95, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(122, 43, 50, 255),
+								'EditableColor2', RGBA(122, 43, 50, 255),
+								'EditableColor3', RGBA(122, 43, 50, 255),
+							}),
+						},
+						'Hat', "FactionMale_Hat_06",
+					}),
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+						},
+						'Gender', "Male",
+						'Hat', "MilitiaCostumeMale_Mask_01",
+						'HatSpot', "Origin",
+					}),
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+						},
+						'Gender', "Male",
+						'HideHair', false,
+						'Hat', "MilitiaCostumeMale_Mask_02",
+						'HatSpot', "Origin",
+					}),
+					PlaceObj('AgencyAttirePoolHat', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(97, 86, 60, 255),
+								'EditableColor2', RGBA(97, 86, 60, 255),
+								'EditableColor3', RGBA(97, 86, 60, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(23, 23, 23, 255),
+								'EditableColor2', RGBA(23, 23, 23, 255),
+								'EditableColor3', RGBA(23, 23, 23, 255),
+							}),
+						},
+						'Gender', "Male",
+						'Hat', "MilitiaCostumeMale_Mask_03",
+						'HatSpot', "Origin",
+					}),
+				},
+				Hat2 = {
+					PlaceObj('AgencyAttirePoolHat2', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(21, 23, 26, 255),
+								'EditableColor2', RGBA(21, 23, 26, 255),
+								'EditableColor3', RGBA(21, 23, 26, 255),
+							}),
+						},
+						'Gender', "Male",
+						'HideHair', false,
+						'Hat2', "EquipmentIvan_Glasses",
+					}),
+					PlaceObj('AgencyAttirePoolHat2', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(21, 23, 26, 255),
+								'EditableColor2', RGBA(21, 23, 26, 255),
+								'EditableColor3', RGBA(21, 23, 26, 255),
+							}),
+						},
+						'Gender', "Male",
+						'HideHair', false,
+						'Hat2', "EquipmentSteroid_Glasses",
+					}),
+					PlaceObj('AgencyAttirePoolHat2', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(21, 23, 26, 255),
+								'EditableColor2', RGBA(21, 23, 26, 255),
+								'EditableColor3', RGBA(21, 23, 26, 255),
+							}),
+						},
+						'Gender', "Female",
+						'HideHair', false,
+						'Hat2', "EquipmentIvan_Glasses",
+						'Hat2AttachOffsetX', -15,
+					}),
+					PlaceObj('AgencyAttirePoolHat2', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(21, 23, 26, 255),
+								'EditableColor2', RGBA(21, 23, 26, 255),
+								'EditableColor3', RGBA(21, 23, 26, 255),
+							}),
+						},
+						'Gender', "Female",
+						'HideHair', false,
+						'Hat2', "EquipmentSteroid_Glasses",
+						'Hat2AttachOffsetX', -15,
+					}),
+				},
+				NameColor = 4288927487,
+				Pants = {
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(80, 56, 26, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'Gender', "Male",
+						'Pants', "Faction_GrandChien_Bottom_01",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(80, 56, 26, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'Gender', "Male",
+						'Pants', "Faction_GrandChien_Bottom_04",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(80, 56, 26, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(52, 75, 86, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'ColorDeviation', -70,
+						'Gender', "Male",
+						'Pants', "NPCCostumeMale_Pants_10",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(80, 56, 26, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'ColorDeviation', -75,
+						'Gender', "Male",
+						'BodyColorKey', "EditableColor3",
+						'Pants', "NPCCostumeMale_Pants_09",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(80, 56, 26, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'ColorDeviation', -60,
+						'Gender', "Female",
+						'Pants', "EquipmentFemale_Pants_01",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(80, 56, 26, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'ColorDeviation', -60,
+						'Gender', "Female",
+						'Pants', "EquipmentIMPTrooper_Pants",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(90, 90, 90, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(41, 55, 28, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(80, 56, 26, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(52, 75, 86, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'ColorDeviation', -70,
+						'Gender', "Female",
+						'Pants', "NPCCostumeFemale_Pants_01",
+					}),
+					PlaceObj('AgencyAttirePoolPants', {
+						'Colors', {
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(90, 90, 90, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(41, 55, 28, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(80, 56, 26, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+							PlaceObj('ColorizationPropSet', {
+								'EditableColor1', RGBA(36, 36, 36, 255),
+								'EditableColor2', RGBA(36, 36, 36, 255),
+								'EditableColor3', RGBA(36, 36, 36, 255),
+							}),
+						},
+						'ColorDeviation', -20,
+						'Gender', "Female",
+						'Pants', "NPCCostumeFemale_Pants_05",
+					}),
+				},
+				group = "Rebels",
+				id = "Merc",
 			}),
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
@@ -5466,4 +6257,65 @@ return {
 			}),
 			}),
 		}),
+	PlaceObj('ModItemUnitDataCompositeDef', {
+		'Group', "MercenariesOld",
+		'Id', "DummyTESTAGENCIES",
+		'object_class', "UnitData",
+		'Health', 82,
+		'Agility', 88,
+		'Dexterity', 91,
+		'Strength', 86,
+		'Wisdom', 85,
+		'Leadership', 85,
+		'Marksmanship', 92,
+		'Mechanical', 62,
+		'Explosives', 45,
+		'Medical', 11,
+		'Portrait', "UI/MercsPortraits/Spike",
+		'BigPortrait', "UI/Mercs/Spike",
+		'IsMercenary', true,
+		'Name', T(953762036292, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES Name]] "dummy female leader"),
+		'Nick', T(451196841994, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES Nick]] "dummy female leader"),
+		'AllCapsNick', T(733495294199, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES AllCapsNick]] "dummy female leader"),
+		'Affiliation', "Secret",
+		'Bio', T(840942689513, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES Bio]] "Spike is revealed to be the Major, fighting against the Santiago Corporation after realizing the nature of their activities in Grand Chien. Originally being hired by them, the sequence of events that led to Spike abandoning his lengthy contract with the North Koreans and joining the Santiago Corporation are unknown."),
+		'Nationality', "USA",
+		'SalaryLv1', 0,
+		'SalaryMaxLv', 0,
+		'LegacyNotes', 'JA:\n\n"A seasoned veteran of international conflict, Major Spike Scallion was deservingly decorated for the unflinching courage he exhibited while evacuating the villagers of Kampoa under extremely heavy fire. This major commands respect and a sizeable fee." \n\nJA2 Alumni: \n\n"The departure of Spike Scallion from A.I.M. was a major loss to the organization. His demeanour and unwavering command of any situation always served as a comfort for those who found themselves neck deep in it alongside him. Major Scallion was offered a lucrative long-term contract serving as a military consultant for the North Koreans and no amount of negotiation could convince him to stay."',
+		'StartingLevel', 8,
+		'MaxHitPoints', 77,
+		'Likes', {
+			"Len",
+		},
+		'StartingPerks', {
+			"AutoWeapons",
+			"BulletHell",
+			"Hobbler",
+			"LeadFromTheFront",
+			"OpportunisticKiller",
+			"Counterfire",
+			"Killzone",
+			"SwiftStrike",
+			"LightningReaction",
+		},
+		'AppearancesList', {
+			PlaceObj('AppearanceWeight', {
+				'Preset', "NewAppearancePreset",
+			}),
+		},
+		'Equipment', {
+			"Spike",
+		},
+		'Tier', "Legendary",
+		'Specialization', "Leader",
+		'gender', "Female",
+	}),
+	PlaceObj('ModItemAppearancePreset', {
+		Body = "EquipmentBuns_Top",
+		Head = "Head_Buns",
+		Pants = "EquipmentBuns_Bottom",
+		group = "Default",
+		id = "NewAppearancePreset",
+	}),
 }

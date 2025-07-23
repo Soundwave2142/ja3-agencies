@@ -1,40 +1,21 @@
 --- ===================================================================================================================
---- Section 1 | Constants, global function to local overrides.
+--- Section 1 | Global function to local overrides, constants.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
---- ===================================================================================================================
---- Section 2 | Overrides and event listeners for appearance appliers.
---- @author Soundwave2142
---- ===================================================================================================================
-function OnMsg.PreGameMenuOpen()
-    AgenciesAppearanceHandler:ApplyToMainMenu()
-end
+local table_copy = table.copy
+local table_sort = table.sort
+local table_equal_values = table.equal_values
+local table_imap = table.imap
+local table_find_value = table.find_value
+local next = next
+local pairs = pairs
+local ipairs = ipairs
+local PlaceObj = PlaceObj
 
-local BaseChooseUnitAppearance = ChooseUnitAppearance
-
-function ChooseUnitAppearance(merc_id, handle)
-    local unit = g_Units[merc_id]
-    local basePreset = BaseChooseUnitAppearance(merc_id, handle)
-
-    if AgenciesAppearanceHandler:CanBeAppliedToUnit(unit) then
-        return AgenciesAppearanceHandler:GeneratePreset(unit, basePreset)
-    end
-
-    return basePreset
-end
-
-function OnMsg.LoadSessionData()
-    AgenciesAppearanceHandler:ApplyToTeam()
-end
-
-function OnMsg.ExplorationStart()
-    AgenciesAppearanceHandler:ApplyToTeam()
-end
-
-function OnMsg.AgenciesApplyAgency()
-    AgenciesAppearanceHandler:ApplyToTeam()
-end
+local AGENCIES_PERSISTED_ID = AGENCIES_PERSISTED_ID
+local AGENCIES_APPEARANCE_TABLE = "AgenciesAppearances"
+local AGENCIES_APPEARANCES_STORAGE_KEY = "LastAppearances"
 
 --- ===================================================================================================================
 --- Section 2 | Overrides and event listeners for appearance appliers.
@@ -99,7 +80,7 @@ DefineClass.AgenciesAppearanceHandler = {
 --- Iterates over default options and assigns them to self.
 --- Then takes values from current faction if possible.
 --- The idea is to allow other mods to insert their own values.
-function AgenciesAppearanceHandler:LoadOptions()
+function AgenciesAppearanceHandler:EnsureOptionsAreLoaded()
     local loadingForAgency = GetCurrentAgency()
 
     if self.OptionsLoaded and self.OptionsLoadedForAgency == loadingForAgency then
@@ -112,7 +93,7 @@ function AgenciesAppearanceHandler:LoadOptions()
             if type(value.class) == "string" and value.class then
                 self[key] = value:Clone()
             else
-                self[key] = table.copy(value)
+                self[key] = table_copy(value)
             end
         else
             self[key] = value
@@ -141,109 +122,72 @@ function AgenciesAppearanceHandler:ReloadOptions()
     self:LoadOptions()
 end
 
---- Iterates the team members and calls for ApplyToUnit for each
-function AgenciesAppearanceHandler:ApplyToTeam(units)
-    if not Game or not Game.Agencies then return end
-
-    local playerUnitsOnMap = GetAllPlayerUnitsOnMap()
-
-    for _, unit in ipairs(units or playerUnitsOnMap) do
-        self:ApplyToUnit(unit)
-    end
-
-    self:SaveToStorage()
-end
-
---- Calls for Preset generation if possible, stops animations and applies preset.
---- @param unit table
---- @param presetId (string|nil)
-function AgenciesAppearanceHandler:ApplyToUnit(unit, presetId, saveToStorage)
-    self:LoadOptions() -- despite being called multiple times, options are only loaded once
-
-    if not self:CanBeAppliedToUnit(unit) then
-        return
-    end
-
-    unit:StopAnimMomentHook()
-    local anim = unit:GetStateText()
-    local phase = unit:GetAnimPhase()
-    presetId = presetId or self:GeneratePreset(unit)
-
-    unit:ApplyAppearance(presetId, true)
-    unit:SetStateText(anim, const.eKeepComponentTargets)
-    unit:SetAnimPhase(1, phase)
-    unit:StartAnimMomentHook()
-    unit:UpdateModifiedAnim()
-    unit:UpdateMoveAnim()
-
-    if saveToStorage then
-        self:SaveToStorage()
-    end
-end
-
---- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
---- @param unit table
-function AgenciesAppearanceHandler:CanBeAppliedToUnit(unit)
-    if not self.Pools or #self.Pools == 0 then
-        return false
-    end
-
-    local reasons = {}
-    Msg("AgenciesAppearanceCanApplyToUnit", unit, self, reasons)
-
-    if next(reasons) ~= nil then
-        return false
-    end
-
-    return unit and IsMerc(unit) and unit:GetGender()
-end
-
 --- Generated (or takes from Game) parts for preset and inserts into the game.
---- @param unit table
+--- @param unit UnitDataCompositeDef
+--- @param defaultPresetId string
 --- @return string id of generated preset
-function AgenciesAppearanceHandler:GeneratePreset(unit, defaultPreset)
-    local defaultLook = AppearancePresets[defaultPreset or unit:ChooseAppearance()]
+function AgenciesAppearanceHandler:GeneratePreset(unit, defaultPresetId)
+    self:EnsureOptionsAreLoaded()
+
+    if not self:CanBeGeneratedForUnit(unit) then
+        return defaultPresetId
+    end
+
     local presetId = self:GenerateId(unit)
 
     if AppearancePresets[presetId] then
         return presetId
     end
 
-    local pickedParts = self:GetPickedParts(unit, defaultLook, presetId)
-    self:PlacePreset(presetId, pickedParts, defaultLook)
+    local pickedParts = self:GetPickedParts(unit, defaultPresetId, presetId)
+    self:PlacePreset(presetId, pickedParts, AppearancePresets[defaultPresetId])
 
     return presetId
+end
+
+--- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
+--- @param unit UnitDataCompositeDef
+function AgenciesAppearanceHandler:CanBeGeneratedForUnit(unit)
+    if not self.Pools or #self.Pools == 0 then
+        return false
+    end
+
+    local reasonsNotTo = {}
+    Msg("AgenciesAppearanceCanApplyToUnit", unit, self, reasonsNotTo)
+
+    if next(reasonsNotTo) ~= nil then
+        return false
+    end
+
+    return unit and IsMerc(unit) and unit:ResolveValue("gender")
 end
 
 --- @param unit table
 --- @return string id of generated preset
 function AgenciesAppearanceHandler:GenerateId(unit)
-    return table.concat({
-        'Agencies', '_',
-        Game.Agencies.id, '_',
-        unit.unitdatadef_id, '_',
-        self.OptionsLoadedForAgency,
-    })
+    return table.concat({ unit.id, '_', self.OptionsLoadedForAgency, '_', Game[AGENCIES_PERSISTED_ID] })
 end
 
-function AgenciesAppearanceHandler:GetPickedParts(unit, defaultLook, presetId)
-    if Game.Agencies and Game.Agencies.appearancePresets and Game.Agencies.appearancePresets[presetId] then
-        return Game.Agencies.appearancePresets[presetId]
+--- @param unit UnitDataCompositeDef
+--- @param
+function AgenciesAppearanceHandler:GetPickedParts(unit, defaultPresetId, presetId)
+    if Game[AGENCIES_APPEARANCE_TABLE] and Game[AGENCIES_APPEARANCE_TABLE][presetId] then
+        return Game[AGENCIES_APPEARANCE_TABLE][presetId]
     end
 
     local pickedParts = {
-        NativePreset = defaultLook.id
+        NativePreset = defaultPresetId
     }
 
     self:PickHeadParts(unit, pickedParts)
     self:PickBodyParts(unit, pickedParts)
     self:PickPantsParts(unit, pickedParts)
 
-    if not Game.Agencies.appearancePresets then
-        Game.Agencies.appearancePresets = {}
+    if not Game[AGENCIES_APPEARANCE_TABLE] then
+        Game[AGENCIES_APPEARANCE_TABLE] = {}
     end
 
-    Game.Agencies.appearancePresets[presetId] = pickedParts
+    Game[AGENCIES_APPEARANCE_TABLE][presetId] = pickedParts
 
     return pickedParts
 end
@@ -256,15 +200,15 @@ function AgenciesAppearanceHandler:PickHeadParts(unit, pickedParts)
     local Hat2 = false
 
     local shouldPickHat = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceHat', self.ChanceToRollForHat,
+        unit.id, 'FSAppearanceHat', self.ChanceToRollForHat,
         self.AlwaysRollForHat, self.NeverRollForHat
     )
     local shouldPickHat2 = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceHat2', self.ChanceToRollForHat2,
+        unit.id, 'FSAppearanceHat2', self.ChanceToRollForHat2,
         self.AlwaysRollForHat2, self.NeverRollForHat2
     )
     local shouldPickHead = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceHead', self.ChanceToRollForHead,
+        unit.id, 'FSAppearanceHead', self.ChanceToRollForHead,
         self.AlwaysRollForHead, self.NeverRollForHead
     )
 
@@ -279,6 +223,16 @@ function AgenciesAppearanceHandler:PickHeadParts(unit, pickedParts)
 
     if shouldPickHat2 and canPickForHat2 then
         Hat2 = self:GetFromAllPools('Hat2', 'Hat2Color', unit, pickedParts)
+
+        if Hat and Hat2 then
+            local try = 0
+
+            while Hat.Hat == Hat2.Hat2 and try < 5 do
+                try = try + 1
+
+                Hat2 = self:GetFromAllPools('Hat2', 'Hat2Color', unit, pickedParts)
+            end
+        end
     end
 
     if shouldPickHead then
@@ -301,19 +255,19 @@ function AgenciesAppearanceHandler:PickBodyParts(unit, pickedParts)
     local body = false
 
     local shouldPickBody = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceBody', self.ChanceToRollForBody,
+        unit.id, 'FSAppearanceBody', self.ChanceToRollForBody,
         self.AlwaysRollForBody, self.NeverRollForBody
     )
     local shouldPickShirt = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceShirt', self.ChanceToRollForShirt,
+        unit.id, 'FSAppearanceShirt', self.ChanceToRollForShirt,
         self.AlwaysRollForShirt, self.NeverRollForShirt
     )
     local shouldPickArmor = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceArmor', self.ChanceToRollForArmor,
+        unit.id, 'FSAppearanceArmor', self.ChanceToRollForArmor,
         self.AlwaysRollForArmor, self.NeverRollForArmor
     )
     local shouldPickChest = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceChest', self.ChanceToRollForChest,
+        unit.id, 'FSAppearanceChest', self.ChanceToRollForChest,
         self.AlwaysRollForChest, self.NeverRollForChest
     )
 
@@ -352,11 +306,11 @@ end
 --- @param pickedParts table collection of all picked parts so far, these are passed to the preset object
 function AgenciesAppearanceHandler:PickPantsParts(unit, pickedParts)
     local shouldPickPants = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearancePants', self.ChanceToRollForPants,
+        unit.id, 'FSAppearancePants', self.ChanceToRollForPants,
         self.AlwaysRollForPants, self.NeverRollForPants
     )
     local shouldPickHip = self:ShouldPickPart(
-        unit.unitdatadef_id, 'FSAppearanceHip', self.ChanceToRollForHip,
+        unit.id, 'FSAppearanceHip', self.ChanceToRollForHip,
         self.AlwaysRollForHip, self.NeverRollForHip
     )
 
@@ -451,11 +405,11 @@ function AgenciesAppearanceHandler:GetFromAllPools(partKey, partColorKey, unit, 
         end
     end
 
-    local pickedColor = #colors > 0 and colors[math.random(#colors)]:Clone() or self.DefaultItemColors:Clone()
+    local pickedColor = self:GetItemColor(colors, pickedItem:ResolveValue("ColorDeviation"))
     local bodyColorKey = pickedItem:ResolveValue('BodyColorKey')
 
     if bodyColorKey ~= nil and bodyColorKey ~= "" then
-        local bodyColor = self:GetBodyColor(unit, pickedItem:GetBodyColorDeviationAsTable())
+        local bodyColor = self:GetBodyColor(unit.id, pickedItem:GetBodyColorDeviationAsTable())
 
         pickedColor[bodyColorKey] = RGBA(unpack_params(bodyColor))
     end
@@ -465,20 +419,45 @@ function AgenciesAppearanceHandler:GetFromAllPools(partKey, partColorKey, unit, 
     return pickedItem
 end
 
+function AgenciesAppearanceHandler:GetItemColor(colors, deviation)
+    local pickedColor = #colors > 0 and colors[math.random(#colors)] or self.DefaultItemColors
+    pickedColor = pickedColor:Clone()
+
+    if deviation and deviation ~= 0 then
+        local colorProperties = { "EditableColor1", "EditableColor2", "EditableColor3" }
+
+        for _, colorPropertyName in ipairs(colorProperties) do
+            local color = pickedColor[colorPropertyName] or false
+
+            if color then
+                local rgba = pack_params(GetRGBA(color))
+
+                for channel, channelValue in ipairs(rgba) do
+                    rgba[channel] = MulDivRound(channelValue, 100 + deviation, 100)
+                end
+
+                pickedColor[colorPropertyName] = RGBA(unpack_params(rgba))
+            end
+        end
+    end
+
+    return pickedColor;
+end
+
 --- Returns a body color of a unit. Currently only basic game mercs are supported.
 --- @param unit table
-function AgenciesAppearanceHandler:GetBodyColor(unit, deviation)
+function AgenciesAppearanceHandler:GetBodyColor(unitId, deviation)
     local bodyColor = self.BodyColors.Default.Color
 
     for _, color in pairs(self.BodyColors) do
-        for _, unitId in pairs(color.Units) do
-            if unitId == unit.unitdatadef_id then
+        for _, colorsUnitId in pairs(color.Units) do
+            if colorsUnitId == unitId then
                 bodyColor = color.Color
             end
         end
     end
 
-    bodyColor = table.copy(bodyColor)
+    bodyColor = table_copy(bodyColor)
 
     if deviation then
         for position, bodyColorChannelValue in ipairs(bodyColor) do
@@ -492,80 +471,172 @@ end
 --- Merges pickedParts and defaultLook and places a preset inside AppearancePreset collection.
 --- @param presetId string
 --- @param pickedParts table all previously picked parts for an attire.
---- @param defaultLook table a reference to units current/default look, this will be taken if nothing was picked.
-function AgenciesAppearanceHandler:PlacePreset(presetId, pickedParts, defaultLook)
-    local preset = {
-        group = "Mercs",
-        id = presetId,
-    }
+--- @param defaultPreset AppearancePreset a reference to units current/default look, this will be taken if nothing was picked.
+function AgenciesAppearanceHandler:PlacePreset(presetId, pickedParts, defaultPreset)
+    local preset = table_copy(pickedParts)
 
-    for partName, part in pairs(pickedParts) do
-        preset[partName] = part
-    end
+    preset.id = presetId
+    preset.group = "Mercs"
 
     -- additionally, iterate over original preset and place items from it
     -- include item only if in new preset there's no mention of it (aka not false, but nil)
-    for partName, defaultPart in pairs(defaultLook) do
-        if preset[partName] == nil then
-            preset[partName] = defaultPart
+    if defaultPreset then
+        for partName, defaultPart in pairs(defaultPreset) do
+            if preset[partName] == nil then
+                preset[partName] = defaultPart
+            end
         end
     end
 
     PlaceObj('AppearancePreset', preset)
 end
 
---- Saves currently loaded agency appearance presets in storage, to be used in main menu.
-function AgenciesAppearanceHandler:SaveToStorage()
+--- ===================================================================================================================
+--- Section 3 | Overrides and event listeners for appearance appliers DURING GAME.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+local BaseChooseUnitAppearance = ChooseUnitAppearance
+
+--- @param merc_id string
+--- @param handle table(?)
+function ChooseUnitAppearance(merc_id, handle)
+    local unit = UnitDataDefs[merc_id]
+    local basePreset = BaseChooseUnitAppearance(merc_id, handle)
+
     if not Game then
+        return basePreset
+    end
+
+    if not Game[AGENCIES_PERSISTED_ID] then
+        Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
+    end
+
+    return AgenciesAppearanceHandler:GeneratePreset(unit, basePreset)
+end
+
+function ReloadUnitsAppearance(units)
+    units = units or GetAllPlayerUnitsOnMap()
+
+    if #units < 1 then
         return
     end
 
+    for _, unit in ipairs(units) do
+        unit:StopAnimMomentHook()
+        local anim = unit:GetStateText()
+        local phase = unit:GetAnimPhase()
+
+        unit:ApplyAppearance(ChooseUnitAppearance(unit.unitdatadef_id, unit.handle))
+        unit:SetStateText(anim, const.eKeepComponentTargets)
+        unit:SetAnimPhase(1, phase)
+        unit:StartAnimMomentHook()
+        unit:UpdateModifiedAnim()
+        unit:UpdateMoveAnim()
+    end
+end
+
+--- Triggered when Agency is changed in main menu or in game. Should only apply appearance in game.
+function OnMsg.AgenciesApplyAgency()
+    if not InGame then
+        return
+    end
+
+    ReloadUnitsAppearance()
+    SaveCurrentSquadPresets()
+end
+
+--- ===================================================================================================================
+--- Section 4 | Overrides and event listeners for appearance appliers DURING MAIN MENU.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+--- Saves current units in a team to the mod local storage to be used in Main Menu.
+function SaveCurrentSquadPresets()
+    local team = table_find_value(g_Teams, "control", "UI")
     local storage = CurrentModStorageTable or {}
-    local lastSavedPresets = storage["appearancePresets"] or {}
-    local lastSavedPresetsList = {}
-    local presets = Game.Agencies.appearancePresets or {}
-    local presetsList = {}
 
-    for preset, pickedItems in pairs(lastSavedPresets) do
-        table.insert(lastSavedPresetsList, preset)
-    end
-
-    for preset, pickedItems in pairs(presets) do
-        table.insert(presetsList, preset)
-    end
-
-    if table.equal_values(lastSavedPresetsList, presetsList) then
+    if not team or not team.units then
         return
     end
 
-    storage["appearancePresets"] = presets
+    local newPresets = table_imap(
+        team.units,
+        function(merc) return merc:ResolveValue("Appearance") end
+    )
+    local oldPresets = table_imap(
+        storage[AGENCIES_APPEARANCES_STORAGE_KEY] or {},
+        function(preset) return preset.id end
+    )
+
+    table_sort(newPresets)
+    table_sort(oldPresets)
+
+    if table_equal_values(newPresets, oldPresets) then
+        return
+    end
+
+    local appearances = {}
+
+    for _, presetId in ipairs(newPresets) do
+        if Game and Game[AGENCIES_APPEARANCE_TABLE] and Game[AGENCIES_APPEARANCE_TABLE][presetId] then
+            local presetParts = table_copy(Game[AGENCIES_APPEARANCE_TABLE][presetId])
+            presetParts.id = presetId
+
+            appearances[_] = presetParts
+        else
+            appearances[_] = presetId
+        end
+    end
+
+    storage[AGENCIES_APPEARANCES_STORAGE_KEY] = appearances
     WriteModPersistentStorageTable()
 end
 
---- Applies unit presets to main menu DummyUnits if anything was saved in storage.
-function AgenciesAppearanceHandler:ApplyToMainMenu()
+OnMsg.EnterSector = SaveCurrentSquadPresets
+
+--- Checks whatever it's possible to apply presets to Main Menu by making a message call.
+function CanApplyAgencyPresetsInMainMenu()
+    local reasonsNotTo = {}
+    Msg("AgenciesAppearanceCanApplyInMainMenu", reasonsNotTo)
+
+    return not InGame and next(reasonsNotTo) == nil
+end
+
+--- Iterates each dummy unit on the map and applies preset from last game (if any saved).
+function ApplyAgencyPresetsInMainMenu()
+    if not CanApplyAgencyPresetsInMainMenu() then
+        return
+    end
+
     local storage = CurrentModStorageTable or {}
-    local lastSavedPresets = storage["appearancePresets"] or {}
+    local lastSavedPresets = table_copy(storage[AGENCIES_APPEARANCES_STORAGE_KEY] or {})
 
     if not lastSavedPresets or next(lastSavedPresets) == nil then
         return
     end
 
-    local availablePresets = {}
+    for key, pickedParts in ipairs(lastSavedPresets) do
+        -- some presets can be saved in table format, such dynamic agency presets,
+        -- other presets can be just default in-game defined.
 
-    for presetId, pickedParts in pairs(lastSavedPresets) do
-        local defaultLook = AppearancePresets[pickedParts.NativePreset]
+        if type(pickedParts) == "table" then
+            local presetId = pickedParts.id
+            local defaultPreset = AppearancePresets[pickedParts.NativePreset]
 
-        if not AppearancePresets[presetId] then
-            self:PlacePreset(presetId, pickedParts, defaultLook)
+            if not AppearancePresets[presetId] then
+                AgenciesAppearanceHandler:PlacePreset(presetId, pickedParts, defaultPreset)
+            end
+
+            lastSavedPresets[key] = presetId
+        elseif type(pickedParts) == "string" and not AppearancePresets[pickedParts] then
+            table.remove(lastSavedPresets, key)
         end
-
-        table.insert(availablePresets, presetId)
     end
 
     local presetPosition = 0
     MapForEach("map", "DummyUnit", function(unit)
-        local preset = availablePresets[presetPosition + 1]
+        local preset = lastSavedPresets[presetPosition + 1]
 
         if preset and unit.Groups then
             unit:ApplyAppearance(preset, true)
@@ -576,3 +647,5 @@ function AgenciesAppearanceHandler:ApplyToMainMenu()
         end
     end)
 end
+
+OnMsg.PreGameMenuOpen = ApplyAgencyPresetsInMainMenu
