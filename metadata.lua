@@ -3,7 +3,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 199,
+	'version', 204,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -19,8 +19,8 @@ return PlaceObj('ModDef', {
 		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1753274314,
-	'code_hash', 7766984456837055231,
+	'saved', 1753285571,
+	'code_hash', -4650753464705836725,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",

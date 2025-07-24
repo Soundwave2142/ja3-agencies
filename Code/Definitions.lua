@@ -1,6 +1,10 @@
 --- ===================================================================================================================
+--- Section 1 | Global function to local overrides, common functions.
 --- @author Soundwave2142
 --- ===================================================================================================================
+
+local table_find = table.find
+local table_insert = table.insert
 
 --- @param entityClass string
 --- @param skipNone boolean
@@ -8,11 +12,11 @@
 --- @return table
 local function GetEntityClassInherits(entityClass, skipNone, filter)
     local inherits = ClassLeafDescendantsList(entityClass, function(class)
-        return not table.find(filter, class)
+        return not table_find(filter, class)
     end)
 
     if not skipNone then
-        table.insert(inherits, 1, "")
+        table_insert(inherits, 1, "")
     end
 
     return inherits
@@ -24,6 +28,11 @@ end
 function GetAgencyAttirePoolItems(part, gender)
     return GetEntityClassInherits(part .. gender)
 end
+
+--- ===================================================================================================================
+--- Section 2 | Agency Preset and related in-preset pickers.
+--- @author Soundwave2142
+--- ===================================================================================================================
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class Agency
@@ -132,16 +141,16 @@ DefineClass.Agency = {
             editor = "number",
             default = 100,
             scale = "%",
-            help = "From 0 to 100, defines a chance for this item to be rolled upon attire generation."
+            help = "Defines a chance for this item to be rolled upon attire generation."
         },
         {
             category = "Attire",
             id = "AttireChanceToRollForHip",
-            name = "Roll for Pants chance",
+            name = "Roll for Hip chance",
             editor = "number",
             default = 80,
             scale = "%",
-            help = "From 0 to 100, defines a chance for this item to be rolled upon attire generation."
+            help = "Defines a chance for this item to be rolled upon attire generation."
         },
     },
 
@@ -186,6 +195,11 @@ function AgencyAttireSelector:GetError()
     end
 end
 
+--- ===================================================================================================================
+--- Section 3 | Agency Attire Pool preset and in-preset related items.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class AgencyAttirePool
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -212,15 +226,6 @@ DefineClass.AgencyAttirePool = {
             default = "",
             items = function(self) return PresetGroupCombo("MercTiers", "Default") end,
             help = "Will limit this attire pool to particular Merc Tier"
-        },
-        -- Group - Attire - Head
-        {
-            category = "Attire",
-            id = "Colors",
-            name = "Colors",
-            editor = "nested_list",
-            default = false,
-            base_class = "ColorizationPropSet",
         },
         {
             category = "Attire - Head",
@@ -328,7 +333,6 @@ end
 
 DefineModItemPreset("AgencyAttirePool", { EditorName = "Agency Attire Pool", EditorSubmenu = "Agencies" })
 
-
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class AgencyAttirePoolItem
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -355,14 +359,7 @@ DefineClass.AgencyAttirePoolItem = {
             max = 100,
             default = 0,
             scale = "%",
-            help = "Some parts have darker skin color. This will help align them.",
-        },
-        {
-            category = "Part",
-            id = "IgnoreFactionColorPool",
-            name = "Ignore General Color Pool",
-            editor = "bool",
-            default = false
+            help = "Some parts have darker color. This will help align them.",
         },
         {
             category = "Limits",
@@ -388,6 +385,37 @@ end
 function AgencyAttirePoolItem:IsItemAllowedForUnit(unit)
     return self:IsItemAllowed(unit:ResolveValue("gender"))
 end
+
+--- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--- @class AgencyAttirePoolItemWithBodyColor
+--- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DefineClass.AgencyAttirePoolItemWithBodyColor = {
+    __parents = { "PropertyObject" },
+    __generated_by_class = "ClassDef",
+
+    properties = {
+        {
+            category = "Part",
+            id = "BodyColorKey",
+            name = "Body Color",
+            editor = "combo",
+            default = "",
+            items = function(self) return { "", "EditableColor1", "EditableColor2", "EditableColor3" } end,
+        },
+        {
+            category = "Part",
+            id = "BodyColorDeviation",
+            name = "Body Color Deviation",
+            editor = "number",
+            default = 100,
+            min = -100,
+            max = 100,
+            default = 0,
+            scale = "%",
+            help = "Some parts have darker color. This will help align them.",
+        }
+    }
+}
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class AgencyAttirePoolHat
@@ -469,6 +497,7 @@ DefineClass.AgencyAttirePoolHat = {
     EditorView = Untranslated("<Gender> - <Hat>"),
 }
 
+--- @return string
 function AgencyAttirePoolHat:GetEditorView()
     local view = ' - <Hat>'
 
@@ -555,6 +584,7 @@ DefineClass.AgencyAttirePoolHat2 = {
     EditorView = Untranslated("<Gender> - <Hat>"),
 }
 
+--- @return string
 function AgencyAttirePoolHat2:GetEditorView()
     local view = ' - <Hat2>'
 
@@ -571,7 +601,10 @@ end
 --- @class AgencyAttirePoolHead
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAttirePoolHead = {
-    __parents = { "AgencyAttirePoolItem" },
+    __parents = {
+        "AgencyAttirePoolItem",
+        "AgencyAttirePoolItemWithBodyColor"
+    },
     __generated_by_class = "ClassDef",
 
     properties = {
@@ -591,7 +624,10 @@ DefineClass.AgencyAttirePoolHead = {
 --- @class AgencyAttirePoolBody
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAttirePoolBody = {
-    __parents = { "AgencyAttirePoolItem" },
+    __parents = {
+        "AgencyAttirePoolItem",
+        "AgencyAttirePoolItemWithBodyColor"
+    },
     __generated_by_class = "ClassDef",
 
     properties = {
@@ -602,22 +638,6 @@ DefineClass.AgencyAttirePoolBody = {
             editor = "combo",
             default = false,
             items = function(self) return GetAgencyAttirePoolItems('CharacterBody', self:ResolveValue('Gender')) end,
-        },
-        {
-            category = "Part",
-            id = "BodyColorKey",
-            name = "Body Color",
-            editor = "combo",
-            default = "",
-            items = function(self) return { "", "EditableColor1", "EditableColor2", "EditableColor3" } end,
-        },
-        {
-            category = "Part",
-            id = "BodyColorDeviation",
-            name = "Body Color Deviation",
-            help = "Some parts have darker skin color. This will help align them.",
-            editor = "text",
-            default = "",
         },
         {
             category = "Limits",
@@ -645,21 +665,14 @@ DefineClass.AgencyAttirePoolBody = {
     EditorView = Untranslated("<Gender> - <Body>"),
 }
 
-function AgencyAttirePoolBody:GetBodyColorDeviationAsTable()
-    local colorValues = self:ResolveValue("BodyColorDeviation")
-
-    if not colorValues or colorValues == '' then
-        return false
-    end
-
-    return string.split(colorValues, ',')
-end
-
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class AgencyAttirePoolShirt
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAttirePoolShirt = {
-    __parents = { "AgencyAttirePoolItem" },
+    __parents = {
+        "AgencyAttirePoolItem",
+        "AgencyAttirePoolItemWithBodyColor"
+    },
     __generated_by_class = "ClassDef",
 
     properties = {
@@ -669,36 +682,11 @@ DefineClass.AgencyAttirePoolShirt = {
             editor = "combo",
             default = false,
             items = function(self) return GetAgencyAttirePoolItems('CharacterShirts', self:ResolveValue('Gender')) end,
-        },
-        {
-            id = "BodyColorKey",
-            name = "Body Color",
-            editor = "combo",
-            default = "",
-            items = function(self) return { "", "EditableColor1", "EditableColor2", "EditableColor3" } end,
-        },
-        {
-            category = "Part",
-            id = "BodyColorDeviation",
-            name = "Body Color Deviation",
-            help = "Some parts have darker skin color. This will help align them.",
-            editor = "text",
-            default = "",
         }
     },
 
     EditorView = Untranslated("<Gender> - <Shirt>"),
 }
-
-function AgencyAttirePoolBody:GetBodyColorDeviationAsTable()
-    local colorValues = self:ResolveValue("BodyColorDeviation")
-
-    if not colorValues or colorValues == '' then
-        return false
-    end
-
-    return string.split(colorValues, ',')
-end
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class AgencyAttirePoolArmor
@@ -767,6 +755,30 @@ DefineClass.AgencyAttirePoolChest = {
 }
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--- @class AgencyAttirePoolPants
+--- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DefineClass.AgencyAttirePoolPants = {
+    __parents = {
+        "AgencyAttirePoolItem",
+        "AgencyAttirePoolItemWithBodyColor"
+    },
+    __generated_by_class = "ClassDef",
+
+    properties = {
+        {
+            category = "Part",
+            id = "Pants",
+            name = "Pants",
+            editor = "combo",
+            default = false,
+            items = function(self) return GetAgencyAttirePoolItems('CharacterPants', self:ResolveValue('Gender')) end,
+        }
+    },
+
+    EditorView = Untranslated("<Gender> - <Pants>"),
+}
+
+--- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --- @class AgencyAttirePoolHip
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAttirePoolHip = {
@@ -811,36 +823,3 @@ DefineClass.AgencyAttirePoolHip = {
 
     EditorView = Untranslated("<Gender> - <Hip>"),
 }
-
---- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
---- @class AgencyAttirePoolPants
---- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-DefineClass.AgencyAttirePoolPants = {
-    __parents = { "AgencyAttirePoolItem" },
-    __generated_by_class = "ClassDef",
-
-    properties = {
-        {
-            category = "Part",
-            id = "BodyColorKey",
-            name = "Body Color",
-            editor = "combo",
-            default = "",
-            items = function(self) return { "", "EditableColor1", "EditableColor2", "EditableColor3" } end,
-        },
-        {
-            category = "Part",
-            id = "Pants",
-            name = "Pants",
-            editor = "combo",
-            default = false,
-            items = function(self) return GetAgencyAttirePoolItems('CharacterPants', self:ResolveValue('Gender')) end,
-        }
-    },
-
-    EditorView = Untranslated("<Gender> - <Pants>"),
-}
-
-function AgencyAttirePoolPants:GetBodyColorDeviationAsTable()
-    return false
-end
