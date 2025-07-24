@@ -44,9 +44,24 @@ DefineClass.AgenciesAppearanceOptions = {
             },
             -- black
             Black = {
-                Units = { 'Ice', 'Vicki', 'Magic', 'Len', 'PierreMerc', 'Pierre_FS' },
+                Units = { 'Ice', 'Magic', 'Len', 'PierreMerc', 'Pierre_FS' },
                 Color = { 20, 7, 5, 255 },
             },
+            Black_Vicki = {
+                Units = { 'Vicki' },
+                Color = { 40, 13, 12, 255 }
+            }
+        },
+        Offsets = { -- additional offsets applied for specific units.
+            Hat = {
+                Units = { 'Igor' },
+                Offset = point(10, 0, 0)
+            },
+            Hat2 = {
+                Units = { 'Igor' },
+                Offset = point(10, 0, 0)
+            }
+            -- TODO: Implement
         },
         AlwaysRollFor = {
             Hat = { 'Mouse', 'Livewire' },
@@ -132,7 +147,6 @@ function AgenciesAppearanceOptions:GetFromAllPools(partName, unit, pickedParts)
     end
 
     local items = {}
-    local colors = {}
 
     -- collect all items (for particular part, with matching gender) and colors of the item and pool
     for _, pool in pairs(self.Pools) do
@@ -146,12 +160,6 @@ function AgenciesAppearanceOptions:GetFromAllPools(partName, unit, pickedParts)
                     table.insert(items, item)
                 end
             end
-
-            local poolColors = poolObj:ResolveValue('Colors')
-
-            for _, colorItem in pairs(poolColors) do
-                table.insert(colors, colorItem)
-            end
         end
     end
 
@@ -160,28 +168,7 @@ function AgenciesAppearanceOptions:GetFromAllPools(partName, unit, pickedParts)
     end
 
     local pickedItem = items[math.random(#items)]:Clone()
-
-    for _, colorItem in pairs(pickedItem.Colors) do
-        table.insert(colors, colorItem)
-    end
-
-    -- TODO: rework this, implement ResolveValues in
-    for pickedItemValueKey, pickedItemValue in pairs(pickedItem) do
-        if pickedItemValueKey == 'param_bindings' then
-            -- TODO: get rid of this param_bindings
-        else
-            pickedParts[pickedItemValueKey] = pickedItemValue
-        end
-    end
-
-    local pickedColor = self:GetItemColor(colors, pickedItem:ResolveValue("ColorDeviation"))
-    local bodyColorKey = pickedItem:ResolveValue("BodyColorKey")
-
-    if bodyColorKey ~= nil and bodyColorKey ~= "" then
-        pickedColor[bodyColorKey] = self:GetBodyColor(unit.id, pickedItem:ResolveValue("BodyColorDeviation"))
-    end
-
-    pickedParts[partName .. "Color"] = pickedColor
+    pickedItem:ResolvePickedItem(unit, pickedParts)
 
     return pickedItem
 end
@@ -217,21 +204,10 @@ function AgenciesAppearanceOptions:ShouldPickPart(unitId, partName)
     return InteractionRand(100, randName) <= chanceToRoll
 end
 
-function AgenciesAppearanceOptions:GetItemColor(colors, deviation)
-    local pickedColor = #colors > 0 and colors[math.random(#colors)] or self.DefaultItemColors
-    pickedColor = pickedColor:Clone()
-
-    if deviation and deviation ~= 0 then
-        self:ApplyColorDeviation(pickedColor, deviation)
-    end
-
-    return pickedColor
-end
-
 --- Returns a body color of a unit. Currently only basic game mercs are supported.
 --- @param unitId string
 --- @param deviation number
-function AgenciesAppearanceOptions:GetBodyColor(unitId, deviation)
+function AgenciesAppearanceOptions:GetBodyColor(unitId)
     local bodyColor = self.BodyColors.Default.Color
 
     for _, colorSet in pairs(self.BodyColors) do
@@ -243,29 +219,7 @@ function AgenciesAppearanceOptions:GetBodyColor(unitId, deviation)
     bodyColor = table_copy(bodyColor)
     bodyColor = RGBA(unpack_params(bodyColor))
 
-    if deviation and deviation ~= 0 then
-        self:ApplyColorDeviation(bodyColor, deviation)
-    end
-
     return bodyColor
-end
-
-function AgenciesAppearanceOptions:ApplyColorDeviation(colors, deviation)
-    local colorProperties = { "EditableColor1", "EditableColor2", "EditableColor3" }
-
-    for _, colorPropertyName in ipairs(colorProperties) do
-        local color = colors[colorPropertyName] or false
-
-        if color then
-            local rgba = pack_params(GetRGBA(color))
-
-            for channel, channelValue in ipairs(rgba) do
-                rgba[channel] = MulDivRound(channelValue, 100 + deviation, 100)
-            end
-
-            colors[colorPropertyName] = RGBA(unpack_params(rgba))
-        end
-    end
 end
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -335,9 +289,15 @@ function AgenciesAppearanceHandler:GetPickedParts(unit, defaultPresetId, presetI
         NativePreset = defaultPresetId
     }
 
-    self:PickHeadParts(unit, pickedParts)
-    self:PickBodyParts(unit, pickedParts)
-    self:PickPantsParts(unit, pickedParts)
+    local buildOrder = {
+        "Body", "Shirt", "Armor", "Chest", -- upper part
+        "Head", "Hat", "Hat2",             -- head
+        "Pants", "Hip"                     -- lower part
+    }
+
+    for _, partName in ipairs(buildOrder) do
+        AgenciesAppearanceOptions:GetFromAllPools(partName, unit, pickedParts)
+    end
 
     if not Game[AGENCIES_APPEARANCE_TABLE] then
         Game[AGENCIES_APPEARANCE_TABLE] = {}
@@ -346,68 +306,6 @@ function AgenciesAppearanceHandler:GetPickedParts(unit, defaultPresetId, presetI
     Game[AGENCIES_APPEARANCE_TABLE][presetId] = pickedParts
 
     return pickedParts
-end
-
---- Populates pickedParts param with head related items.
---- @param unit table
---- @param pickedParts table collection of all picked parts so far, these are passed to the preset object
-function AgenciesAppearanceHandler:PickHeadParts(unit, pickedParts)
-    AgenciesAppearanceOptions:GetFromAllPools('Head', unit, pickedParts)
-    local Hat = AgenciesAppearanceOptions:GetFromAllPools('Hat', unit, pickedParts)
-    local Hat2 = false
-
-    local canPickForHat2 = true
-    if Hat and Hat:ResolveValue('RollForHat2') == false then
-        canPickForHat2 = false
-    end
-
-    if canPickForHat2 then
-        Hat2 = AgenciesAppearanceOptions:GetFromAllPools('Hat2', unit, pickedParts)
-
-        if Hat and Hat2 then
-            local try = 0
-
-            while Hat.Hat == Hat2.Hat2 and try < 5 do
-                try = try + 1
-
-                Hat2 = AgenciesAppearanceOptions:GetFromAllPools('Hat2', unit, pickedParts)
-            end
-        end
-    end
-
-    if (Hat and Hat:ResolveValue('HideHair')) or (Hat2 and Hat2:ResolveValue('HideHair')) then
-        pickedParts['Hair'] = false
-    end
-end
-
---- Populates pickedParts param with body related items.
---- @param unit table
---- @param pickedParts table collection of all picked parts so far, these are passed to the preset object
-function AgenciesAppearanceHandler:PickBodyParts(unit, pickedParts)
-    local body = AgenciesAppearanceOptions:GetFromAllPools('Body', unit, pickedParts)
-    AgenciesAppearanceOptions:GetFromAllPools('Shirt', unit, pickedParts)
-    AgenciesAppearanceOptions:GetFromAllPools('Armor', unit, pickedParts)
-    AgenciesAppearanceOptions:GetFromAllPools('Chest', unit, pickedParts)
-
-    if body and body:ResolveValue('HideHair') then
-        pickedParts['Hair'] = false
-    end
-
-    if body and body:ResolveValue('HideHat') then
-        pickedParts['Hat'] = false
-    end
-
-    if body and body:ResolveValue('HideHat2') then
-        pickedParts['Hat2'] = false
-    end
-end
-
---- Populates pickedParts param with pants related items.
---- @param unit table
---- @param pickedParts table collection of all picked parts so far, these are passed to the preset object
-function AgenciesAppearanceHandler:PickPantsParts(unit, pickedParts)
-    AgenciesAppearanceOptions:GetFromAllPools('Pants', unit, pickedParts)
-    AgenciesAppearanceOptions:GetFromAllPools('Hip', unit, pickedParts)
 end
 
 --- Merges pickedParts and defaultLook and places a preset inside AppearancePreset collection.

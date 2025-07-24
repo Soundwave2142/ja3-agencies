@@ -189,6 +189,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Chest = {
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Heavy_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -206,9 +207,9 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Chest', "Faction_Acc_Heavy_02",
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Stormer_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -226,11 +227,11 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Chest', "Faction_Acc_Stormer_02",
 					}),
 				},
 				Hip = {
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Heavy",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -248,9 +249,9 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Heavy",
 					}),
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Stormer",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -268,7 +269,6 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Stormer",
 					}),
 				},
 				Specialization = "AllRounder",
@@ -278,6 +278,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Chest = {
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Medic_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -285,11 +286,11 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Chest', "Faction_Acc_Medic_02",
 					}),
 				},
 				Hip = {
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Medic",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -298,9 +299,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Hip', "Faction_Acc_Medic",
 					}),
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Medic",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -309,8 +310,7 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Hip', "Faction_Acc_Medic",
-						'HipOffset', point(25, 0, 0),
+						'PartOffset', point(25, 0, 0),
 					}),
 				},
 				Specialization = "Doctor",
@@ -320,6 +320,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Chest = {
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Demolition_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(120, 85, 85, 255),
@@ -328,9 +329,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Chest', "Faction_Acc_Demolition_02",
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Demolition_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(120, 85, 85, 255),
@@ -339,10 +340,10 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Chest', "Faction_Acc_Demolition_02",
-						'ChestOffset', point(-100, 0, 0),
+						'PartOffset', point(-100, 0, 0),
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Demolition_Legion_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(120, 85, 85, 255),
@@ -351,9 +352,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Chest', "Faction_Acc_Demolition_Legion_02",
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Demolition_Legion_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(120, 85, 85, 255),
@@ -362,12 +363,12 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Chest', "Faction_Acc_Demolition_Legion_02",
-						'ChestOffset', point(-100, 0, 0),
+						'PartOffset', point(-100, 0, 0),
 					}),
 				},
 				Hip = {
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Demolition",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(6, 6, 6, 255),
@@ -375,9 +376,9 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Demolition",
 					}),
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Demolition_Legion",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(6, 6, 6, 255),
@@ -385,9 +386,9 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Demolition_Legion",
 					}),
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Bag_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -405,7 +406,6 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Bag_01",
 					}),
 				},
 				Specialization = "ExplosiveExpert",
@@ -415,6 +415,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Chest = {
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Binocular_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -433,9 +434,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Chest', "Faction_Binocular_01",
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Binocular_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -454,12 +455,12 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Chest', "Faction_Binocular_01",
-						'ChestOffset', point(-80, 0, 0),
+						'PartOffset', point(-80, 0, 0),
 					}),
 				},
 				Hip = {
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Artilery",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -477,7 +478,6 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Artilery",
 					}),
 				},
 				Specialization = "Leader",
@@ -487,6 +487,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Chest = {
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Recon_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -505,9 +506,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Chest', "Faction_Acc_Recon_02",
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Recon_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -526,10 +527,10 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Chest', "Faction_Acc_Recon_02",
-						'ChestOffset', point(-40, 40, 0),
+						'PartOffset', point(-40, 40, 0),
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Marksman_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -548,9 +549,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Chest', "Faction_Acc_Marksman_02",
 					}),
 					PlaceObj('AgencyAttirePoolChest', {
+						'Part', "Faction_Acc_Marksman_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -569,12 +570,12 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Chest', "Faction_Acc_Marksman_02",
-						'ChestOffset', point(-40, 40, 0),
+						'PartOffset', point(-40, 40, 0),
 					}),
 				},
 				Hip = {
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Recon",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -592,9 +593,9 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Recon",
 					}),
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Marksman",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -612,7 +613,6 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Marksman",
 					}),
 				},
 				Specialization = "Marksmen",
@@ -622,6 +622,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Hip = {
 					PlaceObj('AgencyAttirePoolHip', {
+						'Part', "Faction_Acc_Artilery",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(7, 7, 7, 255),
@@ -639,7 +640,6 @@ return {
 								'EditableColor3', RGBA(19, 13, 9, 255),
 							}),
 						},
-						'Hip', "Faction_Acc_Artilery",
 					}),
 				},
 				Specialization = "Mechanic",
@@ -649,6 +649,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentBiff_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(95, 45, 25, 255),
@@ -686,11 +687,11 @@ return {
 								'EditableColor3', RGBA(52, 55, 61, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "EquipmentBiff_Top",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentIMPTrooper_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(95, 45, 25, 255),
@@ -729,13 +730,13 @@ return {
 							}),
 						},
 						'ColorDeviation', -50,
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "EquipmentIMPTrooper_Top",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "NPCCostumeMale_Hat_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -768,9 +769,10 @@ return {
 								'EditableColor3', RGBA(122, 43, 50, 255),
 							}),
 						},
-						'Hat', "NPCCostumeMale_Hat_01",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "NPCCostumeMale_Hat_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -803,9 +805,10 @@ return {
 								'EditableColor3', RGBA(122, 43, 50, 255),
 							}),
 						},
-						'Hat', "NPCCostumeMale_Hat_03",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -838,9 +841,10 @@ return {
 								'EditableColor3', RGBA(122, 43, 50, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_04",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_06",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -873,9 +877,10 @@ return {
 								'EditableColor3', RGBA(122, 43, 50, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_06",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "MilitiaCostumeMale_Mask_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -889,10 +894,11 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Hat', "MilitiaCostumeMale_Mask_01",
-						'HatSpot', "Origin",
+						'PartSpot', "Origin",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "MilitiaCostumeMale_Mask_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -911,11 +917,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat', "MilitiaCostumeMale_Mask_02",
-						'HatSpot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "MilitiaCostumeMale_Mask_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -939,12 +944,13 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Hat', "MilitiaCostumeMale_Mask_03",
-						'HatSpot', "Origin",
+						'PartSpot', "Origin",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentIvan_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(21, 23, 26, 255),
@@ -953,10 +959,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "EquipmentIvan_Glasses",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentSteroid_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(21, 23, 26, 255),
@@ -965,10 +970,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "EquipmentSteroid_Glasses",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentIvan_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(21, 23, 26, 255),
@@ -977,11 +981,10 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "EquipmentIvan_Glasses",
-						'Hat2AttachOffsetX', -15,
+						'PartOffset', point(-15, 0, 0),
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentCorazon_Glasses_BattleMod",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(21, 23, 26, 255),
@@ -990,14 +993,12 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "EquipmentSteroid_Glasses",
-						'Hat2AttachOffsetX', -15,
 					}),
 				},
 				NameColor = 4288927487,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -1021,9 +1022,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -1047,9 +1048,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_04",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "NPCCostumeMale_Pants_10",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -1079,9 +1080,9 @@ return {
 						},
 						'ColorDeviation', -70,
 						'Gender', "Male",
-						'Pants', "NPCCostumeMale_Pants_10",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "NPCCostumeMale_Pants_09",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(36, 36, 36, 255),
@@ -1101,11 +1102,11 @@ return {
 							}),
 						},
 						'ColorDeviation', -75,
-						'BodyColorKey', "EditableColor3",
 						'Gender', "Male",
-						'Pants', "NPCCostumeMale_Pants_09",
+						'BodyColorKey', "EditableColor3",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -1130,9 +1131,9 @@ return {
 						},
 						'ColorDeviation', -60,
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentIMPTrooper_Pants",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -1157,9 +1158,9 @@ return {
 						},
 						'ColorDeviation', -60,
 						'Gender', "Female",
-						'Pants', "EquipmentIMPTrooper_Pants",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "NPCCostumeFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(90, 90, 90, 255),
@@ -1189,9 +1190,9 @@ return {
 						},
 						'ColorDeviation', -70,
 						'Gender', "Female",
-						'Pants', "NPCCostumeFemale_Pants_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "NPCCostumeFemale_Pants_05",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(36, 36, 36, 255),
@@ -1216,7 +1217,6 @@ return {
 						},
 						'ColorDeviation', -20,
 						'Gender', "Female",
-						'Pants', "NPCCostumeFemale_Pants_05",
 					}),
 				},
 				group = "Rebels",
@@ -1225,6 +1225,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(18, 7, 4, 255),
@@ -1232,11 +1233,11 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_01",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(48, 20, 12, 255),
@@ -1244,11 +1245,11 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_02",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentIMPTrooper_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(9, 4, 3, 255),
@@ -1256,13 +1257,13 @@ return {
 								'EditableColor3', RGBA(15, 15, 15, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "EquipmentIMPTrooper_Top",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_08",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(10, 9, 9, 255),
@@ -1270,9 +1271,10 @@ return {
 								'EditableColor3', RGBA(10, 9, 9, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_08",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_12",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1280,11 +1282,12 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_12",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentRaider_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -1293,10 +1296,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "EquipmentRaider_Glasses",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentRaider_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -1305,11 +1307,10 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "EquipmentRaider_Glasses",
-						'Hat2AttachOffsetX', -25,
+						'PartOffset', point(-25, 0, 0),
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "Faction_Militia_Scarf_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1318,11 +1319,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "Faction_Militia_Scarf_01",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "MilitiaCostumeMale_Mask_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1331,11 +1331,11 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "MilitiaCostumeMale_Mask_03",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "NPCCostumeFemale_Scarf",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1344,14 +1344,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "NPCCostumeFemale_Scarf",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1360,9 +1359,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1371,9 +1370,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_Camo_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1382,9 +1381,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_Camo_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 35, 22, 255),
@@ -1393,9 +1392,9 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 35, 22, 255),
@@ -1404,11 +1403,11 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Shirt = {
 					PlaceObj('AgencyAttirePoolShirt', {
+						'Part', "Faction_Gloves_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(38, 37, 37, 255),
@@ -1417,7 +1416,6 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Shirt', "Faction_Gloves_01",
 					}),
 				},
 				Specialization = "AllRounder",
@@ -1427,6 +1425,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(10, 4, 2, 255),
@@ -1434,11 +1433,11 @@ return {
 								'EditableColor3', RGBA(128, 6, 6, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_02",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(16, 34, 62, 255),
@@ -1446,13 +1445,13 @@ return {
 								'EditableColor3', RGBA(128, 6, 6, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor2",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_01",
+						'BodyColorKey', "EditableColor2",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_08",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(189, 171, 149, 255),
@@ -1460,11 +1459,12 @@ return {
 								'EditableColor3', RGBA(22, 67, 19, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_08",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "Faction_Militia_Scarf_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1473,11 +1473,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "Faction_Militia_Scarf_01",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "NPCCostumeFemale_Scarf",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1486,14 +1485,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "NPCCostumeFemale_Scarf",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1502,9 +1500,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 35, 22, 255),
@@ -1513,7 +1511,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Specialization = "Doctor",
@@ -1523,6 +1520,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(50, 19, 9, 255),
@@ -1530,11 +1528,11 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_03",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentIMPTrooper_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(50, 19, 9, 255),
@@ -1542,13 +1540,13 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "EquipmentIMPTrooper_Top",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1556,11 +1554,12 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_04",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "Faction_Militia_Scarf_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1569,11 +1568,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "Faction_Militia_Scarf_03",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "NPCCostumeFemale_Scarf",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1582,14 +1580,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "NPCCostumeFemale_Scarf",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1598,9 +1595,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 35, 22, 255),
@@ -1609,7 +1606,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Specialization = "ExplosiveExpert",
@@ -1619,6 +1615,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(31, 13, 8, 255),
@@ -1626,11 +1623,11 @@ return {
 								'EditableColor3', RGBA(19, 19, 19, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_03",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentIMPTrooper_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(31, 13, 8, 255),
@@ -1638,13 +1635,14 @@ return {
 								'EditableColor3', RGBA(19, 19, 19, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
+						'ColorDeviation', -65,
 						'Gender', "Female",
-						'Body', "EquipmentIMPTrooper_Top",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1652,11 +1650,12 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_01",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentLen_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -1665,11 +1664,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "EquipmentLen_Glasses",
-						'Hat2AttachOffsetX', 5,
+						'PartOffset', point(5, 0, 0),
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentLen_Glasses",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(0, 0, 0, 255),
@@ -1678,14 +1676,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "EquipmentLen_Glasses",
-						'Hat2AttachOffsetX', -18,
+						'PartOffset', point(-20, 0, 0),
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1694,9 +1691,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1704,8 +1701,8 @@ return {
 								'EditableColor3', RGBA(15, 14, 14, 255),
 							}),
 						},
+						'ColorDeviation', -65,
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Specialization = "Leader",
@@ -1715,6 +1712,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 5, 3, 255),
@@ -1722,11 +1720,11 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_04",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_05",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(152, 129, 119, 255),
@@ -1734,11 +1732,11 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_05",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCTheBeast_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 5, 3, 255),
@@ -1751,15 +1749,15 @@ return {
 								'EditableColor3', RGBA(15, 15, 15, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
-						'BodyColorDeviation', 25,
 						'Gender', "Female",
-						'Body', "NPCTheBeast_Top",
+						'BodyColorKey', "EditableColor1",
+						'BodyColorDeviation', 100,
 						'HideHair', true,
 						'HideHat', true,
 						'HideHat2', true,
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCTheBeast_Top_HoodDown_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 5, 3, 255),
@@ -1772,13 +1770,13 @@ return {
 								'EditableColor3', RGBA(15, 15, 15, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
-						'BodyColorDeviation', 25,
 						'Gender', "Female",
-						'Body', "NPCTheBeast_Top_HoodDown_01",
+						'BodyColorKey', "EditableColor1",
+						'BodyColorDeviation', 100,
 						'HideHat2', true,
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(16, 34, 62, 255),
@@ -1786,11 +1784,11 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor2",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_01",
+						'BodyColorKey', "EditableColor2",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(16, 34, 62, 255),
@@ -1798,13 +1796,13 @@ return {
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor2",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_01",
+						'BodyColorKey', "EditableColor2",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_05",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(33, 60, 109, 255),
@@ -1812,9 +1810,10 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_05",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_07",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1822,11 +1821,12 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_07",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "MilitiaCostumeMale_Mask_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1835,11 +1835,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "MilitiaCostumeMale_Mask_02",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "Faction_Militia_Scarf_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1848,11 +1847,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "Faction_Militia_Scarf_02",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "NPCCostumeFemale_Scarf",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1861,14 +1859,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "NPCCostumeFemale_Scarf",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_Camo_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1877,9 +1874,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_Camo_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 35, 22, 255),
@@ -1888,11 +1885,11 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_02",
 					}),
 				},
 				Shirt = {
 					PlaceObj('AgencyAttirePoolShirt', {
+						'Part', "Faction_Gloves_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(38, 37, 37, 255),
@@ -1901,7 +1898,6 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Shirt', "Faction_Gloves_01",
 					}),
 				},
 				Specialization = "Marksmen",
@@ -1911,18 +1907,19 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Militia_Top_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
-								'EditableColor1', RGBA(10, 4, 2, 255),
-								'EditableColor2', RGBA(18, 42, 84, 255),
+								'EditableColor1', RGBA(18, 7, 4, 255),
+								'EditableColor2', RGBA(49, 89, 163, 255),
 								'EditableColor3', RGBA(205, 107, 28, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Militia_Top_02",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentIMPTroublemaker_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(10, 4, 2, 255),
@@ -1930,14 +1927,14 @@ return {
 								'EditableColor3', RGBA(13, 30, 59, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "EquipmentIMPTroublemaker_Top",
+						'BodyColorKey', "EditableColor1",
 						'HideHat2', true,
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_13",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1945,10 +1942,9 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'HideHair', false,
-						'Hat', "FactionMale_Hat_13",
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_07",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1956,12 +1952,13 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_07",
-						'HatAttachOffsetZ', 15,
+						'PartOffset', point(0, 0, 15),
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "Faction_Militia_Scarf_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1970,11 +1967,10 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "Faction_Militia_Scarf_01",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "NPCCostumeFemale_Scarf",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(205, 107, 28, 255),
@@ -1983,14 +1979,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'HideHair', false,
-						'Hat2', "NPCCostumeFemale_Scarf",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_Adonis_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(42, 62, 41, 255),
@@ -1999,9 +1994,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_Adonis_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 35, 22, 255),
@@ -2010,7 +2005,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Specialization = "Mechanic",
@@ -2020,6 +2014,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Armor = {
 					PlaceObj('AgencyAttirePoolArmor', {
+						'Part', "EquipmentFemale_FlackVest",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(25, 33, 21, 255),
@@ -2038,11 +2033,11 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Armor', "EquipmentFemale_FlackVest",
 					}),
 				},
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Heavy",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(115, 48, 27, 255),
@@ -2060,11 +2055,11 @@ return {
 								'EditableColor3', RGBA(15, 14, 14, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Heavy",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Soldier",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(73, 31, 18, 255),
@@ -2087,11 +2082,11 @@ return {
 								'EditableColor3', RGBA(19, 7, 2, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Soldier",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Stormer",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(78, 34, 22, 255),
@@ -2108,11 +2103,11 @@ return {
 								'EditableColor3', RGBA(255, 255, 255, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Stormer",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2130,11 +2125,11 @@ return {
 								'EditableColor3', RGBA(15, 14, 14, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor2",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_01",
+						'BodyColorKey', "EditableColor2",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(34, 46, 27, 255),
@@ -2157,11 +2152,11 @@ return {
 								'EditableColor3', RGBA(19, 7, 2, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_02",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(56, 18, 7, 255),
@@ -2179,13 +2174,13 @@ return {
 								'EditableColor3', RGBA(40, 25, 21, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_04",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "MilitiaCostumeMale_Mask_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 12, 12, 255),
@@ -2228,11 +2223,12 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'RollForHat2', false,
-						'Hat', "MilitiaCostumeMale_Mask_01",
-						'HatSpot', "Origin",
+						'PartSpot', "Origin",
+						'HideHair', true,
+						'HideHat2', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_05",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 12, 12, 255),
@@ -2274,10 +2270,11 @@ return {
 								'EditableColor2', RGBA(57, 6, 6, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_05",
-						'HatAttachOffsetX', 4,
+						'PartOffset', point(5, 0, 0),
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_10",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 12, 12, 255),
@@ -2330,11 +2327,12 @@ return {
 								'EditableColor3', RGBA(37, 11, 10, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_10",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "MilitiaCostumeMale_Mask_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(12, 12, 12, 255),
@@ -2388,14 +2386,13 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "MilitiaCostumeMale_Mask_02",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2414,9 +2411,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_04",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2440,9 +2437,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_03",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2461,9 +2458,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(23, 31, 19, 255),
@@ -2482,9 +2479,9 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(30, 39, 25, 255),
@@ -2508,9 +2505,9 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(26, 34, 22, 255),
@@ -2529,7 +2526,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Specialization = "AllRounder",
@@ -2539,6 +2535,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Medic",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(19, 9, 7, 255),
@@ -2556,11 +2553,11 @@ return {
 								'EditableColor3', RGBA(152, 16, 16, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Medic",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "NPCCostumeFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(101, 98, 92, 255),
@@ -2578,13 +2575,13 @@ return {
 								'EditableColor3', RGBA(152, 16, 16, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor2",
 						'Gender', "Female",
-						'Body', "NPCCostumeFemale_Shirt_01",
+						'BodyColorKey', "EditableColor2",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_08",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(255, 255, 255, 255),
@@ -2602,13 +2599,13 @@ return {
 								'EditableColor3', RGBA(9, 40, 7, 255),
 							}),
 						},
-						'RollForHat2', false,
-						'Hat', "FactionMale_Hat_08",
+						'HideHair', true,
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2627,9 +2624,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_03",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2648,7 +2645,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_02",
 					}),
 				},
 				Specialization = "Doctor",
@@ -2658,6 +2654,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Demolution",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(121, 49, 33, 255),
@@ -2675,11 +2672,11 @@ return {
 								'EditableColor3', RGBA(3, 2, 2, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Demolution",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "EquipmentIMPTrooper_Top",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(121, 49, 33, 255),
@@ -2697,13 +2694,13 @@ return {
 								'EditableColor3', RGBA(17, 11, 11, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "EquipmentIMPTrooper_Top",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "MilitiaCostumeMale_Mask_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(62, 8, 8, 255),
@@ -2717,11 +2714,11 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'RollForHat2', false,
-						'Hat', "MilitiaCostumeMale_Mask_01",
-						'HatSpot', "Origin",
+						'PartSpot', "Origin",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_10",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(62, 8, 8, 255),
@@ -2735,13 +2732,13 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'RollForHat2', false,
-						'Hat', "FactionMale_Hat_10",
+						'HideHair', true,
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2760,9 +2757,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_03",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(31, 41, 26, 255),
@@ -2781,7 +2778,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 				},
 				Specialization = "ExplosiveExpert",
@@ -2791,6 +2787,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Comander",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(18, 8, 5, 255),
@@ -2798,11 +2795,11 @@ return {
 								'EditableColor3', RGBA(9, 7, 5, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Comander",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Female_Body_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(18, 8, 5, 255),
@@ -2810,13 +2807,13 @@ return {
 								'EditableColor3', RGBA(9, 7, 5, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor2",
 						'Gender', "Female",
-						'Body', "Female_Body_01",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_05",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(75, 10, 5, 255),
@@ -2824,12 +2821,13 @@ return {
 								'EditableColor3', RGBA(75, 10, 5, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_05",
+						'HideHair', true,
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(29, 24, 24, 255),
@@ -2838,9 +2836,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_03",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentCorazon_Bottom_BattleMod",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(29, 24, 24, 255),
@@ -2849,11 +2847,11 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_03",
 					}),
 				},
 				Shirt = {
 					PlaceObj('AgencyAttirePoolShirt', {
+						'Part', "EquipmentFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(43, 38, 32, 255),
@@ -2862,7 +2860,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Shirt', "EquipmentFemale_Shirt_01",
 					}),
 				},
 				Specialization = "Leader",
@@ -2872,6 +2869,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Marksman",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(107, 46, 25, 255),
@@ -2889,11 +2887,11 @@ return {
 								'EditableColor3', RGBA(255, 255, 255, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Marksman",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Recon",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(17, 6, 2, 255),
@@ -2911,21 +2909,21 @@ return {
 								'EditableColor3', RGBA(27, 64, 101, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Recon",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Female_Body_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', nil),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Female",
-						'Body', "Female_Body_01",
+						'BodyColorKey', "EditableColor1",
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_07",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(44, 22, 13, 255),
@@ -2943,11 +2941,12 @@ return {
 								'EditableColor3', RGBA(0, 0, 0, 255),
 							}),
 						},
-						'Hat', "FactionMale_Hat_07",
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "MilitiaCostumeMale_Mask_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(17, 30, 13, 255),
@@ -2966,14 +2965,13 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'HideHair', false,
-						'Hat2', "MilitiaCostumeMale_Mask_02",
-						'Hat2Spot', "Origin",
+						'PartSpot', "Origin",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_03",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -2992,9 +2990,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_03",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -3013,9 +3011,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_02",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(26, 35, 22, 255),
@@ -3034,9 +3032,9 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentFemale_Pants_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(28, 37, 24, 255),
@@ -3055,11 +3053,11 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentFemale_Pants_02",
 					}),
 				},
 				Shirt = {
 					PlaceObj('AgencyAttirePoolShirt', {
+						'Part', "Faction_Gloves_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(17, 16, 16, 255),
@@ -3068,9 +3066,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Shirt', "Faction_Gloves_01",
 					}),
 					PlaceObj('AgencyAttirePoolShirt', {
+						'Part', "EquipmentFemale_Shirt_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(57, 31, 11, 255),
@@ -3089,9 +3087,9 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Shirt', "EquipmentFemale_Shirt_01",
 					}),
 					PlaceObj('AgencyAttirePoolShirt', {
+						'Part', "EquipmentFemale_Shirt_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(34, 46, 27, 255),
@@ -3110,7 +3108,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Shirt', "EquipmentFemale_Shirt_02",
 					}),
 				},
 				Specialization = "Marksmen",
@@ -3120,6 +3117,7 @@ return {
 			PlaceObj('ModItemAgencyAttirePool', {
 				Body = {
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Rebels_Top_Artillery",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(26, 11, 6, 255),
@@ -3134,11 +3132,11 @@ return {
 								'EditableColor2', RGBA(46, 39, 21, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
 						'Gender', "Male",
-						'Body', "Faction_Rebels_Top_Artillery",
+						'BodyColorKey', "EditableColor1",
 					}),
 					PlaceObj('AgencyAttirePoolBody', {
+						'Part', "Faction_Infected_Top_F_02",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(26, 11, 6, 255),
@@ -3156,14 +3154,14 @@ return {
 								'EditableColor3', RGBA(46, 39, 21, 255),
 							}),
 						},
-						'BodyColorKey', "EditableColor1",
-						'BodyColorDeviation', 20,
 						'Gender', "Female",
-						'Body', "Faction_Infected_Top_F_02",
+						'BodyColorKey', "EditableColor1",
+						'BodyColorDeviation', 75,
 					}),
 				},
 				Hat = {
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "MilitiaCostumeMale_Mask_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(36, 69, 21, 255),
@@ -3172,10 +3170,11 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Hat', "MilitiaCostumeMale_Mask_01",
-						'HatSpot', "Origin",
+						'PartSpot', "Origin",
+						'HideHair', true,
 					}),
 					PlaceObj('AgencyAttirePoolHat', {
+						'Part', "FactionMale_Hat_04",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(36, 69, 21, 255),
@@ -3184,19 +3183,25 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Hat', "FactionMale_Hat_04",
-						'HatAttachOffsetZ', 5,
+						'PartOffset', point(5, 0, 0),
+						'HideHair', true,
 					}),
 				},
 				Hat2 = {
 					PlaceObj('AgencyAttirePoolHat2', {
-						'HideHair', false,
-						'Hat2', "EquipmentCorazon_Glasses_BattleMod",
+						'Part', "EquipmentCorazon_Glasses_BattleMod",
+						'Gender', "Male",
+						'PartOffset', point(20, 0, 0),
+					}),
+					PlaceObj('AgencyAttirePoolHat2', {
+						'Part', "EquipmentCorazon_Glasses_BattleMod",
+						'Gender', "Female",
 					}),
 				},
 				NameColor = 4286226623,
 				Pants = {
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "Faction_GrandChien_Bottom_01",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(46, 60, 39, 255),
@@ -3212,9 +3217,9 @@ return {
 							}),
 						},
 						'Gender', "Male",
-						'Pants', "Faction_GrandChien_Bottom_01",
 					}),
 					PlaceObj('AgencyAttirePoolPants', {
+						'Part', "EquipmentIMPTrooper_Pants",
 						'Colors', {
 							PlaceObj('ColorizationPropSet', {
 								'EditableColor1', RGBA(26, 35, 22, 255),
@@ -3233,7 +3238,6 @@ return {
 							}),
 						},
 						'Gender', "Female",
-						'Pants', "EquipmentIMPTrooper_Pants",
 					}),
 				},
 				Specialization = "Mechanic",
@@ -6311,11 +6315,75 @@ return {
 		'Specialization', "Leader",
 		'gender', "Female",
 	}),
+	PlaceObj('ModItemUnitDataCompositeDef', {
+		'Group', "MercenariesOld",
+		'Id', "DummyTESTAGENCIES2",
+		'object_class', "UnitData",
+		'Health', 82,
+		'Agility', 88,
+		'Dexterity', 91,
+		'Strength', 86,
+		'Wisdom', 85,
+		'Leadership', 85,
+		'Marksmanship', 92,
+		'Mechanical', 62,
+		'Explosives', 45,
+		'Medical', 11,
+		'Portrait', "UI/MercsPortraits/Spike",
+		'BigPortrait', "UI/Mercs/Spike",
+		'IsMercenary', true,
+		'Name', T(737621683361, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES2 Name]] "dummy male mechanic"),
+		'Nick', T(126840024696, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES2 Nick]] "dummy male mechanic"),
+		'AllCapsNick', T(252369120117, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES2 AllCapsNick]] "dummy male mechanic"),
+		'Affiliation', "Secret",
+		'Bio', T(915090056010, --[[ModItemUnitDataCompositeDef DummyTESTAGENCIES2 Bio]] "Spike is revealed to be the Major, fighting against the Santiago Corporation after realizing the nature of their activities in Grand Chien. Originally being hired by them, the sequence of events that led to Spike abandoning his lengthy contract with the North Koreans and joining the Santiago Corporation are unknown."),
+		'Nationality', "USA",
+		'SalaryLv1', 0,
+		'SalaryMaxLv', 0,
+		'LegacyNotes', 'JA:\n\n"A seasoned veteran of international conflict, Major Spike Scallion was deservingly decorated for the unflinching courage he exhibited while evacuating the villagers of Kampoa under extremely heavy fire. This major commands respect and a sizeable fee." \n\nJA2 Alumni: \n\n"The departure of Spike Scallion from A.I.M. was a major loss to the organization. His demeanour and unwavering command of any situation always served as a comfort for those who found themselves neck deep in it alongside him. Major Scallion was offered a lucrative long-term contract serving as a military consultant for the North Koreans and no amount of negotiation could convince him to stay."',
+		'StartingLevel', 8,
+		'MaxHitPoints', 77,
+		'Likes', {
+			"Len",
+		},
+		'StartingPerks', {
+			"AutoWeapons",
+			"BulletHell",
+			"Hobbler",
+			"LeadFromTheFront",
+			"OpportunisticKiller",
+			"Counterfire",
+			"Killzone",
+			"SwiftStrike",
+			"LightningReaction",
+		},
+		'AppearancesList', {
+			PlaceObj('AppearanceWeight', {
+				'Preset', "NewAppearancePreset2",
+			}),
+		},
+		'Equipment', {
+			"Spike",
+		},
+		'Tier', "Legendary",
+		'Specialization', "Mechanic",
+		'gender', "Male",
+	}),
 	PlaceObj('ModItemAppearancePreset', {
-		Body = "EquipmentBuns_Top",
+		Body = "EquipmentIMPTroublemaker_Top",
+		BodyColor = PlaceObj('ColorizationPropSet', {
+			'EditableColor1', RGBA(40, 13, 12, 255),
+		}),
 		Head = "Head_Buns",
 		Pants = "EquipmentBuns_Bottom",
 		group = "Default",
 		id = "NewAppearancePreset",
+	}),
+	PlaceObj('ModItemAppearancePreset', {
+		Body = "EquipmentFidel_Top",
+		Head = "Head_Biff",
+		Pants = "EquipmentFidel_Bottom",
+		group = "Default",
+		id = "NewAppearancePreset2",
 	}),
 }

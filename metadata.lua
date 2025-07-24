@@ -3,7 +3,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 204,
+	'version', 211,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -13,14 +13,15 @@ return PlaceObj('ModDef', {
 		"Code/UI.lua",
 		"Code/Debugger.lua",
 		"UnitData/DummyTESTAGENCIES.lua",
+		"UnitData/DummyTESTAGENCIES2.lua",
 	},
 	'default_options', {
 		AgencyChoice = "Default",
 		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1753285571,
-	'code_hash', -4650753464705836725,
+	'saved', 1753380507,
+	'code_hash', 8919880289388036055,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
@@ -183,8 +184,18 @@ return PlaceObj('ModDef', {
 			'ClassDisplayName', "Unit",
 		}),
 		PlaceObj('ModResourcePreset', {
+			'Class', "UnitDataCompositeDef",
+			'Id', "DummyTESTAGENCIES2",
+			'ClassDisplayName', "Unit",
+		}),
+		PlaceObj('ModResourcePreset', {
 			'Class', "AppearancePreset",
 			'Id', "NewAppearancePreset",
+			'ClassDisplayName', "Appearance preset",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AppearancePreset",
+			'Id', "NewAppearancePreset2",
 			'ClassDisplayName', "Appearance preset",
 		}),
 	},
