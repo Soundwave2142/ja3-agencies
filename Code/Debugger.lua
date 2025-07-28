@@ -7,9 +7,14 @@ function OnMsg.AgenciesApplyAgency(agency)
     print("Agencies: Applying agency", agency)
 end
 
-function AgenciesDebugAppearance()
+function AgenciesDebugAppearance(reloadOptions)
     Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
     Game["AgenciesAppearances"] = {}
+
+    if reloadOptions then
+        AgenciesAppearanceOptions:ReloadOptions()
+    end
+
     ReloadUnitsAppearance()
 end
 

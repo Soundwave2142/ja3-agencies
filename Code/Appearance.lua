@@ -76,7 +76,8 @@ DefineClass.AgenciesAppearanceOptions = {
 
         -- loaded from options of current Agency
         Pools = {},
-        RollChances = {}
+        RollChances = {},
+        AppendDefaultHats = true,
     },
     OptionsLoaded = false,
     OptionsLoadedForAgency = false
@@ -118,6 +119,7 @@ function AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
         Pants = GetCurrentAgencyValue('AttireChanceToRollForPants') or 100,
         Hip = GetCurrentAgencyValue('AttireChanceToRollForHip') or 80,
     }
+    self.AppendDefaultHats = GetCurrentAgencyValue('AttireAppendDefaultHats')
 
     Msg("AgenciesAppearanceOptionsLoaded", self, loadingForAgency)
     self.OptionsLoaded = true
@@ -127,7 +129,7 @@ end
 --- Reloads current options with new / updated values.
 function AgenciesAppearanceOptions:ReloadOptions()
     self.OptionsLoaded = false
-    self:LoadOptions()
+    self:EnsureOptionsAreLoaded()
 end
 
 --- @return boolean
@@ -318,11 +320,19 @@ function AgenciesAppearanceHandler:PlacePreset(presetId, pickedParts, defaultPre
     preset.id = presetId
     preset.group = "Mercs"
 
+    local isDefaultPartAllowed = function(part)
+        if part == "Hat" or part == "Hat2" then
+            return AgenciesAppearanceOptions.AppendDefaultHats
+        end
+
+        return true
+    end
+
     -- iterate over original preset and place items from it
     -- include item only if in new preset there's no mention of it (aka not false, but nil)
     if defaultPreset then
         for partName, defaultPart in pairs(defaultPreset) do
-            if preset[partName] == nil then
+            if isDefaultPartAllowed(partName) and preset[partName] == nil then
                 preset[partName] = defaultPart
             end
         end

@@ -3,7 +3,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 211,
+	'version', 266,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -20,12 +20,17 @@ return PlaceObj('ModDef', {
 		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1753380507,
-	'code_hash', 8919880289388036055,
+	'saved', 1753719855,
+	'code_hash', 1431862978070541743,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
 			'Id', "Merc",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Adonis",
 			'ClassDisplayName', "Agency",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -47,11 +52,6 @@ return PlaceObj('ModDef', {
 			'Class', "Agency",
 			'Id', "ArmySF",
 			'ClassDisplayName', "Agency",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "AgencyAttirePool",
-			'Id', "General",
-			'ClassDisplayName', "Agency Attire Pool",
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "AgencyAttirePool",
@@ -86,6 +86,36 @@ return PlaceObj('ModDef', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "AgencyAttirePool",
 			'Id', "Merc",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisExplosives",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisMechanic",
 			'ClassDisplayName', "Agency Attire Pool",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -149,9 +179,64 @@ return PlaceObj('ModDef', {
 			'ClassDisplayName', "Agency Attire Pool",
 		}),
 		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "Army",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyExplosives",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
 			'Class', "MsgDef",
 			'Id', "AgenciesApplyAgency",
 			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
@@ -165,7 +250,7 @@ return PlaceObj('ModDef', {
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
-			'Id', "PDAStartButtonRebels",
+			'Id', "PDABrowserLandingRebels",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -175,7 +260,7 @@ return PlaceObj('ModDef', {
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
-			'Id', "PDABrowserLandingRebels",
+			'Id', "PDAStartButtonRebels",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {

@@ -73,6 +73,14 @@ DefineClass.Agency = {
         },
         {
             category = "Attire",
+            id = "AttireAppendDefaultHats",
+            name = "Append Default/Current Hats",
+            editor = "bool",
+            default = true,
+            help = "Allows appending default/current hats into generated preset."
+        },
+        {
+            category = "Attire",
             id = "AttireChanceToRollForHat",
             name = "Roll for Hat chance",
             editor = "number",
@@ -382,12 +390,12 @@ DefineClass.AgencyAttirePoolItem = {
     EditorView = Untranslated("<Gender> - <Part>"),
 }
 
---- @param allParts table
---- @param color
+--- @return table
 function AgencyAttirePoolItem:GetItemOptions()
-    assert(false, "GetItemOptions must be implemented for this item!")
+    return GetAgencyAttirePoolItems("Character" .. self:GetPartName(), self:ResolveValue("Gender"))
 end
 
+--- @return table
 function AgencyAttirePoolItem:GetPartName()
     assert(false, "GetPartName must be implemented for this item!")
 end
@@ -446,7 +454,17 @@ function AgencyAttirePoolItem:ApplyColorDeviation(colors, deviation, colorProper
             local rgba = pack_params(GetRGBA(color))
 
             for channel, channelValue in ipairs(rgba) do
-                rgba[channel] = MulDivRound(channelValue, 100 + deviation, 100)
+                local modifiedChannelValue = MulDivRound(channelValue, 100 + deviation, 100)
+
+                if modifiedChannelValue < 0 then
+                    color = 0
+                end
+
+                if modifiedChannelValue > 255 then
+                    color = 255
+                end
+
+                rgba[channel] = modifiedChannelValue
             end
 
             colors[colorPropertyName] = RGBA(unpack_params(rgba))
@@ -688,13 +706,55 @@ end
 --- @class AgencyAttirePoolHat2
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAttirePoolHat2 = {
-    __parents = { "AgencyAttirePoolHat" },
+    __parents = {
+        "AgencyAttirePoolItem",
+        "AgencyAttirePoolItemWithSpot",
+        "AgencyAttirePoolItemWithConflicts"
+    },
     __generated_by_class = "ClassDef",
 }
 
 --- @return string
+function AgencyAttirePoolHat2:GetEditorView()
+    local view = ' - <Part>'
+
+    local gender = self:ResolveValue('Gender')
+    view = (gender ~= '' and '<Gender>' or 'No Gender') .. view
+    view = view .. (self:ResolveValue('HideHair') and ' - Hides Hair' or '')
+    local hatSpot = self:ResolveValue('PartSpot')
+    view = view .. (hatSpot and ' - ' .. hatSpot or '')
+
+    return Untranslated(view)
+end
+
+--- @return table
+function AgencyAttirePoolHat2:GetItemOptions()
+    return GetCharacterHatComboItems()
+end
+
+--- @return string
 function AgencyAttirePoolHat2:GetPartName()
     return "Hat2"
+end
+
+--- @return string
+function AgencyAttirePoolHat2:GetSpotSystem()
+    return "non-point30"
+end
+
+--- @param unit UnitDataCompositeDef
+--- @param allParts table
+function AgencyAttirePoolHat2:ResolvePickedItem(unit, allParts)
+    local partName = self:GetPartName()
+
+    if allParts[partName] == false then
+        return
+    end
+
+    self:ResolveMainPart(allParts)
+    self:ResolveColor(allParts)
+    self:ResolveSpot(allParts)
+    self:ResolveConflicts(allParts)
 end
 
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -708,11 +768,6 @@ DefineClass.AgencyAttirePoolHead = {
     },
     __generated_by_class = "ClassDef",
 }
-
---- @return table
-function AgencyAttirePoolHead:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterHead", self:ResolveValue("Gender"))
-end
 
 function AgencyAttirePoolHead:GetPartName()
     return "Head"
@@ -739,11 +794,6 @@ DefineClass.AgencyAttirePoolBody = {
     __generated_by_class = "ClassDef",
 }
 
---- @return table
-function AgencyAttirePoolBody:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterBody", self:ResolveValue("Gender"))
-end
-
 function AgencyAttirePoolBody:GetPartName()
     return "Body"
 end
@@ -762,18 +812,20 @@ end
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAttirePoolShirt = {
     __parents = {
-        "AgencyAttirePoolBody"
+        "AgencyAttirePoolItem",
+        "AgencyAttirePoolItemWithBodyColor",
+        "AgencyAttirePoolItemWithConflicts"
     },
     __generated_by_class = "ClassDef",
 }
 
---- @return table
-function AgencyAttirePoolShirt:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterShirt", self:ResolveValue("Gender"))
-end
-
 function AgencyAttirePoolShirt:GetPartName()
     return "Shirt"
+end
+
+--- @return table
+function AgencyAttirePoolShirt:GetItemOptions()
+    return GetAgencyAttirePoolItems("CharacterShirts", self:ResolveValue("Gender"))
 end
 
 --- @param unit UnitDataCompositeDef
@@ -795,11 +847,6 @@ DefineClass.AgencyAttirePoolArmor = {
     },
     __generated_by_class = "ClassDef",
 }
-
---- @return table
-function AgencyAttirePoolArmor:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterArmor", self:ResolveValue("Gender"))
-end
 
 --- @return string
 function AgencyAttirePoolArmor:GetPartName()
@@ -824,11 +871,6 @@ DefineClass.AgencyAttirePoolChest = {
     },
     __generated_by_class = "ClassDef",
 }
-
---- @return table
-function AgencyAttirePoolChest:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterChest", self:ResolveValue("Gender"))
-end
 
 --- @return string
 function AgencyAttirePoolChest:GetPartName()
@@ -859,11 +901,6 @@ DefineClass.AgencyAttirePoolPants = {
     __generated_by_class = "ClassDef",
 }
 
---- @return table
-function AgencyAttirePoolPants:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterPants", self:ResolveValue("Gender"))
-end
-
 function AgencyAttirePoolPants:GetPartName()
     return "Pants"
 end
@@ -886,11 +923,6 @@ DefineClass.AgencyAttirePoolHip = {
     },
     __generated_by_class = "ClassDef",
 }
-
---- @return table
-function AgencyAttirePoolHip:GetItemOptions()
-    return GetAgencyAttirePoolItems("CharacterHip", self:ResolveValue("Gender"))
-end
 
 --- @return string
 function AgencyAttirePoolHip:GetPartName()
