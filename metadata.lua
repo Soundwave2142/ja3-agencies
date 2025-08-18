@@ -1,9 +1,17 @@
 return PlaceObj('ModDef', {
 	'title', "Agencies",
+	'dependencies', {
+		PlaceObj('ModDependency', {
+			'id', "JA3_CommonLib",
+			'title', "JA3_CommonLib",
+			'version_major', 1,
+			'version_minor', 5,
+		}),
+	},
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 266,
+	'version', 292,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -17,11 +25,13 @@ return PlaceObj('ModDef', {
 	},
 	'default_options', {
 		AgencyChoice = "Default",
+		AgencyEnableBonus = true,
+		AgencyEnableThemedUI = true,
 		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1753719855,
-	'code_hash', 1431862978070541743,
+	'saved', 1755518404,
+	'code_hash', -1101937743912396088,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
@@ -46,11 +56,6 @@ return PlaceObj('ModDef', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
 			'Id', "Army",
-			'ClassDisplayName', "Agency",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "Agency",
-			'Id', "ArmySF",
 			'ClassDisplayName', "Agency",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -216,6 +221,36 @@ return PlaceObj('ModDef', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "MsgDef",
 			'Id', "AgenciesApplyAgency",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesIsEnabled",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesIsBonusEnabled",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesAppearanceOptionsLoaded",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesAppearanceCanApplyToUnit",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesAppearanceCanApplyInMainMenu",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesCanApplyUI",
 			'ClassDisplayName', "Message definition",
 		}),
 		PlaceObj('ModResourcePreset', {

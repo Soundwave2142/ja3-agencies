@@ -252,14 +252,26 @@ function AgenciesAppearanceHandler:GeneratePreset(unit, defaultPresetId)
     return presetId
 end
 
+--- Performs basic required checks for blocking appearance.
+--- @return table
+local function GetReasonsNotToApplyAppearance()
+    local reasonsNotTo = {}
+
+    if not IsAgenciesEnabled() then
+        reasonsNotTo['agencies are disabled'] = true
+    end
+
+    if not AgenciesAppearanceOptions:HasPools() then
+        reasonsNotTo['agency has no pools'] = true
+    end
+
+    return reasonsNotTo
+end
+
 --- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
 --- @param unit UnitDataCompositeDef
 function AgenciesAppearanceHandler:CanBeGeneratedForUnit(unit)
-    if not AgenciesAppearanceOptions:HasPools() then
-        return false
-    end
-
-    local reasonsNotTo = {}
+    local reasonsNotTo = GetReasonsNotToApplyAppearance()
     Msg("AgenciesAppearanceCanApplyToUnit", unit, self, reasonsNotTo)
 
     if next(reasonsNotTo) ~= nil then

@@ -29,22 +29,22 @@ end
 --- When mod options are applied, calls for ApplyAgency to ensure correct agency is applied.
 --- This function can be redundant if OnApply from CommonLib to be used.
 --- @param modId string
-function OnMsg.ApplyModOptions(modId)
-    if modId ~= AGENCIES_MOD_ID then
-        return
-    end
-
-    local mod = Mods[modId]
-    local options = mod.options or empty_table
-
-    for _, item in ipairs(mod:GetOptionItems()) do
-        local value = options[item.name]
-
-        if item.name == AGENCIES_OPTION then
-            ApplyAgency(value)
-        end
-    end
-end
+--function OnMsg.ApplyModOptions(modId)
+--    if modId ~= AGENCIES_MOD_ID then
+--        return
+--    end
+--
+--    local mod = Mods[modId]
+--    local options = mod.options or empty_table
+--
+--    for _, item in ipairs(mod:GetOptionItems()) do
+--        local value = options[item.name]
+--
+--        if item.name == AGENCIES_OPTION then
+--            ApplyAgency(value)
+--        end
+--    end
+--end
 
 --- Triggers AgenciesApplyAgency to ensure current agency is applied to game and writes it to storage if needed.
 --- @param agency string
@@ -61,7 +61,22 @@ function ApplyAgency(agency)
         WriteModPersistentStorageTable()
     end
 
-    Msg("AgenciesApplyAgency", agency)
+    Msg("AgenciesApplyAgency", storageAgency, agency)
+end
+
+--- Checks if agencies functionality should be enabled in general.
+--- @return boolean
+function IsAgenciesEnabled()
+    local reasonsToDisable = {}
+    local currentAgency = GetCurrentAgency()
+
+    if currentAgency == AGENCIES_DEFAULT then
+        reasonsToDisable['default agency active'] = true
+    end
+
+    Msg("AgenciesIsEnabled", currentAgency, reasonsToDisable)
+
+    return next(reasonsToDisable) == nil
 end
 
 --- Checks if passed agency is selected currently selected agency.
@@ -94,6 +109,30 @@ function GetCurrentAgencyValue(value, agency)
     end
 
     return agencyObject:ResolveValue(value)
+end
+
+--- Checks if agencies functionality should be enabled in general.
+--- @return boolean
+function IsAgenciesBonusEnabled(agencyBonusBelongsTo)
+    local reasonsToDisable = {}
+    local options = CurrentModOptions or empty_table
+    local currentAgency = GetCurrentAgency()
+
+    if not IsAgenciesEnabled() then
+        reasonsToDisable['agencies are disabled'] = true
+    end
+
+    if currentAgency ~= agencyBonusBelongsTo then
+        reasonsToDisable['bonus agency missmatch'] = true
+    end
+
+    if not options.AgencyEnableBonus then
+        reasonsToDisable['setting not enabled'] = true
+    end
+
+    Msg("AgenciesIsBonusEnabled", currentAgency, agencyBonusBelongsTo, reasonsToDisable)
+
+    return next(reasonsToDisable) == nil
 end
 
 local AGENCIES_LIST = false

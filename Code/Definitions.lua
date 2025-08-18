@@ -48,7 +48,7 @@ DefineClass.Agency = {
         -- category = UI
         {
             category = "UI",
-            id = "BrowserLandingTemplate",
+            id = "LandingTemplate",
             name = "Browser Landing Template",
             editor = "preset_id",
             default = "",
@@ -56,7 +56,7 @@ DefineClass.Agency = {
         },
         {
             category = "UI",
-            id = "LandingTemplate",
+            id = "BrowserTemplate",
             name = "Browser Template",
             editor = "preset_id",
             default = "",
