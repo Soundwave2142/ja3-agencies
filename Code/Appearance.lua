@@ -13,7 +13,7 @@ local pairs = pairs
 local ipairs = ipairs
 local PlaceObj = PlaceObj
 
-local AGENCIES_PERSISTED_ID = AGENCIES_PERSISTED_ID
+local AGENCIES_PERSISTED_IDS = "AgenciesPersistentIds"
 local AGENCIES_APPEARANCE_TABLE = "AgenciesAppearances"
 local AGENCIES_APPEARANCES_STORAGE_KEY = "LastAppearances"
 
@@ -271,14 +271,14 @@ end
 --- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
 --- @param unit UnitDataCompositeDef
 function AgenciesAppearanceHandler:CanBeGeneratedForUnit(unit)
-    local reasonsNotTo = GetReasonsNotToApplyAppearance()
-    Msg("AgenciesAppearanceCanApplyToUnit", unit, self, reasonsNotTo)
-
-    if next(reasonsNotTo) ~= nil then
+    if not unit or not IsMerc(unit) or not unit:ResolveValue("gender") then
         return false
     end
 
-    return unit and IsMerc(unit) and unit:ResolveValue("gender")
+    local reasonsNotTo = GetReasonsNotToApplyAppearance()
+    Msg("AgenciesAppearanceCanApplyToUnit", unit, self, reasonsNotTo)
+
+    return next(reasonsNotTo) == nil
 end
 
 --- @param unit table
@@ -287,7 +287,7 @@ function AgenciesAppearanceHandler:GenerateId(unit)
     return table.concat({
         unit.id, '_',
         AgenciesAppearanceOptions.OptionsLoadedForAgency, '_',
-        Game[AGENCIES_PERSISTED_ID]
+        Game[AGENCIES_PERSISTED_IDS][unit.id]
     })
 end
 
@@ -358,6 +358,20 @@ end
 --- @author Soundwave2142
 --- ===================================================================================================================
 
+--- During initial hire, force the game to generate a preset for a new merc.
+--- @param unit UnitDataCompositeDef
+--- @param oldStatus string
+--- @param newStatus string
+function OnMsg.MercHireStatusChanged(unit, oldStatus, newStatus)
+    if not IsMerc(unit) then
+        return
+    end
+
+    if newStatus == "Hired" then
+        ChooseUnitAppearance(unit.session_id)
+    end
+end
+
 local BaseChooseUnitAppearance = ChooseUnitAppearance
 
 --- Overriden in order to allow AgenciesAppearanceHandler to handle appearance of a merc.
@@ -367,12 +381,16 @@ function ChooseUnitAppearance(merc_id, handle)
     local unit = UnitDataDefs[merc_id]
     local basePreset = BaseChooseUnitAppearance(merc_id, handle)
 
-    if not Game then
+    if not Game or not InGame or not unit then
         return basePreset
     end
 
-    if not Game[AGENCIES_PERSISTED_ID] then
-        Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
+    if not Game[AGENCIES_PERSISTED_IDS] then
+        Game[AGENCIES_PERSISTED_IDS] = {}
+    end
+
+    if not Game[AGENCIES_PERSISTED_IDS][unit.id] then
+        Game[AGENCIES_PERSISTED_IDS][unit.id] = GenerateAgencyPersistentId()
     end
 
     return AgenciesAppearanceHandler:GeneratePreset(unit, basePreset)
@@ -431,7 +449,13 @@ function SaveCurrentSquadPresets()
     )
     local oldPresets = table_imap(
         storage[AGENCIES_APPEARANCES_STORAGE_KEY] or {},
-        function(preset) return preset.id end
+        function(preset)
+            if type(preset) == "string" then
+                return preset
+            end
+
+            return preset and preset.id or nil
+        end
     )
 
     table_sort(newPresets)
@@ -495,22 +519,100 @@ function ApplyAgencyPresetsInMainMenu()
 
             lastSavedPresets[key] = presetId
         elseif type(pickedParts) == "string" and not AppearancePresets[pickedParts] then
-            table.remove(lastSavedPresets, key)
+            lastSavedPresets[key] = nil
         end
     end
 
+    if #lastSavedPresets <= 0 then
+        return
+    end
+
+    local constant = const.efVisible
     local presetPosition = 0
     MapForEach("map", "DummyUnit", function(unit)
         local preset = lastSavedPresets[presetPosition + 1]
 
         if preset and unit.Groups then
             unit:ApplyAppearance(preset, true)
-            unit:SetEnumFlags(const.efVisible)
+            unit:SetEnumFlags(constant)
             presetPosition = presetPosition + 1
         else
-            unit:ClearEnumFlags(const.efVisible)
+            unit:ClearEnumFlags(constant)
         end
     end)
 end
 
 OnMsg.PreGameMenuOpen = ApplyAgencyPresetsInMainMenu
+
+--- ===================================================================================================================
+--- Section 5 | UI related appearance function.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+--- Checks if unit is on the map (in team) and view is not SatView.
+--- @param host
+--- @return string
+function AgenciesGetRedressButtonState(host)
+    if not IsAgenciesEnabled() then
+        return "hidden"
+    end
+
+    local content = host.idContent
+
+    if not IsKindOf(content, "PDABrowser") then
+        return "hidden"
+    end
+
+    content = content.idBrowserContent
+
+    if not IsKindOf(content, "PDAAIMBrowser") then
+        return "hidden"
+    end
+
+    local mercId = content.selected_merc
+    local team = table.find_value(g_Teams, "control", "UI")
+
+    for _, unit in ipairs(team.units) do
+        if mercId == unit.session_id then
+            if gv_SatelliteView then
+                return "disabled"
+            end
+
+            return "enabled"
+        end
+    end
+
+    return "hidden"
+end
+
+--- Removes current preset from Game object, regenerates persistent id and reloads unit appearance.
+--- @param host
+function AgenciesRedressButtonAction(host)
+    local content = host.idContent
+
+    if not IsKindOf(content, "PDABrowser") then
+        return
+    end
+
+    content = content.idBrowserContent
+
+    if not IsKindOf(content, "PDAAIMBrowser") then
+        return
+    end
+
+    local mercId = content.selected_merc
+    local mercUnit = mercId and g_Units[mercId] or false
+
+    if not mercId or not mercUnit then
+        return
+    end
+
+    local mercAttirePresetId = ChooseUnitAppearance(mercId)
+
+    if mercAttirePresetId and Game["AgenciesAppearances"] and Game["AgenciesAppearances"][mercAttirePresetId] then
+        Game["AgenciesAppearances"][mercAttirePresetId] = nil
+    end
+
+    Game["AgenciesPersistentIds"][mercId] = nil
+    ReloadUnitsAppearance({ mercUnit })
+end

@@ -20,7 +20,11 @@ function OnMsg.AgenciesIsBonusEnabled(currentAgency, agencyBonusBelongsTo, reaso
         return
     end
 
-    print("Agencies: Checking if", agencyBonusBelongsTo, "bonus is enabled. Reasons not:", reasonsToDisable)
+    local campaign = Game and Game.Campaign
+
+    if campaign and campaign == "HotDiamonds" then
+        print("Agencies: Checking if", agencyBonusBelongsTo, "bonus is enabled. Reasons not:", reasonsToDisable)
+    end
 end
 
 function OnMsg.AgenciesAppearanceCanApplyToUnit(unit, AgenciesAppearanceOptions, reasonsNotTo)
@@ -50,7 +54,7 @@ function OnMsg.AgenciesCanApplyUI(parent, template, reasonsNotTo)
 end
 
 function AgenciesDebugAppearance(reloadOptions)
-    Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
+    Game["AgenciesPersistentIds"] = {}
     Game["AgenciesAppearances"] = {}
 
     if reloadOptions then

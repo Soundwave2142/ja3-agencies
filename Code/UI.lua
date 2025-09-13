@@ -84,6 +84,25 @@ function InsertAgencyTemplateSwitcher(template, replacingTemplate, runFunction)
     table.insert(elementParent, 1, PlaceObj('XTemplateCode', { 'run', runFunction }))
 end
 
+function InsertAgencyAppearanceButton(template)
+    local match = { ActionId = "idHideBio" }
+    local element, elementParent, elementIndex = UIFindControl(template, match)
+
+    if not element or not elementParent then
+        return
+    end
+
+    local action = PlaceObj('XTemplateAction', {
+        'ActionId', "idRegenerateAttire",
+        'ActionName', T(512051407484, "Redress"),
+        'ActionToolbar', "ActionBar",
+        'ActionState', function(self, host) return AgenciesGetRedressButtonState(host) end,
+        'OnAction', function(self, host, source, ...) return AgenciesRedressButtonAction(host) end,
+    })
+
+    table.insert(elementParent, elementIndex + 1, action)
+end
+
 if FirstLoad then
     local templatesInserted = false
 
@@ -91,6 +110,7 @@ if FirstLoad then
         if not templatesInserted then
             InsertAgencyTemplateSwitcher("PDABrowser", "PDAAIMBrowser", AgencyBrowserTemplateSwitcher)
             InsertAgencyTemplateSwitcher("PDABrowser", "PDABrowserLanding", AgencyLandingTemplateSwitcher)
+            InsertAgencyAppearanceButton("PDAAIMBrowser")
 
             templatesInserted = true
         end
@@ -112,6 +132,74 @@ local BasePDAUrl = TFormat.PDAUrl
 --- Override original in order to replace A.I.M. url with whatever agency is current active.
 TFormat.PDAUrl = function(...)
     local result = BasePDAUrl(...)
+    local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(true)
+    Msg("AgenciesCanApplyUI", nil, true, reasonsNotTo)
 
-    return result
+    if next(reasonsNotTo) ~= nil then
+        return result
+    end
+
+    local pda = GetDialog("PDADialog")
+
+    if not pda then
+        return false
+    end
+
+    local content = pda:ResolveId("idContent")
+    local mercBrowser = IsKindOf(content, "PDABrowser") and content
+    local mode = mercBrowser:GetMode()
+
+    local agencyUrl = GetCurrentAgencyValue("BrowserUrl")
+
+    local unsupportedModes = {
+        imp = true, banner_page = true, page_error = true, bobby_ray_shop = true
+    }
+
+    if not IsAgenciesEnabled() or not agencyUrl or unsupportedModes[mode] then
+        return result
+    end
+
+    local browserContent = mercBrowser.idBrowserContent
+
+    if IsKindOf(browserContent, "PDAAIMBrowser") then
+        local filters = GetAIMScreenFilters()
+        local filter = filters[browserContent.current_filter]
+
+        if not filter then
+            return
+        end
+
+        local string = Untranslated(agencyUrl)
+            .. GetCurrentAgencyValue("BrowserUrlFile")
+            .. (filter.urlName or filter.name)
+        local selectedUnit = browserContent.selected_merc
+
+        if selectedUnit then
+            string = string .. T { 260441561992, "/<Nick>", gv_UnitData[selectedUnit] }
+        end
+
+        return string
+    end
+
+    return Untranslated(agencyUrl)
 end
+
+--- Applies agency data to tabs.
+function ApplyAgencyTabData()
+    local urlName = GetCurrentAgencyValue("BrowserUrlName")
+    local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(true)
+    Msg("AgenciesCanApplyUI", nil, true, reasonsNotTo)
+
+    if next(reasonsNotTo) ~= nil or not urlName then
+        urlName = T(750064110101, "A.I.M. Database")
+    end
+
+    for _, tab in ipairs(PDABrowserTabData or {}) do
+        if tab.id and (tab.id == "aim" or tab.id == "landing") then
+            tab.DisplayName = urlName
+        end
+    end
+end
+
+OnMsg.AgenciesApplyAgency = ApplyAgencyTabData
+OnMsg.ZuluGameLoaded = ApplyAgencyTabData

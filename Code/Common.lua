@@ -9,7 +9,6 @@ local empty_table = empty_table
 
 AGENCIES_MOD_ID = "Agencies"
 AGENCIES_OPTION = "AgencyChoice"
-AGENCIES_PERSISTED_ID = "AgenciesPersistentId"
 
 AGENCIES_DEFAULT = "Default"
 AGENCIES_DEFAULT_LABEL = "A.I.M."
@@ -20,6 +19,15 @@ AGENCIES_AGENCY_STORAGE_KEY = "Agency"
 --- Section 2 | Game start, initial functions.
 --- @author Soundwave2142
 --- ===================================================================================================================
+
+--- @param option string
+--- @return (string|boolean)
+function GetAgencyOption(option)
+    local mod = Mods[AGENCIES_MOD_ID]
+    local options = mod.options or empty_table
+
+    return options[option]
+end
 
 --- When mods done loading,  calls for ApplyAgency to ensure current agency is applied to game.
 function OnMsg.ModsReloaded()
@@ -167,18 +175,6 @@ function GetAgencies(clearList)
 
     AGENCIES_LIST = agenciesSorted
     return agenciesSorted;
-end
-
-function OnMsg.ZuluGameLoaded()
-    if not Game then
-        return
-    end
-
-    if Game[AGENCIES_PERSISTED_ID] then
-        return
-    end
-
-    Game[AGENCIES_PERSISTED_ID] = GenerateAgencyPersistentId()
 end
 
 function GenerateAgencyPersistentId()

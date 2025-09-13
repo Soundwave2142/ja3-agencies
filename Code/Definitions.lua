@@ -62,6 +62,29 @@ DefineClass.Agency = {
             default = "",
             preset_class = "XTemplate",
         },
+        {
+            category = "UI",
+            id = "BrowserUrl",
+            name = "Browser URL",
+            editor = "text",
+            default = false,
+        },
+        {
+            category = "UI",
+            id = "BrowserUrlFile",
+            name = "Browser URL Files",
+            editor = "text",
+            translate = true,
+            default = false,
+        },
+        {
+            category = "UI",
+            id = "BrowserUrlName",
+            name = "Browser URL Name",
+            editor = "text",
+            translate = true,
+            default = false,
+        },
         -- category = Attire
         {
             category = "Attire",

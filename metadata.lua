@@ -11,7 +11,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 292,
+	'version', 351,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -25,13 +25,11 @@ return PlaceObj('ModDef', {
 	},
 	'default_options', {
 		AgencyChoice = "Default",
-		AgencyEnableBonus = true,
 		AgencyEnableThemedUI = true,
-		AgencyRegenerateAttire = "Every 2 weeks",
 	},
 	'has_data', true,
-	'saved', 1755518404,
-	'code_hash', -1101937743912396088,
+	'saved', 1757782437,
+	'code_hash', -1582918825765722374,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
@@ -275,12 +273,42 @@ return PlaceObj('ModDef', {
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
-			'Id', "PDAAIMBrowserMilitia",
+			'Id', "PDABrowserLandingAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonAdonis",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
 			'Id', "PDABrowserLandingMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonMilitia",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {
@@ -295,7 +323,32 @@ return PlaceObj('ModDef', {
 		}),
 		PlaceObj('ModResourcePreset', {
 			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMRebels",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
 			'Id', "PDAStartButtonRebels",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonArmy",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
 		PlaceObj('ModResourcePreset', {

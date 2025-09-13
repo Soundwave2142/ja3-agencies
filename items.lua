@@ -15,29 +15,6 @@ return {
 				"Default",
 			},
 		}),
-		PlaceObj('ModItemOptionChoice', {
-			'name', "AgencyRegenerateAttire",
-			'NameColor', RGBA(120, 200, 43, 255),
-			'DisplayName', "Regenerate Attire",
-			'Help', 'Dictactes how long generated attire will be used on a merc. You can set an interval that will ensure your mercs will "change" their gear in due time. If you grow bored or unhappy of the way your mercs are dressed, you can set to <em>Now and then Never</em> which will regenerated your current attire once and then set this options to <em>Never</em>.',
-			'DefaultValue', "Every 2 weeks",
-			'ChoiceList', {
-				"Every 2 days",
-				"Every week",
-				"Every 2 weeks",
-				"Every month",
-				"Every year",
-				"Never",
-				"Now and then Never",
-			},
-		}),
-		PlaceObj('ModItemOptionToggle', {
-			'name', "AgencyEnableBonus",
-			'NameColor', RGBA(120, 200, 43, 255),
-			'DisplayName', "Enable Faction Bonuses",
-			'Help', "Factions come with their own bonuses. If you do not wish for those bonuses to be active, set this setting to <em>Disabled</em>.",
-			'DefaultValue', true,
-		}),
 		PlaceObj('ModItemOptionToggle', {
 			'name', "AgencyEnableThemedUI",
 			'NameColor', RGBA(120, 200, 43, 255),
@@ -75,6 +52,9 @@ return {
 				}),
 			},
 			BrowserTemplate = "PDAAIMBrowserMerc",
+			BrowserUrl = "http://www.mercmercs.net",
+			BrowserUrlFile = T(343957089088, --[[ModItemAgency Merc BrowserUrlFile]] "/Files/"),
+			BrowserUrlName = T(466791762598, --[[ModItemAgency Merc BrowserUrlName]] "M.E.R.C. Files"),
 			LandingTemplate = "PDABrowserLandingMerc",
 			NameColor = 4288927487,
 			SortKey = 10,
@@ -106,8 +86,11 @@ return {
 					'AttirePool', "AdonisMechanic",
 				}),
 			},
-			BrowserTemplate = "PDAAIMBrowserMilitia",
-			LandingTemplate = "PDABrowserLandingMilitia",
+			BrowserTemplate = "PDAAIMBrowserAdonis",
+			BrowserUrl = "http://www.new.adonis.net",
+			BrowserUrlFile = T(877043958329, --[[ModItemAgency Adonis BrowserUrlFile]] "/Talent/"),
+			BrowserUrlName = T(145468510460, --[[ModItemAgency Adonis BrowserUrlName]] "Adonis Talent Acquisition"),
+			LandingTemplate = "PDABrowserLandingAdonis",
 			NameColor = 4284778385,
 			SortKey = 20,
 			display_name = T(259939982426, --[[ModItemAgency Adonis display_name]] "Adonis Corporation"),
@@ -155,6 +138,9 @@ return {
 				}),
 			},
 			BrowserTemplate = "PDAAIMBrowserMilitia",
+			BrowserUrl = "http://www.recruitment.militia.gc",
+			BrowserUrlFile = T(772007829036, --[[ModItemAgency Militia BrowserUrlFile]] "/Militia/"),
+			BrowserUrlName = T(848138170971, --[[ModItemAgency Militia BrowserUrlName]] "Militia Database"),
 			LandingTemplate = "PDABrowserLandingMilitia",
 			NameColor = 4284134911,
 			SortKey = 30,
@@ -204,6 +190,9 @@ return {
 				}),
 			},
 			BrowserTemplate = "PDAAIMBrowserRebels",
+			BrowserUrl = "http://www.maquisforthe.revolution.net",
+			BrowserUrlFile = T(897387627432, --[[ModItemAgency Rebels BrowserUrlFile]] "/Rebels/"),
+			BrowserUrlName = T(356754000213, --[[ModItemAgency Rebels BrowserUrlName]] "Maquis Rebels Database"),
 			LandingTemplate = "PDABrowserLandingRebels",
 			NameColor = 4294918740,
 			SortKey = 40,
@@ -238,8 +227,11 @@ return {
 					'AttirePool', "ArmyMechanic",
 				}),
 			},
-			BrowserTemplate = "PDAAIMBrowserMilitia",
-			LandingTemplate = "PDABrowserLandingMilitia",
+			BrowserTemplate = "PDAAIMBrowserArmy",
+			BrowserUrl = "http://www.joinarmy.gc",
+			BrowserUrlFile = T(521304192340, --[[ModItemAgency Army BrowserUrlFile]] "/InternationalLegion/"),
+			BrowserUrlName = T(342964555522, --[[ModItemAgency Army BrowserUrlName]] "GC International Legion DB"),
+			LandingTemplate = "PDABrowserLandingArmy",
 			NameColor = 4291342989,
 			SortKey = 50,
 			display_name = T(715098551457, --[[ModItemAgency Army display_name]] "Grand Chien Army"),
@@ -5450,6 +5442,7 @@ return {
 	}, {
 		PlaceObj('ModItemFolder', {
 			'name', "Merc",
+			'NameColor', RGBA(163, 214, 255, 255),
 		}, {
 			PlaceObj('ModItemXTemplate', {
 				group = "Zulu PDA",
@@ -5486,7 +5479,7 @@ return {
 						'comment', "bkg frame",
 						'__class', "XImage",
 						'Dock', "box",
-						'Image', "Mod/Agencies/Images/ui_background_rebels.png",
+						'Image', "Mod/Agencies/Images/ui_background_merc.png",
 						'ImageFit', "stretch",
 					}),
 					PlaceObj('XTemplateWindow', {
@@ -5511,9 +5504,9 @@ return {
 							PlaceObj('XTemplateWindow', {
 								'__class', "XText",
 								'VAlign', "top",
-								'TextStyle', "AimCopyrightText",
+								'TextStyle', "PDACommonButton",
 								'Translate', true,
-								'Text', T(796390090045, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "<style AimCopyrightTextC><copyright></style> A.I.M. 2001"),
+								'Text', T(796390090045, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "<style AimCopyrightTextC><copyright></style> M.E.R.C. 2001"),
 							}),
 							PlaceObj('XTemplateTemplate', {
 								'__template', "PDALinkButton",
@@ -5521,7 +5514,7 @@ return {
 								'OnPress', function (self, gamepad)
 									local msg = CreateMessageBox(self.desktop, T(193416941017, "Error Page"), T(399424889814, "HTTP Error 400. The request URL is invalid."), T({"OK"}))
 								end,
-								'TextStyle', "WebLinkButton_Hiring",
+								'TextStyle', "PDACommonButton",
 								'Text', T(718018980561, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "About Us"),
 								'ActiveTextStyle', "WebLinkButton_Hiring_Heavy",
 							}),
@@ -5531,7 +5524,7 @@ return {
 								'OnPress', function (self, gamepad)
 									local msg = CreateMessageBox(self.desktop, T(193416941017, "Error Page"), T(548899058407, "HTTP Error 403. You don't have permission to access on this server."), T({"OK"}))
 								end,
-								'TextStyle', "WebLinkButton_Hiring",
+								'TextStyle', "PDACommonButton",
 								'Text', T(696443111928, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "Terms of Service"),
 								'ActiveTextStyle', "WebLinkButton_Hiring_Heavy",
 							}),
@@ -5593,25 +5586,25 @@ return {
 						}, {
 							PlaceObj('XTemplateWindow', {
 								'__class', "XImage",
-								'Image', "UI/PDA/aim_logo",
+								'Image', "Mod/Agencies/Images/ui_logo_merc.png",
 							}),
 							PlaceObj('XTemplateWindow', {
 								'comment', "header txt",
 								'__class', "XText",
 								'Margins', box(0, 20, 0, 0),
 								'HAlign', "center",
-								'TextStyle', "PDALandingHeader",
+								'TextStyle', "PDABrowserErrorIP",
 								'Translate', true,
-								'Text', T(816474834984, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "WELCOME TO THE A.I.M. RECRUITMENT WEBSITE"),
+								'Text', T(816474834984, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "WELCOME TO THE M.E.R.C. RECRUITMENT WEBSITE"),
 							}),
 							PlaceObj('XTemplateWindow', {
 								'comment', "main txt",
 								'__class', "XText",
 								'Margins', box(0, 55, 0, 0),
 								'MaxWidth', 1150,
-								'TextStyle', "PDALandingText",
+								'TextStyle', "PDAMercPrice_Hired",
 								'Translate', true,
-								'Text', T(557137057749, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "Rebels desc"),
+								'Text', T(557137057749, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "Created by former A.I.M members and highly decorated operatives, M.E.R.C. provides professional hiring services."),
 								'TextHAlign', "center",
 							}),
 							PlaceObj('XTemplateWindow', {
@@ -5619,7 +5612,7 @@ return {
 								'__class', "XText",
 								'Margins', box(0, 50, 0, 0),
 								'MaxWidth', 1150,
-								'TextStyle', "PDALandingEm",
+								'TextStyle', "PDACommonButton",
 								'Translate', true,
 								'Text', T(475259880768, --[[ModItemXTemplate PDABrowserLandingMerc Text]] "Hit the continue button below to browse our catalogue!"),
 								'TextHAlign', "center",
@@ -5887,7 +5880,7 @@ return {
 												PlaceObj('XTemplateWindow', {
 													'__class', "XText",
 													'VAlign', "center",
-													'TextStyle', "PDAAIMMoneyDisplayLabel",
+													'TextStyle', "MessengerMercName",
 													'Translate', true,
 													'Text', T(286230992113, --[[ModItemXTemplate PDAAIMBrowserMerc Text]] "Bank Account"),
 												}),
@@ -6040,7 +6033,7 @@ return {
 									PlaceObj('XTemplateWindow', {
 										'__class', "XFrame",
 										'Dock', "box",
-										'Image', "UI/PDA/os_background",
+										'Image', "Mod/Agencies/Images/ui_os_header_merc.png",
 										'FrameBox', box(3, 3, 3, 3),
 									}),
 									PlaceObj('XTemplateWindow', {
@@ -6599,7 +6592,7 @@ return {
 													'__class', "XText",
 													'Id', "idBioText",
 													'HAlign', "left",
-													'TextStyle', "Hiring_MercBio",
+													'TextStyle', "MoneyText",
 													'Translate', true,
 												}),
 												PlaceObj('XTemplateWindow', {
@@ -6801,6 +6794,17 @@ return {
 							end,
 						}),
 						PlaceObj('XTemplateAction', {
+							'ActionId', "idRegenerateAttire",
+							'ActionName', T(327545804265, --[[ModItemXTemplate PDAAIMBrowserMerc ActionName]] "Redress"),
+							'ActionToolbar', "ActionBar",
+							'ActionState', function (self, host)
+								return AgenciesGetRedressButtonState(host)
+							end,
+							'OnAction', function (self, host, source, ...)
+								AgenciesRedressButtonAction(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
 							'ActionId', "idScrollUp",
 							'ActionGamepad', "RightThumbUp",
 							'ActionState', function (self, host)
@@ -6984,9 +6988,9 @@ return {
 						'VAlign', "bottom",
 						'MinHeight', 45,
 						'MaxHeight', 45,
-						'TextStyle', "PDAMercPrice",
+						'TextStyle', "PDAIMPAnswer",
 						'Translate', true,
-						'TextStyleSmall', "PDAMercPrice_Small",
+						'TextStyleSmall', "PDAIMPAnswer",
 					}),
 					PlaceObj('XTemplateWindow', {
 						'Id', "idContent",
@@ -7147,12 +7151,111 @@ return {
 			}),
 			}),
 		PlaceObj('ModItemFolder', {
-			'name', "Militia",
+			'name', "Adonis",
+			'NameColor', RGBA(100, 135, 145, 255),
 		}, {
+			PlaceObj('ModItemXTemplate', {
+				group = "Zulu PDA",
+				id = "PDABrowserLandingAdonis",
+				PlaceObj('XTemplateWindow', {
+					'__class', "XDialog",
+					'Id', "idBrowserContent",
+				}, {
+					PlaceObj('XTemplateFunc', {
+						'name', "Open",
+						'func', function (self, ...)
+							XDialog.Open(self, ...)
+							-- close all browser tabs except for landing
+							for k, v in pairs(PDABrowserTabState) do
+								UndockBrowserTab(k)
+							end
+							DockBrowserTab("landing")
+							AddPageToBrowserHistory("landing")
+							ObjModified("pda browser tabs")
+						end,
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "OnDelete",
+						'func', function (self, ...)
+							-- restore browser tabs to default defined in AIMHiringScreen.lua
+							UndockBrowserTab("landing")
+							DockBrowserTab("aim")
+							if not g_TestCombat then DockBrowserTab("imp") end
+							ObjModified("pda browser tabs")
+							XDialog.OnDelete(self, ...)
+						end,
+					}),
+					PlaceObj('XTemplateWindow', {
+						'comment', "bkg frame",
+						'__class', "XImage",
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_background_adonis.png",
+						'ImageFit', "stretch",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "VirtualCursorManager",
+						'Reason', "Langing",
+						'ActionType', false,
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Dock', "box",
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'comment', "main",
+							'HAlign', "center",
+							'VAlign', "center",
+							'LayoutMethod', "VList",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Image', "Mod/Agencies/Images/ui_logo_adonis.png",
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "main txt",
+								'__class', "XText",
+								'Margins', box(0, 55, 0, 0),
+								'MaxWidth', 1150,
+								'Background', RGBA(0, 0, 0, 150),
+								'TextStyle', "PDAActivityTitleWhite",
+								'Translate', true,
+								'Text', T(765661433095, --[[ModItemXTemplate PDABrowserLandingAdonis Text]] "NEW INTERNAL TOOL FOR TALENT ACQUISITION"),
+								'TextHAlign', "center",
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "button",
+								'__class', "XToolBarList",
+								'Id', "idToolBar",
+								'Margins', box(0, 30, 0, 0),
+								'HAlign', "center",
+								'Background', RGBA(255, 255, 255, 0),
+								'Toolbar', "ActionBar",
+								'Show', "text",
+								'ButtonTemplate', "PDALandingPageButton",
+							}),
+							}),
+						}),
+					PlaceObj('XTemplateAction', {
+						'ActionId', "idContinue",
+						'ActionName', T(609922920196, --[[ModItemXTemplate PDABrowserLandingAdonis ActionName]] "Continue"),
+						'ActionToolbar', "ActionBar",
+						'ActionShortcut', "C",
+						'ActionShortcut2', "Enter",
+						'ActionGamepad', "ButtonA",
+						'OnAction', function (self, host, source, ...)
+							TutorialHintsState.LandingPageShown = true
+							if source == "imp" then
+								host:SetMode("imp")
+							else
+								host:SetMode("aim")
+							end
+						end,
+					}),
+					}),
+			}),
 			PlaceObj('ModItemXTemplate', {
 				__is_kind_of = "XDialog",
 				group = "Zulu PDA",
-				id = "PDAAIMBrowserMilitia",
+				id = "PDAAIMBrowserAdonis",
 				PlaceObj('XTemplateWindow', {
 					'comment', "content",
 					'__class', "PDAAIMBrowser",
@@ -7184,12 +7287,13 @@ return {
 						'__class', "XImage",
 						'Margins', box(-50, -1, -50, 0),
 						'Dock', "box",
-						'Image', "Mod/Agencies/Images/ui_background_militia.png",
+						'Image', "Mod/Agencies/Images/ui_background_adonis.png",
 						'ImageFit', "stretch",
 					}),
 					PlaceObj('XTemplateWindow', {
 						'Margins', box(5, 25, 0, 20),
 						'Dock', "box",
+						'Background', RGBA(0, 0, 0, 110),
 					}, {
 						PlaceObj('XTemplateWindow', {
 							'Dock', "top",
@@ -7206,7 +7310,7 @@ return {
 									'comment', "bg",
 									'__class', "XFrame",
 									'Dock', "box",
-									'Image', "Mod/Agencies/Images/ui_os_header_rebels.png",
+									'Image', "Mod/Agencies/Images/ui_os_header_adonis.png",
 									'FrameBox', box(3, 5, 3, 5),
 								}),
 								PlaceObj('XTemplateForEach', {
@@ -7226,6 +7330,8 @@ return {
 										'FXMouseIn', "buttonRollover",
 										'FXPress', "AIMCategoryMercsClick",
 										'FXPressDisabled', "TabButtonDisabled",
+										'FocusedBorderColor', RGBA(132, 0, 0, 255),
+										'DisabledBorderColor', RGBA(80, 0, 0, 255),
 										'DisabledBackground', RGBA(255, 255, 255, 255),
 										'OnPress', function (self, gamepad)
 											if self.context.premium and PremiumPopupLogic() then return end
@@ -7233,13 +7339,13 @@ return {
 											local dlg = GetDialog(self)
 											dlg:SetFilter(self.context.id)
 										end,
-										'Image', "UI/PDA/os_header_disable",
+										'Image', "Mod/Agencies/Images/ui_os_header_rebels.png",
 										'FrameBox', box(3, 5, 3, 5),
 										'SqueezeX', true,
 										'SqueezeY', true,
-										'TextStyle', "Hiring_Filter_Unselected",
+										'TextStyle', "BadgeNameActive",
 										'Translate', true,
-										'Text', T(396416673884, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<name>"),
+										'Text', T(299345260556, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "<name>"),
 										'UseXTextControl', true,
 									}, {
 										PlaceObj('XTemplateWindow', {
@@ -7259,30 +7365,14 @@ return {
 										PlaceObj('XTemplateFunc', {
 											'name', "SetSelected(self, selected)",
 											'func', function (self, selected)
-												local enable = selected and "enable" or "disable"
-												local img = "UI/PDA/os_header_" .. enable
-												if self.context.customBG then
-													img = img .. "_" .. self.context.customBG
-												end
-												if self.GridX == 1 then
-													img = img .. "_first"
-												elseif not self.enabled and rawget(self, "lastIndex") then -- Set in for each
-													img = img .. "_last_2"
-												end
+												local enable = selected and "" or "_disabled"
+												local img = "Mod/Agencies/Images/ui_os_header_adonis" .. enable
 												
 												self:SetImage(img)
 												rawset(self, "selected", selected)
 												
 												local paddings = selected and box(0, -3, 0 ,0) or empty_box
 												self:SetMargins(paddings)
-												--self.idLabel:SetMargins(selected and box(0, 0, 0, 0) or empty_box)
-												
-												local textStyle = "Hiring_Filter_"
-												if self.context.customBG then
-													textStyle = textStyle .. self.context.customBG .. "_"
-												end
-												textStyle = textStyle .. (selected and "Selected" or "Unselected")
-												self:SetTextStyle(textStyle)
 											end,
 										}),
 										PlaceObj('XTemplateFunc', {
@@ -7316,7 +7406,7 @@ return {
 										XText.OnContextUpdate(self, context, ...)
 									end,
 									'Translate', true,
-									'Text', T(840891966944, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<LB> <RB> - Change category"),
+									'Text', T(155767153166, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "<LB> <RB> - Change category"),
 								}),
 								}),
 							PlaceObj('XTemplateWindow', {
@@ -7341,7 +7431,7 @@ return {
 								'comment', "bg",
 								'__class', "XFrame",
 								'Dock', "box",
-								'Image', "UI/PDA/os_background",
+								'Transparency', 255,
 								'FrameBox', box(3, 3, 3, 3),
 							}),
 							PlaceObj('XTemplateWindow', {
@@ -7358,7 +7448,7 @@ return {
 											'comment', "bg",
 											'__class', "XFrame",
 											'Dock', "box",
-											'Image', "UI/PDA/os_background_2",
+											'Image', "Mod/Agencies/Images/ui_os_header_adonis.png",
 											'FrameBox', box(3, 3, 3, 3),
 										}),
 										PlaceObj('XTemplateWindow', {
@@ -7387,9 +7477,9 @@ return {
 												PlaceObj('XTemplateWindow', {
 													'__class', "XText",
 													'VAlign', "center",
-													'TextStyle', "PDAAIMMoneyDisplayLabel",
+													'TextStyle', "MessengerMercName",
 													'Translate', true,
-													'Text', T(917515944930, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Bank Account"),
+													'Text', T(864187741424, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "Budget:"),
 												}),
 												PlaceObj('XTemplateWindow', {
 													'__context', function (parent, context) return Game end,
@@ -7426,7 +7516,7 @@ return {
 												'__context', function (parent, context, item, i, n) return item end,
 											}, {
 												PlaceObj('XTemplateTemplate', {
-													'__template', "PDASatelliteMercAIM",
+													'__template', "PDASatelliteMercAIMAdonis",
 													'HAlign', "left",
 												}),
 												}),
@@ -7474,54 +7564,10 @@ return {
 								}, {
 									PlaceObj('XTemplateTemplate', {
 										'__condition', function (parent, context) return not (InitialConflictNotStarted() and not gv_AIMBrowserEverClosed) end,
-										'__template', "PDAStartButton",
+										'__template', "PDAStartButtonAdonis",
 										'Margins', box(20, 0, 0, 0),
 										'VAlign', "center",
 									}),
-									PlaceObj('XTemplateWindow', {
-										'Margins', box(20, 11, 0, 9),
-										'HAlign', "right",
-										'MinHeight', 36,
-										'MaxHeight', 36,
-										'LayoutMethod', "HList",
-										'LayoutHSpacing', 20,
-									}, {
-										PlaceObj('XTemplateWindow', {
-											'__class', "XText",
-											'VAlign', "center",
-											'OnLayoutComplete', function (self)
-												local node = self:ResolveId("node")
-												local startButton = node.idStartButton
-												local intersects = startButton and BoxIntersectsBox(self.box, startButton.box)
-												self:SetVisible(not intersects)
-											end,
-											'TextStyle', "AimCopyrightText",
-											'Translate', true,
-											'Text', T(252945758588, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<style AimCopyrightTextC><copyright></style> AIM 2001"),
-										}),
-										PlaceObj('XTemplateTemplate', {
-											'__template', "PDALinkButton",
-											'Id', "idAboutUs",
-											'VAlign', "center",
-											'OnPress', function (self, gamepad)
-												CreateMessageBox(self.desktop, T(193416941017, "Error Page"), T(399424889814, "HTTP Error 400. The request URL is invalid."), T({"OK"}))
-											end,
-											'TextStyle', "WebLinkButton_Hiring",
-											'Text', T(739974211145, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "About Us"),
-											'ActiveTextStyle', "WebLinkButton_Hiring_Heavy",
-										}),
-										PlaceObj('XTemplateTemplate', {
-											'__template', "PDALinkButton",
-											'Id', "idTermsOfService",
-											'VAlign', "center",
-											'OnPress', function (self, gamepad)
-												CreateMessageBox(self.desktop, T(193416941017, "Error Page"), T(548899058407, "HTTP Error 403. You don't have permission to access on this server."), T({"OK"}))
-											end,
-											'TextStyle', "WebLinkButton_Hiring",
-											'Text', T(948865137189, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Terms of Service"),
-											'ActiveTextStyle', "WebLinkButton_Hiring_Heavy",
-										}),
-										}),
 									}),
 								}),
 							PlaceObj('XTemplateWindow', {
@@ -7584,7 +7630,8 @@ return {
 									PlaceObj('XTemplateWindow', {
 										'__class', "XFrame",
 										'Dock', "box",
-										'Image', "UI/PDA/os_background",
+										'Background', RGBA(100, 114, 118, 255),
+										'Image', "Mod/Agencies/Images/ui_os_header_adonis.png",
 										'FrameBox', box(3, 3, 3, 3),
 									}),
 									PlaceObj('XTemplateWindow', {
@@ -7613,7 +7660,7 @@ return {
 											}, {
 												PlaceObj('XTemplateWindow', {
 													'__class', "XImage",
-													'Image', "UI/Hud/portrait_background",
+													'Image', "Mod/Agencies/Images/ui_os_header_adonis.png",
 													'ImageFit', "stretch",
 												}),
 												PlaceObj('XTemplateWindow', {
@@ -7651,14 +7698,14 @@ return {
 														'HAlign', "center",
 														'TextStyle', "Hiring_MercLevel",
 														'Translate', true,
-														'Text', T(209616143598, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<MercLevel()>"),
+														'Text', T(738176999427, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "<MercLevel()>"),
 													}),
 													PlaceObj('XTemplateWindow', {
 														'__class', "XText",
 														'HAlign', "center",
 														'TextStyle', "PDASMLevelTxt",
 														'Translate', true,
-														'Text', T(657597490502, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Level"),
+														'Text', T(301586813143, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "Level"),
 													}),
 													}),
 												PlaceObj('XTemplateWindow', {
@@ -7691,7 +7738,7 @@ return {
 															'__class', "AutoFitText",
 															'TextStyle', "MercName",
 															'Translate', true,
-															'Text', T(338986027874, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<Name> <MercFlagImage()>"),
+															'Text', T(166619304759, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "<Name> <MercFlagImage()>"),
 															'TextVAlign', "bottom",
 															'ImageScale', 1000,
 															'SafeSpace', 70,
@@ -7765,9 +7812,9 @@ return {
 														'__class', "XContextWindow",
 														'RolloverTemplate', "RolloverGeneric",
 														'RolloverAnchor', "center-top",
-														'RolloverText', T(515082049938, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverText]] "<help>"),
+														'RolloverText', T(320483144569, --[[ModItemXTemplate PDAAIMBrowserAdonis RolloverText]] "<help>"),
 														'RolloverOffset', box(0, 0, 0, 5),
-														'RolloverTitle', T(262066792271, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverTitle]] "<name>"),
+														'RolloverTitle', T(908428419521, --[[ModItemXTemplate PDAAIMBrowserAdonis RolloverTitle]] "<name>"),
 														'IdNode', true,
 													}, {
 														PlaceObj('XTemplateWindow', {
@@ -7845,7 +7892,7 @@ return {
 													'MinWidth', 120,
 													'TextStyle', "Hiring_Bio_Header",
 													'Translate', true,
-													'Text', T(558360899410, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] " "),
+													'Text', T(686178970874, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] " "),
 												}),
 												PlaceObj('XTemplateWindow', {
 													'__class', "XFrame",
@@ -7888,15 +7935,15 @@ return {
 													'__class', "XText",
 													'RolloverTemplate', "RolloverGeneric",
 													'RolloverAnchor', "center-top",
-													'RolloverText', T(915706411936, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverText]] "<MercPriceBioPageRollover()>"),
+													'RolloverText', T(123961520830, --[[ModItemXTemplate PDAAIMBrowserAdonis RolloverText]] "<MercPriceBioPageRollover()>"),
 													'RolloverOffset', box(0, 0, 60, 10),
-													'RolloverTitle', T(205849670958, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverTitle]] "Weekly Cost"),
+													'RolloverTitle', T(708153557297, --[[ModItemXTemplate PDAAIMBrowserAdonis RolloverTitle]] "Weekly Cost"),
 													'Id', "idValue",
 													'HAlign', "right",
 													'VAlign', "center",
 													'TextStyle', "PDAMercPrice",
 													'Translate', true,
-													'Text', T(367164880052, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<MercPriceBioPage(7, true)>"),
+													'Text', T(203479085073, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "<MercPriceBioPage(7, true)>"),
 													'TextVAlign', "center",
 												}),
 												}),
@@ -7908,7 +7955,6 @@ return {
 										'Id', "idPerksAndInventory",
 										'Padding', box(20, 0, 20, 5),
 										'Dock', "box",
-										'Visible', false,
 										'FoldWhenHidden', true,
 									}, {
 										PlaceObj('XTemplateWindow', {
@@ -7934,7 +7980,7 @@ return {
 												'VAlign', "top",
 												'TextStyle', "Hiring_Bio_Header",
 												'Translate', true,
-												'Text', T(186182787894, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Perks"),
+												'Text', T(679623542182, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "Perks"),
 												'TextVAlign', "center",
 											}),
 											PlaceObj('XTemplateWindow', {
@@ -7974,7 +8020,7 @@ return {
 													'VAlign', "center",
 													'TextStyle', "Hiring_Bio_Header",
 													'Translate', true,
-													'Text', T(155288272741, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Equipment"),
+													'Text', T(367858942248, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "Equipment"),
 													'TextVAlign', "center",
 												}),
 												PlaceObj('XTemplateWindow', {
@@ -8064,7 +8110,7 @@ return {
 													'VAlign', "center",
 													'TextStyle', "Hiring_Bio_Header",
 													'Translate', true,
-													'Text', T(938639992594, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Backpack"),
+													'Text', T(731393738972, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "Backpack"),
 													'TextVAlign', "center",
 												}),
 												PlaceObj('XTemplateWindow', {
@@ -8131,7 +8177,7 @@ return {
 												end,
 												'TextStyle', "Hiring_Bio_Header",
 												'Translate', true,
-												'Text', T(225852192607, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "BIO - <Title>"),
+												'Text', T(126381812970, --[[ModItemXTemplate PDAAIMBrowserAdonis Text]] "BIO - <Title>"),
 											}),
 											PlaceObj('XTemplateWindow', {
 												'__class', "XScrollArea",
@@ -8224,7 +8270,7 @@ return {
 							'RolloverTemplate', "RolloverGeneric",
 							'RolloverOffset', box(0, 0, 0, 8),
 							'ActionId', "idContact",
-							'ActionName', T(184823480594, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Contact"),
+							'ActionName', T(440891260507, --[[ModItemXTemplate PDAAIMBrowserAdonis ActionName]] "Contact"),
 							'ActionToolbar', "ActionBar",
 							'ActionGamepad', "ButtonX",
 							'ActionButtonTemplate', "PDACommonButtonBlueSnype",
@@ -8260,7 +8306,7 @@ return {
 							'RolloverTemplate', "RolloverGeneric",
 							'RolloverOffset', box(0, 0, 0, 8),
 							'ActionId', "idDismiss",
-							'ActionName', T(681657232901, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Dismiss"),
+							'ActionName', T(530700842505, --[[ModItemXTemplate PDAAIMBrowserAdonis ActionName]] "Dismiss"),
 							'ActionToolbar', "ActionBar",
 							'ActionButtonTemplate', "PDACommonButtonBlueSnype",
 							'ActionState', function (self, host)
@@ -8296,7 +8342,7 @@ return {
 						}),
 						PlaceObj('XTemplateAction', {
 							'ActionId', "idSeeBio",
-							'ActionName', T(895753464449, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "See Bio"),
+							'ActionName', T(520625243086, --[[ModItemXTemplate PDAAIMBrowserAdonis ActionName]] "See Bio"),
 							'ActionToolbar', "ActionBar",
 							'ActionShortcut', "S",
 							'ActionState', function (self, host)
@@ -8321,7 +8367,7 @@ return {
 						}),
 						PlaceObj('XTemplateAction', {
 							'ActionId', "idHideBio",
-							'ActionName', T(966700617205, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Loadout"),
+							'ActionName', T(934157691283, --[[ModItemXTemplate PDAAIMBrowserAdonis ActionName]] "Loadout"),
 							'ActionToolbar', "ActionBar",
 							'ActionShortcut', "S",
 							'ActionState', function (self, host)
@@ -8342,6 +8388,17 @@ return {
 								AIMBrowserSection = "loadout"
 								ObjModified(gv_UnitData[content.selected_merc])
 								content.idToolBar:RebuildActions(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idRegenerateAttire",
+							'ActionName', T(743578449428, --[[ModItemXTemplate PDAAIMBrowserAdonis ActionName]] "Redress"),
+							'ActionToolbar', "ActionBar",
+							'ActionState', function (self, host)
+								return AgenciesGetRedressButtonState(host)
+							end,
+							'OnAction', function (self, host, source, ...)
+								AgenciesRedressButtonAction(host)
 							end,
 						}),
 						PlaceObj('XTemplateAction', {
@@ -8414,6 +8471,286 @@ return {
 					}),
 			}),
 			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "PDASatelliteAIMMercClass",
+				group = "Zulu Satellite UI",
+				id = "PDASatelliteMercAIMAdonis",
+				PlaceObj('XTemplateWindow', {
+					'__class', "PDASatelliteAIMMercClass",
+					'MinWidth', 125,
+					'MinHeight', 190,
+					'MaxWidth', 125,
+					'MaxHeight', 190,
+					'LayoutMethod', "VList",
+					'UseClipBox', false,
+					'BorderColor', RGBA(255, 255, 255, 0),
+					'Background', RGBA(255, 255, 255, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'ChildrenHandleMouse', true,
+					'FocusedBorderColor', RGBA(255, 255, 255, 0),
+					'FocusedBackground', RGBA(255, 255, 255, 0),
+					'DisabledBorderColor', RGBA(255, 255, 255, 0),
+					'RolloverBackground', RGBA(255, 255, 255, 0),
+					'PressedBackground', RGBA(255, 255, 255, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XTextWithStyleBasedOnSize",
+						'Id', "idPrice",
+						'Dock', "bottom",
+						'HAlign', "center",
+						'VAlign', "bottom",
+						'MinHeight', 45,
+						'MaxHeight', 45,
+						'Translate', true,
+						'TextStyleSmall', "PDAIMPAnswer",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Id', "idContent",
+						'Margins', box(2, 28, 2, 0),
+						'Dock', "box",
+						'Background', RGBA(230, 222, 203, 255),
+						'BackgroundRectGlowSize', 1,
+						'BackgroundRectGlowColor', RGBA(230, 222, 203, 255),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'__class', "XFrame",
+							'Id', "idSelectedRounding",
+							'Dock', "box",
+							'Image', "UI/PDA/os_portrait_selection",
+							'FrameBox', box(5, 5, 5, 5),
+						}),
+						PlaceObj('XTemplateWindow', {
+							'__class', "XImage",
+							'Id', "idPortraitBG",
+							'IdNode', false,
+							'Margins', box(5, 5, 5, 0),
+							'Image', "Mod/Agencies/Images/ui_os_header_adonis.png",
+							'ImageFit', "stretch",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'UIEffectModifierId', "Default",
+								'Id', "idPortrait",
+								'IdNode', false,
+								'ZOrder', 2,
+								'Margins', box(0, -20, 0, 0),
+								'ImageFit', "height",
+								'ImageRect', box(36, 0, 264, 246),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'Id', "idExpensive",
+								'ZOrder', 3,
+								'HAlign', "left",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'Visible', false,
+								'Background', RGBA(191, 67, 77, 255),
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XText",
+									'HAlign', "center",
+									'VAlign', "center",
+									'Clip', false,
+									'UseClipBox', false,
+									'HandleMouse', false,
+									'ChildrenHandleMouse', false,
+									'TextStyle', "MoneyText",
+									'Translate', true,
+									'Text', T(299232797339, --[[ModItemXTemplate PDASatelliteMercAIMAdonis Text]] "$"),
+									'TextVAlign', "center",
+								}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'RolloverTemplate', "RolloverGeneric",
+								'RolloverAnchor', "right",
+								'RolloverOffset', box(10, 0, 0, 0),
+								'Id', "idClassIconBg",
+								'ZOrder', 3,
+								'HAlign', "right",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'HandleMouse', true,
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XImage",
+									'Id', "idClassIcon",
+									'HAlign', "center",
+									'VAlign', "center",
+									'MinWidth', 20,
+									'MinHeight', 20,
+									'MaxWidth', 20,
+									'MaxHeight', 20,
+									'ImageFit', "stretch",
+									'ImageColor', RGBA(27, 31, 45, 255),
+								}),
+								PlaceObj('XTemplateFunc', {
+									'comment', "XButton is weird about propagating clicks from within it",
+									'name', "OnMouseButtonDown(self, pos, button)",
+									'func', function (self, pos, button)
+										local node = self:ResolveId("node")
+										return node:OnPress()
+									end,
+								}),
+								}),
+							PlaceObj('XTemplateTemplate', {
+								'__template', "MercContractWarningIcon",
+								'OnPress', function (self, gamepad)
+									--OpenAIMAndSelectMerc(self.context.session_id)
+								end,
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idOffline",
+								'HAlign', "center",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'DrawOnTop', true,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "DescriptionTextRed",
+								'Translate', true,
+								'Text', T(185876649095, --[[ModItemXTemplate PDASatelliteMercAIMAdonis Text]] "OFFLINE"),
+								'TextHAlign', "center",
+								'TextVAlign', "center",
+							}),
+							}),
+						PlaceObj('XTemplateWindow', {
+							'Id', "idBottomSection",
+							'Margins', box(5, 0, 5, 0),
+							'Dock', "bottom",
+							'MinHeight', 30,
+							'MaxHeight', 30,
+							'LayoutMethod', "HList",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Id', "idOnlineStatusIcon",
+								'Margins', box(4, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'UseClipBox', false,
+								'FoldWhenHidden', true,
+								'Image', "UI/PDA/snype_on",
+								'ImageScale', point(800, 800),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idName",
+								'Margins', box(2, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "PDAMercNameCard",
+								'Translate', true,
+								'Text', T(204272576982, --[[ModItemXTemplate PDASatelliteMercAIMAdonis Text]] "<Nick>"),
+								'TextVAlign', "bottom",
+							}),
+							}),
+						}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "GenericHUDButtonFrame",
+				group = "Zulu",
+				id = "PDAStartButtonAdonis",
+				PlaceObj('XTemplateWindow', {
+					'__class', "XButton",
+					'Id', "idStartButton",
+					'Margins', box(45, 0, 0, 15),
+					'HAlign', "left",
+					'VAlign', "top",
+					'MinWidth', 203,
+					'MinHeight', 44,
+					'MaxHeight', 44,
+					'Background', RGBA(0, 0, 0, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'FXMouseIn', "buttonRollover",
+					'FXPressDisabled', "IactDisabled",
+					'FocusedBackground', RGBA(0, 0, 0, 0),
+					'OnPress', function (self, gamepad)
+						
+						local dlg = GetDialog("PDADialog")
+						local ctxMenu = XTemplateSpawn("StartButtonContextMenu", dlg.idDisplayPopupHost, dlg)
+						ctxMenu:SetZOrder(999)
+						ctxMenu:SetAnchor(self.box)
+						ctxMenu:Open()
+						self.desktop:SetModalWindow(ctxMenu)
+					end,
+					'RolloverBackground', RGBA(0, 0, 0, 0),
+					'PressedBackground', RGBA(0, 0, 0, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XFrame",
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_os_header_adonis.png",
+						'FrameBox', box(5, 5, 5, 5),
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "XImage",
+						'Id', "idIcon",
+						'Margins', box(10, 0, 5, 0),
+						'Dock', "left",
+						'VAlign', "center",
+						'Image', "UI/Hud/pda",
+						'Columns', 2,
+						'ImageScale', point(800, 800),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'comment', "controller hint",
+							'__context', function (parent, context) return "GamepadUIStyleChanged" end,
+							'__class', "XText",
+							'Margins', box(-5, 0, 0, -5),
+							'HAlign', "left",
+							'VAlign', "bottom",
+							'ScaleModifier', point(700, 700),
+							'TextStyle', "HUDHeaderBig",
+							'ContextUpdateOnOpen', true,
+							'OnContextUpdate', function (self, context, ...)
+								self:SetVisible(GetUIStyleGamepad())
+								XText.OnContextUpdate(self, context, ...)
+							end,
+							'Translate', true,
+							'Text', T(573381811001, --[[ModItemXTemplate PDAStartButtonAdonis Text]] "<ButtonY>"),
+						}),
+						}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "XText",
+						'Id', "idLargeText",
+						'Margins', box(0, 0, 5, 0),
+						'HAlign', "center",
+						'VAlign', "center",
+						'TextStyle', "HUDHeaderBigger",
+						'Translate', true,
+						'Text', T(424532707455, --[[ModItemXTemplate PDAStartButtonAdonis Text]] "COMMAND"),
+						'TextHAlign', "center",
+						'TextVAlign', "center",
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "OnSetRollover(self, rollover)",
+						'func', function (self, rollover)
+							self.idIcon:SetColumn(rollover and 2 or 1)
+							XButton.OnSetRollover(self, rollover)
+						end,
+					}),
+					}),
+			}),
+			}),
+		PlaceObj('ModItemFolder', {
+			'name', "Militia",
+			'NameColor', RGBA(90, 181, 255, 255),
+		}, {
+			PlaceObj('ModItemXTemplate', {
 				group = "Zulu PDA",
 				id = "PDABrowserLandingMilitia",
 				PlaceObj('XTemplateWindow', {
@@ -8457,94 +8794,6 @@ return {
 						'ActionType', false,
 					}),
 					PlaceObj('XTemplateWindow', {
-						'comment', "banner",
-						'Margins', box(0, 0, 0, 40),
-						'Dock', "bottom",
-						'HAlign', "center",
-						'VAlign', "center",
-						'LayoutMethod', "VList",
-						'LayoutVSpacing', 5,
-					}, {
-						PlaceObj('XTemplateWindow', {
-							'HAlign', "center",
-							'LayoutMethod', "HList",
-							'LayoutHSpacing', 20,
-						}, {
-							PlaceObj('XTemplateWindow', {
-								'__class', "XText",
-								'VAlign', "top",
-								'TextStyle', "AimCopyrightText",
-								'Translate', true,
-								'Text', T(954994736946, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "<style AimCopyrightTextC><copyright></style> A.I.M. 2001"),
-							}),
-							PlaceObj('XTemplateTemplate', {
-								'__template', "PDALinkButton",
-								'VAlign', "center",
-								'OnPress', function (self, gamepad)
-									local msg = CreateMessageBox(self.desktop, T(193416941017, "Error Page"), T(399424889814, "HTTP Error 400. The request URL is invalid."), T({"OK"}))
-								end,
-								'TextStyle', "WebLinkButton_Hiring",
-								'Text', T(237773638882, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "About Us"),
-								'ActiveTextStyle', "WebLinkButton_Hiring_Heavy",
-							}),
-							PlaceObj('XTemplateTemplate', {
-								'__template', "PDALinkButton",
-								'VAlign', "center",
-								'OnPress', function (self, gamepad)
-									local msg = CreateMessageBox(self.desktop, T(193416941017, "Error Page"), T(548899058407, "HTTP Error 403. You don't have permission to access on this server."), T({"OK"}))
-								end,
-								'TextStyle', "WebLinkButton_Hiring",
-								'Text', T(139233209614, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "Terms of Service"),
-								'ActiveTextStyle', "WebLinkButton_Hiring_Heavy",
-							}),
-							}),
-						PlaceObj('XTemplateWindow', {
-							'__class', "AnimatedIMPBanner",
-							'HAlign', "center",
-							'VAlign', "top",
-							'HandleMouse', true,
-							'MouseCursor', "UI/Cursors/Pda_Hand.tga",
-							'Image', "UI/PDA/imp_banner_1",
-						}, {
-							PlaceObj('XTemplateFunc', {
-								'name', "OnMouseButtonDown(self, pos, button)",
-								'func', function (self, pos, button)
-									local dlg = GetDialog(self)
-									dlg:ActionById("idContinue"):OnAction(dlg, "imp")
-								end,
-							}),
-							PlaceObj('XTemplateWindow', {
-								'__class', "XImage",
-								'Id', "idMegaphone",
-								'Margins', box(0, 0, 25, 0),
-								'HAlign', "right",
-								'VAlign', "center",
-								'Image', "UI/PDA/imp_banner_megaphone",
-							}),
-							PlaceObj('XTemplateWindow', {
-								'Id', "idTextContainer",
-								'Margins', box(25, -5, 0, 0),
-								'HAlign', "left",
-								'VAlign', "center",
-								'LayoutMethod', "VList",
-								'LayoutVSpacing', 5,
-							}, {
-								PlaceObj('XTemplateWindow', {
-									'__class', "XImage",
-									'Id', "idText",
-									'HAlign', "center",
-									'Image', "UI/PDA/imp_banner_text_1",
-								}),
-								PlaceObj('XTemplateWindow', {
-									'__class', "XImage",
-									'Id', "idTextTwo",
-									'HAlign', "center",
-									'Image', "UI/PDA/imp_banner_text_2",
-								}),
-								}),
-							}),
-						}),
-					PlaceObj('XTemplateWindow', {
 						'Dock', "box",
 					}, {
 						PlaceObj('XTemplateWindow', {
@@ -8555,16 +8804,7 @@ return {
 						}, {
 							PlaceObj('XTemplateWindow', {
 								'__class', "XImage",
-								'Image', "UI/PDA/aim_logo",
-							}),
-							PlaceObj('XTemplateWindow', {
-								'comment', "header txt",
-								'__class', "XText",
-								'Margins', box(0, 20, 0, 0),
-								'HAlign', "center",
-								'TextStyle', "PDALandingHeader",
-								'Translate', true,
-								'Text', T(573609189202, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "WELCOME TO THE A.I.M. RECRUITMENT WEBSITE"),
+								'Image', "Mod/Agencies/Images/ui_logo_militia.png",
 							}),
 							PlaceObj('XTemplateWindow', {
 								'comment', "main txt",
@@ -8573,17 +8813,7 @@ return {
 								'MaxWidth', 1150,
 								'TextStyle', "PDALandingText",
 								'Translate', true,
-								'Text', T(945264768214, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "Militia DESC"),
-								'TextHAlign', "center",
-							}),
-							PlaceObj('XTemplateWindow', {
-								'comment', "button text",
-								'__class', "XText",
-								'Margins', box(0, 50, 0, 0),
-								'MaxWidth', 1150,
-								'TextStyle', "PDALandingEm",
-								'Translate', true,
-								'Text', T(805758755285, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "Hit the continue button below to browse our catalogue!"),
+								'Text', T(945264768214, --[[ModItemXTemplate PDABrowserLandingMilitia Text]] "Take matters into your own hands and defend what's rightfully yours."),
 								'TextHAlign', "center",
 							}),
 							PlaceObj('XTemplateWindow', {
@@ -8617,9 +8847,1502 @@ return {
 					}),
 					}),
 			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "XDialog",
+				group = "Zulu PDA",
+				id = "PDAAIMBrowserMilitia",
+				PlaceObj('XTemplateWindow', {
+					'comment', "content",
+					'__class', "PDAAIMBrowser",
+					'Margins', box(50, 0, 50, 0),
+					'LayoutMethod', "VList",
+					'MouseCursor', "UI/Cursors/Pda_Cursor.tga",
+					'HostInParent', true,
+					'FocusOnOpen', "",
+				}, {
+					PlaceObj('XTemplateFunc', {
+						'name', "Open",
+						'func', function (self, ...)
+							PDAAIMBrowser.Open(self,...)
+							AddPageToBrowserHistory("aim", nil)
+						end,
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "Done(self, ...)",
+						'func', function (self, ...)
+							PDAAIMBrowser.Done(self,...)
+						end,
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__condition', function (parent, context) return not netInGame and not gv_SatelliteView end,
+						'__class', "PDACampaignPausingDlg",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'comment', "bkg frame",
+						'__class', "XImage",
+						'Margins', box(-50, -1, -50, 0),
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_background_militia.png",
+						'ImageFit', "stretch",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Margins', box(5, 25, 0, 20),
+						'Dock', "box",
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'Dock', "top",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'comment', "filters",
+								'__context', function (parent, context) return GetAIMScreenFilters() end,
+								'Id', "idFilters",
+								'MinHeight', 44,
+								'MaxHeight', 44,
+								'LayoutMethod', "HList",
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'comment', "bg",
+									'__class', "XFrame",
+									'Dock', "box",
+									'Image', "Mod/Agencies/Images/ui_os_header_militia.png",
+									'FrameBox', box(3, 5, 3, 5),
+								}),
+								PlaceObj('XTemplateForEach', {
+									'__context', function (parent, context, item, i, n) return item end,
+									'run_after', function (child, context, item, i, n, last)
+										child:SetGridX(i)
+										child:SetIcon("UI/Icons/hf_" .. item.nameString)
+										rawset(child, "lastIndex", i == last)
+									end,
+								}, {
+									PlaceObj('XTemplateWindow', {
+										'__class', "XTextButton",
+										'Padding', box(10, 0, 10, 8),
+										'MinWidth', 170,
+										'LayoutMethod', "Box",
+										'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+										'FXMouseIn', "buttonRollover",
+										'FXPress', "AIMCategoryMercsClick",
+										'FXPressDisabled', "TabButtonDisabled",
+										'FocusedBorderColor', RGBA(132, 0, 0, 255),
+										'DisabledBorderColor', RGBA(80, 0, 0, 255),
+										'DisabledBackground', RGBA(255, 255, 255, 255),
+										'OnPress', function (self, gamepad)
+											if self.context.premium and PremiumPopupLogic() then return end
+											
+											local dlg = GetDialog(self)
+											dlg:SetFilter(self.context.id)
+										end,
+										'Image', "Mod/Agencies/Images/ui_os_header_rebels.png",
+										'FrameBox', box(3, 5, 3, 5),
+										'SqueezeX', true,
+										'SqueezeY', true,
+										'TextStyle', "WeaponModExtraModifications",
+										'Translate', true,
+										'Text', T(314985136081, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<name>"),
+										'UseXTextControl', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'Id', "idCenteredContainer",
+											'HAlign', "center",
+											'VAlign', "center",
+											'LayoutMethod', "HList",
+											'LayoutHSpacing', 5,
+										}),
+										PlaceObj('XTemplateCode', {
+											'run', function (self, parent, context)
+												local centeredContainer = parent.idCenteredContainer
+												parent.idIcon:SetParent(centeredContainer)
+												parent.idLabel:SetParent(centeredContainer)
+											end,
+										}),
+										PlaceObj('XTemplateFunc', {
+											'name', "SetSelected(self, selected)",
+											'func', function (self, selected)
+												local enable = selected and "" or "_disabled"
+												local img = "Mod/Agencies/Images/ui_os_header_militia" .. enable
+												
+												self:SetImage(img)
+												rawset(self, "selected", selected)
+												
+												local paddings = selected and box(0, -3, 0 ,0) or empty_box
+												self:SetMargins(paddings)
+											end,
+										}),
+										PlaceObj('XTemplateFunc', {
+											'name', "SetEnabled(self, enabled)",
+											'func', function (self, enabled)
+												self.idIcon:SetDesaturation(enabled and 0 or 255)
+												self.idLabel:SetEnabled(enabled)
+												XTextButton.SetEnabled(self, enabled)
+											end,
+										}),
+										PlaceObj('XTemplateWindow', {
+											'__context', function (parent, context) return gv_Squads end,
+											'__condition', function (parent, context) return parent.context.nameString == "hired" end,
+											'__class', "XContextWindow",
+											'OnContextUpdate', function (self, context, ...)
+												self.parent:OnContextUpdate(self.parent.context)
+											end,
+										}),
+										}),
+									}),
+								PlaceObj('XTemplateWindow', {
+									'comment', "gamepad hint",
+									'__context', function (parent, context) return "GamepadUIStyleChanged" end,
+									'__class', "XText",
+									'Margins', box(10, 0, 0, 0),
+									'HAlign', "right",
+									'VAlign', "top",
+									'ContextUpdateOnOpen', true,
+									'OnContextUpdate', function (self, context, ...)
+										self:SetVisible(GetUIStyleGamepad())
+										XText.OnContextUpdate(self, context, ...)
+									end,
+									'Translate', true,
+									'Text', T(336192104929, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<LB> <RB> - Change category"),
+								}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Margins', box(0, 0, 15, 0),
+								'HAlign', "right",
+								'VAlign', "center",
+								'Image', "UI/PDA/HazOS",
+							}),
+							}),
+						PlaceObj('XTemplateWindow', {
+							'comment', "content",
+							'Dock', "box",
+							'LayoutMethod', "HPanel",
+						}, {
+							PlaceObj('XTemplateCode', {
+								'run', function (self, parent, context)
+									parent.LayoutMethod = "AimBrowserCustom"
+								end,
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "bg",
+								'__class', "XFrame",
+								'Dock', "box",
+								'Transparency', 255,
+								'FrameBox', box(3, 3, 3, 3),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "left part - list",
+								'Id', "idLeft",
+								'Margins', box(0, 0, 30, 0),
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'Margins', box(20, 20, 0, 0),
+									'HAlign', "left",
+								}, {
+									PlaceObj('XTemplateWindow', nil, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "bg",
+											'__class', "XFrame",
+											'Dock', "box",
+											'Image', "Mod/Agencies/Images/ui_os_header_militia_g.png",
+											'FrameBox', box(3, 3, 3, 3),
+										}),
+										PlaceObj('XTemplateWindow', {
+											'Margins', box(50, 0, 50, 7),
+											'Dock', "bottom",
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'comment', "vertical sep",
+												'__class', "XFrame",
+												'Margins', box(0, 5, 0, 0),
+												'Dock', "top",
+												'VAlign', "top",
+												'Image', "UI/PDA/separate_line_vertical",
+												'FrameBox', box(3, 3, 3, 3),
+												'SqueezeY', false,
+											}),
+											PlaceObj('XTemplateTemplate', {
+												'__template', "PDAAIMBrowserBanner",
+											}),
+											PlaceObj('XTemplateWindow', {
+												'Margins', box(0, 5, 0, 0),
+												'Dock', "right",
+												'VAlign', "center",
+												'LayoutMethod', "HList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'VAlign', "center",
+													'TextStyle', "PDAAIMMoneyDisplayLabel",
+													'Translate', true,
+													'Text', T(305050152091, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Bank Account"),
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__context', function (parent, context) return Game end,
+													'__class', "PDAMoneyText",
+													'Margins', box(30, 0, 0, 0),
+													'VAlign', "center",
+													'TextStyle', "PDAAIMMoneyDisplay",
+													'OnContextUpdate', function (self, context, ...)
+														self:SetMoneyAmount(Game.Money)
+													end,
+													'Translate', true,
+												}),
+												}),
+											}),
+										PlaceObj('XTemplateWindow', {
+											'__class', "SnappingScrollArea",
+											'Id', "idMercList",
+											'Margins', box(40, 0, 40, 0),
+											'Padding', box(2, 0, 2, 0),
+											'HAlign', "left",
+											'MinWidth', 630,
+											'GridStretchX', false,
+											'LayoutMethod', "HWrap",
+											'LayoutHSpacing', 40,
+											'LayoutVSpacing', 20,
+											'UniformColumnWidth', true,
+											'UniformRowHeight', true,
+											'VScroll', "idMercScroll",
+											'ShowPartialItems', true,
+											'LeftThumbScroll', false,
+											'KeepSelectionOnRespawn', true,
+										}, {
+											PlaceObj('XTemplateForEach', {
+												'__context', function (parent, context, item, i, n) return item end,
+											}, {
+												PlaceObj('XTemplateTemplate', {
+													'__template', "PDASatelliteMercAIMMilitia",
+													'HAlign', "left",
+												}),
+												}),
+											PlaceObj('XTemplateFunc', {
+												'name', "OnShortcut(self, shortcut, source, ...)",
+												'func', function (self, shortcut, source, ...)
+													--if GetMouseViaGamepadCtrl() then return end
+													
+													if shortcut == "RightThumbClick" then
+														self:SetInitialSelection()
+														return "break"
+													end
+													
+													return SnappingScrollArea.OnShortcut(self, shortcut, source, ...)
+												end,
+											}),
+											PlaceObj('XTemplateFunc', {
+												'name', "OnSelection(self, _, selection)",
+												'func', function (self, _, selection)
+													selection = selection and selection[1]
+													if not selection then return end
+													
+													local selectedMercWnd = self[selection]
+													if not selectedMercWnd then return end
+													
+													local browser = self:ResolveId("node")
+													browser:SetSelectedMerc(selectedMercWnd.context.session_id)
+												end,
+											}),
+											}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'__class', "MessengerScrollbar",
+										'Id', "idMercScroll",
+										'Dock', "right",
+										'FoldWhenHidden', false,
+										'Target', "idMercList",
+										'SnapToItems', true,
+										'AutoHide', true,
+									}),
+									}),
+								PlaceObj('XTemplateWindow', {
+									'Dock', "bottom",
+									'MinWidth', 550,
+								}, {
+									PlaceObj('XTemplateTemplate', {
+										'__condition', function (parent, context) return not (InitialConflictNotStarted() and not gv_AIMBrowserEverClosed) end,
+										'__template', "PDAStartButtonMilitia",
+										'Margins', box(20, 0, 0, 0),
+										'VAlign', "center",
+									}),
+									}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "right - selected merc info, rest of space",
+								'Id', "idRight",
+							}, {
+								PlaceObj('XTemplateFunc', {
+									'comment', "take whole space even when insides dont",
+									'name', "Measure(self, max_width, max_height)",
+									'func', function (self, max_width, max_height)
+										local width, height = XWindow.Measure(self, max_width, max_height)
+										return max_width, max_height
+									end,
+								}),
+								PlaceObj('XTemplateWindow', {
+									'__class', "XContentTemplate",
+									'Id', "idMercData",
+									'Margins', box(0, 20, 20, 10),
+									'LayoutMethod', "VList",
+								}, {
+									PlaceObj('XTemplateFunc', {
+										'name', "RespawnContent(self)",
+										'func', function (self)
+											XContentTemplate.RespawnContent(self)
+											local context = self.context
+											if not context then return end
+											
+											local hireStatus = context.HireStatus
+											local func = HireStatusToUITextMap[hireStatus]
+											assert(func)
+											func(context, self.idInfoContainer)
+											
+											local kia = hireStatus == "Dead"
+											local mia = hireStatus == "MIA"
+											
+											self.idPortrait:SetImage(context.Portrait)
+											self.idPortrait:SetDesaturation((mia or kia) and 255 or 0)
+											self.idPortrait:SetTransparency(kia and 25 or 0)
+											self.idDead:SetVisible(kia)
+											
+											local dlg = GetDialog(self)
+											self.idPerksAndInventory:SetVisible(not dlg.show_bio)
+											self.idBio:SetVisible(dlg.show_bio)
+											local bioText = self.idBioContent.idBioText
+											local iconAppend = T(381811065044, "<valign top><image UI/PDA/Event/T_Event_TextIcon 1500><valign bottom>")
+											if context.Affiliation ~= "AIM" and not context.Bio then
+												bioText:SetText(iconAppend .. T(448145280145, "Warning! This merc is not a member of A.I.M. We are not liable for any damages, loss of limbs, accidental atrocities, or unexpected war crimes that may be caused by using unlicensed mercs. \n\n Caution! Use at your own risk!"))
+											else
+												bioText:SetText(iconAppend .. T(606873920225, "<Bio>"))
+											end
+											
+											local specName = Presets.MercSpecializations.Default
+											specName = specName[context.Specialization]
+											specName = specName and specName.name
+											self.idClassName:SetVisible(not not specName)
+											self.idClassName:SetText(specName or Untranslated("placeholder"))
+											self.idClassIcon:SetImage(GetMercSpecIcon(context))
+										end,
+									}),
+									PlaceObj('XTemplateWindow', {
+										'__class', "XFrame",
+										'Dock', "box",
+										'Image', "Mod/Agencies/Images/ui_background_militia_g.png",
+										'FrameBox', box(3, 3, 3, 3),
+									}),
+									PlaceObj('XTemplateWindow', {
+										'Padding', box(20, 20, 20, 5),
+										'Dock', "top",
+										'LayoutMethod', "VPanel",
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "portrait holder",
+											'Dock', "left",
+											'HAlign', "left",
+											'VAlign', "top",
+											'MinWidth', 185,
+											'MinHeight', 215,
+											'MaxWidth', 185,
+											'MaxHeight', 215,
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'__class', "XFrame",
+												'IdNode', false,
+												'Padding', box(2, 2, 2, 2),
+												'HAlign', "left",
+												'VAlign', "top",
+												'Image', "UI/PDA/os_background_2",
+												'FrameBox', box(3, 3, 3, 3),
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XImage",
+													'Image', "Mod/Agencies/Images/ui_os_header_militia.png",
+													'ImageFit', "stretch",
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XImage",
+													'Id', "idPortrait",
+													'Clip', "parent & self",
+													'ImageFit', "height",
+													'ImageRect', box(36, 0, 264, 251),
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XImage",
+													'Id', "idDead",
+													'HAlign', "right",
+													'VAlign', "top",
+													'Image', "UI/Hud/death_ribbon",
+												}),
+												}),
+											}),
+										PlaceObj('XTemplateWindow', {
+											'Margins', box(20, 0, 0, 0),
+											'Dock', "box",
+											'LayoutMethod', "VList",
+										}, {
+											PlaceObj('XTemplateWindow', nil, {
+												PlaceObj('XTemplateWindow', {
+													'Id', "idLevelBox",
+													'Dock', "right",
+													'VAlign', "center",
+													'LayoutMethod', "VList",
+													'LayoutVSpacing', -12,
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XText",
+														'Margins', box(0, -13, 0, 0),
+														'HAlign', "center",
+														'TextStyle', "Hiring_MercLevel",
+														'Translate', true,
+														'Text', T(272332316639, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<MercLevel()>"),
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XText",
+														'HAlign', "center",
+														'TextStyle', "PDASMLevelTxt",
+														'Translate', true,
+														'Text', T(853341778287, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Level"),
+													}),
+													}),
+												PlaceObj('XTemplateWindow', {
+													'comment', "name and class",
+													'HAlign', "left",
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XImage",
+														'Id', "idClassIcon",
+														'Margins', box(0, 0, 10, 0),
+														'Dock', "left",
+														'HAlign', "center",
+														'VAlign', "center",
+														'MinWidth', 40,
+														'MinHeight', 40,
+														'MaxWidth', 40,
+														'MaxHeight', 40,
+														'ImageFit', "stretch",
+														'ImageColor', RGBA(195, 189, 172, 255),
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XContextWindow",
+														'Margins', box(0, -10, 0, 0),
+														'VAlign', "center",
+														'LayoutMethod', "VList",
+														'LayoutVSpacing', -8,
+													}, {
+														PlaceObj('XTemplateWindow', {
+															'comment', "name",
+															'__class', "AutoFitText",
+															'TextStyle', "MercName",
+															'Translate', true,
+															'Text', T(303570941176, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<Name> <MercFlagImage()>"),
+															'TextVAlign', "bottom",
+															'ImageScale', 1000,
+															'SafeSpace', 70,
+														}),
+														PlaceObj('XTemplateWindow', {
+															'__class', "XText",
+															'Id', "idClassName",
+															'TextStyle', "MercSubTitle",
+															'Translate', true,
+														}),
+														}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "vertical sep",
+												'__class', "XFrame",
+												'Margins', box(0, 5, 0, 13),
+												'VAlign', "top",
+												'Image', "UI/PDA/separate_line_vertical",
+												'FrameBox', box(3, 3, 3, 3),
+												'SqueezeY', false,
+											}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "stats",
+												'__context', function (parent, context) return MercStatsItems(context) end,
+												'__class', "XContextWindow",
+												'IdNode', true,
+												'LayoutMethod', "Grid",
+												'LayoutVSpacing', -1,
+												'UniformRowHeight', true,
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XFrame",
+													'Id', "idLineSep",
+													'Margins', box(4, 5, 4, 5),
+													'HAlign', "center",
+													'GridX', 2,
+													'GridStretchX', false,
+													'Image', "UI/PDA/separate_line",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeX', false,
+												}),
+												PlaceObj('XTemplateForEach', {
+													'run_after', function (child, context, item, i, n, last)
+														local columnSize = MulDivRound(#context, 1, 2)
+														local column = ((i - 1) / columnSize) + 1
+														if column == 2 then
+															column = 3 -- Skip one
+														end
+														
+														child.parent.idLineSep:SetGridHeight(columnSize)
+														
+														local row = ((i - 1) % columnSize) + 1
+														child:SetGridY(row)
+														child:SetGridX(column)
+														child:SetContext(item)
+														
+														child.idName:SetText(item.name)
+														child.idValue:SetText(item.value)
+														
+														local preset = Presets.MercStat.Default[item.id]
+														if not preset then return end
+														child.idIcon:SetImage(preset.Icon)
+														
+														if column == 1 then
+														--	child:SetMargins(box(0, 0, 20, 0))
+														end
+													end,
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XContextWindow",
+														'RolloverTemplate', "RolloverGeneric",
+														'RolloverAnchor', "center-top",
+														'RolloverText', T(480649745167, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverText]] "<help>"),
+														'RolloverOffset', box(0, 0, 0, 5),
+														'RolloverTitle', T(530544301477, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverTitle]] "<name>"),
+														'IdNode', true,
+													}, {
+														PlaceObj('XTemplateWindow', {
+															'__class', "XContextImage",
+															'Id', "idIcon",
+															'Margins', box(0, 0, 8, 0),
+															'Dock', "left",
+															'HAlign', "left",
+															'VAlign', "center",
+															'ImageScale', point(350, 350),
+															'ImageColor', RGBA(130, 128, 120, 128),
+														}),
+														PlaceObj('XTemplateWindow', {
+															'__class', "XText",
+															'Id', "idName",
+															'HAlign', "left",
+															'VAlign', "center",
+															'TextStyle', "MercStatName",
+															'Translate', true,
+														}),
+														PlaceObj('XTemplateWindow', {
+															'__class', "XText",
+															'Id', "idValue",
+															'Dock', "right",
+															'HAlign', "right",
+															'VAlign', "center",
+															'TextStyle', "MercStatValue",
+														}),
+														PlaceObj('XTemplateFunc', {
+															'name', "OnSetRollover(self, rollover)",
+															'func', function (self, rollover)
+																if rollover then PlayFX("buttonRollover", "start") end
+																self.idName:SetTextStyle(rollover and "MercStatNameRollover" or "MercStatName")
+															end,
+														}),
+														}),
+													}),
+												}),
+											}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'__condition', function (parent, context) return context end,
+										'__class', "XContextWindow",
+										'Id', "idMedicalAndPriceFooter",
+										'Margins', box(20, 0, 20, 0),
+										'Dock', "bottom",
+										'LayoutMethod', "VList",
+										'FoldWhenHidden', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "vertical sep",
+											'__class', "XFrame",
+											'Margins', box(0, 1, 0, 0),
+											'VAlign', "top",
+											'Image', "UI/PDA/separate_line_vertical",
+											'FrameBox', box(3, 3, 3, 3),
+											'SqueezeY', false,
+										}),
+										PlaceObj('XTemplateWindow', {
+											'Id', "idInfoContainer",
+											'IdNode', true,
+											'LayoutMethod', "Grid",
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'Id', "idTitleContainer",
+												'Margins', box(0, 0, 10, 0),
+												'Dock', "left",
+												'HAlign', "left",
+												'LayoutMethod', "HList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Id', "idName",
+													'Margins', box(0, 10, 10, 10),
+													'MinWidth', 120,
+													'TextStyle', "Hiring_Bio_Header",
+													'Translate', true,
+													'Text', T(968454687279, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] " "),
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XFrame",
+													'Id', "idLineSep",
+													'Margins', box(4, 10, 4, 10),
+													'HAlign', "center",
+													'Image', "UI/PDA/separate_line",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeX', false,
+												}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "XContextWindow",
+												'Id', "idText",
+												'IdNode', true,
+												'Visible', false,
+												'FoldWhenHidden', true,
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'RolloverTemplate', "RolloverGeneric",
+													'RolloverAnchor', "center-top",
+													'RolloverOffset', box(0, 0, 60, 10),
+													'Id', "idValue",
+													'HAlign', "right",
+													'VAlign', "center",
+													'TextStyle', "PDAMercPrice",
+													'Translate', true,
+													'TextVAlign', "center",
+												}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "XContextWindow",
+												'Id', "idPrice1W",
+												'IdNode', true,
+												'FoldWhenHidden', true,
+												'ContextUpdateOnOpen', true,
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'RolloverTemplate', "RolloverGeneric",
+													'RolloverAnchor', "center-top",
+													'RolloverText', T(576715391718, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverText]] "<MercPriceBioPageRollover()>"),
+													'RolloverOffset', box(0, 0, 60, 10),
+													'RolloverTitle', T(626514395896, --[[ModItemXTemplate PDAAIMBrowserMilitia RolloverTitle]] "Weekly Cost"),
+													'Id', "idValue",
+													'HAlign', "right",
+													'VAlign', "center",
+													'TextStyle', "PDAMercPrice",
+													'Translate', true,
+													'Text', T(611431415809, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "<MercPriceBioPage(7, true)>"),
+													'TextVAlign', "center",
+												}),
+												}),
+											}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'__condition', function (parent, context) return context end,
+										'__class', "XContextWindow",
+										'Id', "idPerksAndInventory",
+										'Padding', box(20, 0, 20, 5),
+										'Dock', "box",
+										'Visible', false,
+										'FoldWhenHidden', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "vertical sep",
+											'__class', "XFrame",
+											'Margins', box(0, 0, 0, 5),
+											'VAlign', "top",
+											'Image', "UI/PDA/separate_line_vertical",
+											'FrameBox', box(3, 3, 3, 3),
+											'SqueezeY', false,
+										}),
+										PlaceObj('XTemplateWindow', {
+											'__class', "XScrollArea",
+											'Id', "idPerkAndInventoryContent",
+											'Margins', box(0, 4, 0, 5),
+											'LayoutMethod', "VList",
+											'VScroll', "idLoadoutScroll",
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'__class', "XText",
+												'Margins', box(0, 7, 0, 1),
+												'HAlign', "left",
+												'VAlign', "top",
+												'TextStyle', "Hiring_Bio_Header",
+												'Translate', true,
+												'Text', T(981492612110, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Perks"),
+												'TextVAlign', "center",
+											}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "perks",
+												'LayoutMethod', "HWrap",
+												'LayoutHSpacing', 10,
+												'LayoutVSpacing', 10,
+											}, {
+												PlaceObj('XTemplateForEach', {
+													'array', function (parent, context) return context:GetPerks(nil, "sort") end,
+													'run_after', function (child, context, item, i, n, last)
+														child:SetPerkId(item.class)
+													end,
+												}, {
+													PlaceObj('XTemplateTemplate', {
+														'__template', "PDAPerk",
+													}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "equipment",
+												'LayoutMethod', "VList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'comment', "vertical sep",
+													'__class', "XFrame",
+													'Margins', box(0, 5, 0, 7),
+													'VAlign', "top",
+													'Image', "UI/PDA/separate_line_vertical",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeY', false,
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Margins', box(0, 0, 0, 4),
+													'HAlign', "left",
+													'VAlign', "center",
+													'TextStyle', "Hiring_Bio_Header",
+													'Translate', true,
+													'Text', T(527310418709, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Equipment"),
+													'TextVAlign', "center",
+												}),
+												PlaceObj('XTemplateWindow', {
+													'LayoutMethod', "HWrap",
+													'LayoutHSpacing', 10,
+													'LayoutVSpacing', 10,
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idHead",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Head",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idTorso",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Torso",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idLegs",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Legs",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idWeaponA",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Handheld A",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idWeaponB",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Handheld B",
+														'HideWhenEmpty', true,
+													}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "backpack",
+												'LayoutMethod', "VList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'comment', "vertical sep",
+													'__class', "XFrame",
+													'Margins', box(0, 5, 0, 7),
+													'VAlign', "top",
+													'Image', "UI/PDA/separate_line_vertical",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeY', false,
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Margins', box(0, 0, 0, 4),
+													'HAlign', "left",
+													'VAlign', "center",
+													'TextStyle', "Hiring_Bio_Header",
+													'Translate', true,
+													'Text', T(658480012946, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "Backpack"),
+													'TextVAlign', "center",
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XInventoryItemEmbed",
+													'HAlign', "left",
+													'VAlign', "top",
+													'LayoutMethod', "HWrap",
+													'LayoutHSpacing', 10,
+													'LayoutVSpacing', 10,
+													'BorderColor', RGBA(60, 63, 68, 255),
+													'Background', RGBA(42, 45, 54, 120),
+													'slot', "Inventory",
+													'HideWhenEmpty', true,
+												}, {
+													PlaceObj('XTemplateFunc', {
+														'name', "SetVisible(self, visible)",
+														'func', function (self, visible)
+															XInventoryItemEmbed.SetVisible(self, visible)
+															self.parent:SetVisible(visible)
+														end,
+													}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "MessengerScrollbar",
+												'Id', "idLoadoutScroll",
+												'Margins', box(20, 3, 3, 3),
+												'Dock', "right",
+												'FoldWhenHidden', false,
+												'Target', "node",
+												'SnapToItems', true,
+												'AutoHide', true,
+											}),
+											}),
+										PlaceObj('XTemplateWindow', {
+											'IdNode', true,
+										}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'Id', "idBio",
+										'Padding', box(20, 0, 20, 5),
+										'Dock', "box",
+										'FoldWhenHidden', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "vertical sep",
+											'__class', "XFrame",
+											'Margins', box(0, 0, 0, 5),
+											'VAlign', "top",
+											'Image', "UI/PDA/separate_line_vertical",
+											'FrameBox', box(3, 3, 3, 3),
+											'SqueezeY', false,
+										}),
+										PlaceObj('XTemplateWindow', nil, {
+											PlaceObj('XTemplateWindow', {
+												'__class', "XText",
+												'Margins', box(0, 10, 0, 10),
+												'OnLayoutComplete', function (self)
+													if self.context and self.context.Title then 
+														self:SetText(T{442425729284, "Bio - <Title>", self.context})
+													else
+														self:SetText(T(661110761557, "Bio"))
+													end
+												end,
+												'TextStyle', "Hiring_Bio_Header",
+												'Translate', true,
+												'Text', T(218571713872, --[[ModItemXTemplate PDAAIMBrowserMilitia Text]] "BIO - <Title>"),
+											}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "XScrollArea",
+												'Id', "idBioContent",
+												'Margins', box(0, 50, 0, 15),
+												'VScroll', "idBioScroll",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Id', "idBioText",
+													'HAlign', "left",
+													'TextStyle', "Hiring_MercBio",
+													'Translate', true,
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "MessengerScrollbar",
+													'Id', "idBioScroll",
+													'Margins', box(20, 3, 3, 3),
+													'Dock', "right",
+													'FoldWhenHidden', false,
+													'Target', "node",
+													'SnapToItems', true,
+													'AutoHide', true,
+												}),
+												}),
+											}),
+										}),
+									}),
+								PlaceObj('XTemplateWindow', {
+									'Margins', box(20, 0, 20, 10),
+									'Dock', "bottom",
+									'MinHeight', 36,
+									'MaxHeight', 36,
+								}, {
+									PlaceObj('XTemplateWindow', {
+										'__class', "XToolBarList",
+										'Id', "idToolBar",
+										'HAlign', "right",
+										'ScaleModifier', point(900, 900),
+										'LayoutHSpacing', 18,
+										'Background', RGBA(255, 255, 255, 0),
+										'Toolbar', "ActionBar",
+										'Show', "text",
+										'ButtonTemplate', "PDACommonButton",
+									}, {
+										PlaceObj('XTemplateFunc', {
+											'name', "RebuildActions(self, ...)",
+											'func', function (self, ...)
+												XToolBarList.RebuildActions(self, ...)
+												if not gv_InitialHiringDone then
+													self.idPDACloseOrBackTab:SetText(T(476547188462, "Start"))
+												end
+												
+												local dismissButton = self.ididDismiss
+												if dismissButton then
+													dismissButton.GetRolloverAnchor = function()
+														return "center-top"
+													end
+													dismissButton.GetRolloverDisabledText = empty_func
+													dismissButton.GetRolloverText = function()
+														if dismissButton:GetEnabled() then return false end
+														if not gv_SatelliteView then return false end
+														return T(175457184875, "You can't dismiss mercs during an ongoing conflict.")
+													end
+												end
+												
+												local contactButton = self.ididContact
+												if contactButton then
+													local selectedMerc = self:ResolveId("node").selected_merc
+												
+													contactButton.GetRolloverAnchor = function()
+														return "center-top"
+													end
+													contactButton.GetRolloverDisabledText = empty_func
+													contactButton.GetRolloverText = function()
+														if not selectedMerc then return false end
+														local canContact, disableText = MercCanContact(gv_UnitData[selectedMerc])
+														return disableText
+													end
+												end
+											end,
+										}),
+										}),
+									}),
+								}),
+							}),
+						}),
+					PlaceObj('XTemplateWindow', nil, {
+						PlaceObj('XTemplateAction', {
+							'RolloverTemplate', "RolloverGeneric",
+							'RolloverOffset', box(0, 0, 0, 8),
+							'ActionId', "idContact",
+							'ActionName', T(460716511931, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Contact"),
+							'ActionToolbar', "ActionBar",
+							'ActionGamepad', "ButtonX",
+							'ActionButtonTemplate', "PDACommonButtonBlueSnype",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local id = content.selected_merc
+								if not id then return "disabled" end
+								
+								local enabled = MercCanContact(gv_UnitData[id])
+								if not enabled then return "hidden" end
+								if enabled == "disabled" then
+									return "disabled"
+								end
+								
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local mercId = content.selected_merc
+								StartMercChat(mercId)
+							end,
+							'FXPress', "none",
+						}),
+						PlaceObj('XTemplateAction', {
+							'RolloverTemplate', "RolloverGeneric",
+							'RolloverOffset', box(0, 0, 0, 8),
+							'ActionId', "idDismiss",
+							'ActionName', T(391809744019, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Dismiss"),
+							'ActionToolbar', "ActionBar",
+							'ActionButtonTemplate', "PDACommonButtonBlueSnype",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local id = content.selected_merc
+								if not id then return "hidden" end
+								local merc = gv_UnitData[id]
+								if merc.HireStatus ~= "Hired" then return "hidden" end
+								if not merc.HiredUntil then return "hidden" end
+								
+								local remainingTime = merc.HiredUntil - Game.CampaignTime
+								local daysLeft = remainingTime / const.Scale.day
+								if daysLeft <= 1 then return "hidden" end
+								
+								if g_Combat then return "disabled" end
+								
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local mercId = content.selected_merc
+								DismissMerc(mercId)
+							end,
+							'FXPress', "none",
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idSeeBio",
+							'ActionName', T(434425472248, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "See Bio"),
+							'ActionToolbar', "ActionBar",
+							'ActionShortcut', "S",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								return content.show_bio and "hidden" or "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								content.show_bio = true
+								AIMBrowserSection = "bio"
+								ObjModified(gv_UnitData[content.selected_merc])
+								content.idToolBar:RebuildActions(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idHideBio",
+							'ActionName', T(746527562489, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Loadout"),
+							'ActionToolbar', "ActionBar",
+							'ActionShortcut', "S",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								return content.show_bio and "enabled" or "hidden"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								content.show_bio = false
+								AIMBrowserSection = "loadout"
+								ObjModified(gv_UnitData[content.selected_merc])
+								content.idToolBar:RebuildActions(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idRegenerateAttire",
+							'ActionName', T(654845306646, --[[ModItemXTemplate PDAAIMBrowserMilitia ActionName]] "Redress"),
+							'ActionToolbar', "ActionBar",
+							'ActionState', function (self, host)
+								return AgenciesGetRedressButtonState(host)
+							end,
+							'OnAction', function (self, host, source, ...)
+								AgenciesRedressButtonAction(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idScrollUp",
+							'ActionGamepad', "RightThumbUp",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") or not content.idMercData then return end
+								
+								local scroll = false
+								if content.show_bio then
+									scroll = content.idMercData:ResolveId("idBioContent")
+								else
+									scroll = content.idMercData:ResolveId("idPerkAndInventoryContent")
+								end
+								if not scroll then return end
+								
+								scroll:ScrollUp()
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idScrollDown",
+							'ActionGamepad', "RightThumbDown",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") or not content.idMercData then return end
+								
+								local scroll = false
+								if content.show_bio then
+									scroll = content.idMercData:ResolveId("idBioContent")
+								else
+									scroll = content.idMercData:ResolveId("idPerkAndInventoryContent")
+								end
+								if not scroll then return end
+								
+								scroll:ScrollDown()
+							end,
+						}),
+						PlaceObj('XTemplateTemplate', {
+							'__template', "PDAGenericCloseAction",
+						}),
+						}),
+					PlaceObj('XTemplateWindow', {
+						'comment', "aim premium observer",
+						'__context', function (parent, context) return "AIMPremium" end,
+						'__class', "XContextWindow",
+						'OnContextUpdate', function (self, context, ...)
+							local node = self:ResolveId("node")
+							node.idMercList:RespawnContent()
+						end,
+					}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "PDASatelliteAIMMercClass",
+				group = "Zulu Satellite UI",
+				id = "PDASatelliteMercAIMMilitia",
+				PlaceObj('XTemplateWindow', {
+					'__class', "PDASatelliteAIMMercClass",
+					'MinWidth', 125,
+					'MinHeight', 190,
+					'MaxWidth', 125,
+					'MaxHeight', 190,
+					'LayoutMethod', "VList",
+					'UseClipBox', false,
+					'BorderColor', RGBA(255, 255, 255, 0),
+					'Background', RGBA(255, 255, 255, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'ChildrenHandleMouse', true,
+					'FocusedBorderColor', RGBA(255, 255, 255, 0),
+					'FocusedBackground', RGBA(255, 255, 255, 0),
+					'DisabledBorderColor', RGBA(255, 255, 255, 0),
+					'RolloverBackground', RGBA(255, 255, 255, 0),
+					'PressedBackground', RGBA(255, 255, 255, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XTextWithStyleBasedOnSize",
+						'Id', "idPrice",
+						'Dock', "bottom",
+						'HAlign', "center",
+						'VAlign', "bottom",
+						'MinHeight', 45,
+						'MaxHeight', 45,
+						'Translate', true,
+						'TextStyleSmall', "PDAIMPAnswer",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Id', "idContent",
+						'Margins', box(2, 28, 2, 0),
+						'Dock', "box",
+						'Background', RGBA(230, 222, 203, 255),
+						'BackgroundRectGlowSize', 1,
+						'BackgroundRectGlowColor', RGBA(230, 222, 203, 255),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'__class', "XFrame",
+							'Id', "idSelectedRounding",
+							'Dock', "box",
+							'Image', "UI/PDA/os_portrait_selection",
+							'FrameBox', box(5, 5, 5, 5),
+						}),
+						PlaceObj('XTemplateWindow', {
+							'__class', "XImage",
+							'Id', "idPortraitBG",
+							'IdNode', false,
+							'Margins', box(5, 5, 5, 0),
+							'Image', "Mod/Agencies/Images/ui_background_militia.png",
+							'ImageFit', "stretch",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'UIEffectModifierId', "Default",
+								'Id', "idPortrait",
+								'IdNode', false,
+								'ZOrder', 2,
+								'Margins', box(0, -20, 0, 0),
+								'ImageFit', "height",
+								'ImageRect', box(36, 0, 264, 246),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'Id', "idExpensive",
+								'ZOrder', 3,
+								'HAlign', "left",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'Visible', false,
+								'Background', RGBA(191, 67, 77, 255),
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XText",
+									'HAlign', "center",
+									'VAlign', "center",
+									'Clip', false,
+									'UseClipBox', false,
+									'HandleMouse', false,
+									'ChildrenHandleMouse', false,
+									'TextStyle', "MoneyText",
+									'Translate', true,
+									'Text', T(105258045486, --[[ModItemXTemplate PDASatelliteMercAIMMilitia Text]] "$"),
+									'TextVAlign', "center",
+								}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'RolloverTemplate', "RolloverGeneric",
+								'RolloverAnchor', "right",
+								'RolloverOffset', box(10, 0, 0, 0),
+								'Id', "idClassIconBg",
+								'ZOrder', 3,
+								'HAlign', "right",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'HandleMouse', true,
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XImage",
+									'Id', "idClassIcon",
+									'HAlign', "center",
+									'VAlign', "center",
+									'MinWidth', 20,
+									'MinHeight', 20,
+									'MaxWidth', 20,
+									'MaxHeight', 20,
+									'ImageFit', "stretch",
+									'ImageColor', RGBA(27, 31, 45, 255),
+								}),
+								PlaceObj('XTemplateFunc', {
+									'comment', "XButton is weird about propagating clicks from within it",
+									'name', "OnMouseButtonDown(self, pos, button)",
+									'func', function (self, pos, button)
+										local node = self:ResolveId("node")
+										return node:OnPress()
+									end,
+								}),
+								}),
+							PlaceObj('XTemplateTemplate', {
+								'__template', "MercContractWarningIcon",
+								'OnPress', function (self, gamepad)
+									--OpenAIMAndSelectMerc(self.context.session_id)
+								end,
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idOffline",
+								'HAlign', "center",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'DrawOnTop', true,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "DescriptionTextRed",
+								'Translate', true,
+								'Text', T(922627989097, --[[ModItemXTemplate PDASatelliteMercAIMMilitia Text]] "OFFLINE"),
+								'TextHAlign', "center",
+								'TextVAlign', "center",
+							}),
+							}),
+						PlaceObj('XTemplateWindow', {
+							'Id', "idBottomSection",
+							'Margins', box(5, 0, 5, 0),
+							'Dock', "bottom",
+							'MinHeight', 30,
+							'MaxHeight', 30,
+							'LayoutMethod', "HList",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Id', "idOnlineStatusIcon",
+								'Margins', box(4, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'UseClipBox', false,
+								'FoldWhenHidden', true,
+								'Image', "UI/PDA/snype_on",
+								'ImageScale', point(800, 800),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idName",
+								'Margins', box(2, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "PDAMercNameCard",
+								'Translate', true,
+								'Text', T(414048949657, --[[ModItemXTemplate PDASatelliteMercAIMMilitia Text]] "<Nick>"),
+								'TextVAlign', "bottom",
+							}),
+							}),
+						}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "GenericHUDButtonFrame",
+				group = "Zulu",
+				id = "PDAStartButtonMilitia",
+				PlaceObj('XTemplateWindow', {
+					'__class', "XButton",
+					'Id', "idStartButton",
+					'Margins', box(45, 0, 0, 15),
+					'HAlign', "left",
+					'VAlign', "top",
+					'MinWidth', 203,
+					'MinHeight', 44,
+					'MaxHeight', 44,
+					'Background', RGBA(0, 0, 0, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'FXMouseIn', "buttonRollover",
+					'FXPressDisabled', "IactDisabled",
+					'FocusedBackground', RGBA(0, 0, 0, 0),
+					'OnPress', function (self, gamepad)
+						
+						local dlg = GetDialog("PDADialog")
+						local ctxMenu = XTemplateSpawn("StartButtonContextMenu", dlg.idDisplayPopupHost, dlg)
+						ctxMenu:SetZOrder(999)
+						ctxMenu:SetAnchor(self.box)
+						ctxMenu:Open()
+						self.desktop:SetModalWindow(ctxMenu)
+					end,
+					'RolloverBackground', RGBA(0, 0, 0, 0),
+					'PressedBackground', RGBA(0, 0, 0, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XFrame",
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_os_header_militia_g.png",
+						'FrameBox', box(5, 5, 5, 5),
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "XImage",
+						'Id', "idIcon",
+						'Margins', box(10, 0, 5, 0),
+						'Dock', "left",
+						'VAlign', "center",
+						'Image', "UI/Hud/pda",
+						'Columns', 2,
+						'ImageScale', point(800, 800),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'comment', "controller hint",
+							'__context', function (parent, context) return "GamepadUIStyleChanged" end,
+							'__class', "XText",
+							'Margins', box(-5, 0, 0, -5),
+							'HAlign', "left",
+							'VAlign', "bottom",
+							'ScaleModifier', point(700, 700),
+							'TextStyle', "HUDHeaderBig",
+							'ContextUpdateOnOpen', true,
+							'OnContextUpdate', function (self, context, ...)
+								self:SetVisible(GetUIStyleGamepad())
+								XText.OnContextUpdate(self, context, ...)
+							end,
+							'Translate', true,
+							'Text', T(610629432410, --[[ModItemXTemplate PDAStartButtonMilitia Text]] "<ButtonY>"),
+						}),
+						}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "XText",
+						'Id', "idLargeText",
+						'Margins', box(0, 0, 5, 0),
+						'HAlign', "center",
+						'VAlign', "center",
+						'TextStyle', "HUDHeaderBigger",
+						'Translate', true,
+						'Text', T(171916085317, --[[ModItemXTemplate PDAStartButtonMilitia Text]] "COMMAND"),
+						'TextHAlign', "center",
+						'TextVAlign', "center",
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "OnSetRollover(self, rollover)",
+						'func', function (self, rollover)
+							self.idIcon:SetColumn(rollover and 2 or 1)
+							XButton.OnSetRollover(self, rollover)
+						end,
+					}),
+					}),
+			}),
 			}),
 		PlaceObj('ModItemFolder', {
 			'name', "Rebels",
+			'NameColor', RGBA(255, 66, 84, 255),
 		}, {
 			PlaceObj('ModItemXTemplate', {
 				group = "Zulu PDA",
@@ -8678,22 +10401,13 @@ return {
 								'Image', "Mod/Agencies/Images/ui_logo_rebels.png",
 							}),
 							PlaceObj('XTemplateWindow', {
-								'comment', "header txt",
-								'__class', "XText",
-								'Margins', box(0, 20, 0, 0),
-								'HAlign', "center",
-								'TextStyle', "PDALandingHeader",
-								'Translate', true,
-								'Text', T(206534144719, --[[ModItemXTemplate PDABrowserLandingRebels Text]] "WELCOME TO THE A.I.M. RECRUITMENT WEBSITE"),
-							}),
-							PlaceObj('XTemplateWindow', {
 								'comment', "main txt",
 								'__class', "XText",
 								'Margins', box(0, 55, 0, 0),
 								'MaxWidth', 1150,
 								'TextStyle', "PDALandingText",
 								'Translate', true,
-								'Text', T(883525179091, --[[ModItemXTemplate PDABrowserLandingRebels Text]] "Rebels desc"),
+								'Text', T(883525179091, --[[ModItemXTemplate PDABrowserLandingRebels Text]] "Fight for the revolution with Maquis Rebels recruitment center!"),
 								'TextHAlign', "center",
 							}),
 							PlaceObj('XTemplateWindow', {
@@ -8817,7 +10531,7 @@ return {
 										'FrameBox', box(3, 5, 3, 5),
 										'SqueezeX', true,
 										'SqueezeY', true,
-										'TextStyle', "Hiring_Filter_Unselected",
+										'TextStyle', "ActivityDescrRed",
 										'Translate', true,
 										'Text', T(100078301826, --[[ModItemXTemplate PDAAIMBrowserRebels Text]] "<name>"),
 										'UseXTextControl', true,
@@ -8839,22 +10553,14 @@ return {
 										PlaceObj('XTemplateFunc', {
 											'name', "SetSelected(self, selected)",
 											'func', function (self, selected)
-												local enable = selected and "enable" or "disable"
-												local img = "Mod/Agencies/Images/os_header_" .. enable .. "_rebels"
+												local enable = selected and "" or "_disabled"
+												local img = "Mod/Agencies/Images/ui_os_header_rebels" .. enable
 												
 												self:SetImage(img)
 												rawset(self, "selected", selected)
 												
 												local paddings = selected and box(0, -3, 0 ,0) or empty_box
 												self:SetMargins(paddings)
-												--self.idLabel:SetMargins(selected and box(0, 0, 0, 0) or empty_box)
-												
-												local textStyle = "Hiring_Filter_"
-												if self.context.customBG then
-													textStyle = textStyle .. self.context.customBG .. "_"
-												end
-												textStyle = textStyle .. (selected and "Selected" or "Unselected")
-												self:SetTextStyle(textStyle)
 											end,
 										}),
 										PlaceObj('XTemplateFunc', {
@@ -8930,7 +10636,7 @@ return {
 											'comment', "bg",
 											'__class', "XFrame",
 											'Dock', "box",
-											'Image', "UI/PDA/os_background_2",
+											'Image', "Mod/Agencies/Images/ui_os_header_rebels.png",
 											'FrameBox', box(3, 3, 3, 3),
 										}),
 										PlaceObj('XTemplateWindow', {
@@ -8998,7 +10704,7 @@ return {
 												'__context', function (parent, context, item, i, n) return item end,
 											}, {
 												PlaceObj('XTemplateTemplate', {
-													'__template', "PDASatelliteMercAIM",
+													'__template', "PDASatelliteMercAIMRebels",
 													'HAlign', "left",
 												}),
 												}),
@@ -9112,7 +10818,7 @@ return {
 									PlaceObj('XTemplateWindow', {
 										'__class', "XFrame",
 										'Dock', "box",
-										'Image', "UI/PDA/os_background",
+										'Image', "Mod/Agencies/Images/ui_background_rebels.png",
 										'FrameBox', box(3, 3, 3, 3),
 									}),
 									PlaceObj('XTemplateWindow', {
@@ -9141,7 +10847,7 @@ return {
 											}, {
 												PlaceObj('XTemplateWindow', {
 													'__class', "XImage",
-													'Image', "UI/Hud/portrait_background",
+													'Image', "Mod/Agencies/Images/ui_os_header_rebels.png",
 													'ImageFit', "stretch",
 												}),
 												PlaceObj('XTemplateWindow', {
@@ -9873,6 +11579,17 @@ return {
 							end,
 						}),
 						PlaceObj('XTemplateAction', {
+							'ActionId', "idRegenerateAttire",
+							'ActionName', T(618767939457, --[[ModItemXTemplate PDAAIMBrowserRebels ActionName]] "Redress"),
+							'ActionToolbar', "ActionBar",
+							'ActionState', function (self, host)
+								return AgenciesGetRedressButtonState(host)
+							end,
+							'OnAction', function (self, host, source, ...)
+								AgenciesRedressButtonAction(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
 							'ActionId', "idScrollUp",
 							'ActionGamepad', "RightThumbUp",
 							'ActionState', function (self, host)
@@ -9939,6 +11656,196 @@ return {
 							node.idMercList:RespawnContent()
 						end,
 					}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "PDASatelliteAIMMercClass",
+				group = "Zulu Satellite UI",
+				id = "PDASatelliteMercAIMRebels",
+				PlaceObj('XTemplateWindow', {
+					'__class', "PDASatelliteAIMMercClass",
+					'MinWidth', 125,
+					'MinHeight', 190,
+					'MaxWidth', 125,
+					'MaxHeight', 190,
+					'LayoutMethod', "VList",
+					'UseClipBox', false,
+					'BorderColor', RGBA(255, 255, 255, 0),
+					'Background', RGBA(255, 255, 255, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'ChildrenHandleMouse', true,
+					'FocusedBorderColor', RGBA(255, 255, 255, 0),
+					'FocusedBackground', RGBA(255, 255, 255, 0),
+					'DisabledBorderColor', RGBA(255, 255, 255, 0),
+					'RolloverBackground', RGBA(255, 255, 255, 0),
+					'PressedBackground', RGBA(255, 255, 255, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XTextWithStyleBasedOnSize",
+						'Id', "idPrice",
+						'Dock', "bottom",
+						'HAlign', "center",
+						'VAlign', "bottom",
+						'MinHeight', 45,
+						'MaxHeight', 45,
+						'Translate', true,
+						'TextStyleSmall', "PDAIMPAnswer",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Id', "idContent",
+						'Margins', box(2, 28, 2, 0),
+						'Dock', "box",
+						'Background', RGBA(230, 222, 203, 255),
+						'BackgroundRectGlowSize', 1,
+						'BackgroundRectGlowColor', RGBA(230, 222, 203, 255),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'__class', "XFrame",
+							'Id', "idSelectedRounding",
+							'Dock', "box",
+							'Image', "UI/PDA/os_portrait_selection",
+							'FrameBox', box(5, 5, 5, 5),
+						}),
+						PlaceObj('XTemplateWindow', {
+							'__class', "XImage",
+							'Id', "idPortraitBG",
+							'IdNode', false,
+							'Margins', box(5, 5, 5, 0),
+							'Image', "Mod/Agencies/Images/ui_background_rebels.png",
+							'ImageFit', "stretch",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'UIEffectModifierId', "Default",
+								'Id', "idPortrait",
+								'IdNode', false,
+								'ZOrder', 2,
+								'Margins', box(0, -20, 0, 0),
+								'ImageFit', "height",
+								'ImageRect', box(36, 0, 264, 246),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'Id', "idExpensive",
+								'ZOrder', 3,
+								'HAlign', "left",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'Visible', false,
+								'Background', RGBA(191, 67, 77, 255),
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XText",
+									'HAlign', "center",
+									'VAlign', "center",
+									'Clip', false,
+									'UseClipBox', false,
+									'HandleMouse', false,
+									'ChildrenHandleMouse', false,
+									'TextStyle', "MoneyText",
+									'Translate', true,
+									'Text', T(191658763637, --[[ModItemXTemplate PDASatelliteMercAIMRebels Text]] "$"),
+									'TextVAlign', "center",
+								}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'RolloverTemplate', "RolloverGeneric",
+								'RolloverAnchor', "right",
+								'RolloverOffset', box(10, 0, 0, 0),
+								'Id', "idClassIconBg",
+								'ZOrder', 3,
+								'HAlign', "right",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'HandleMouse', true,
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XImage",
+									'Id', "idClassIcon",
+									'HAlign', "center",
+									'VAlign', "center",
+									'MinWidth', 20,
+									'MinHeight', 20,
+									'MaxWidth', 20,
+									'MaxHeight', 20,
+									'ImageFit', "stretch",
+									'ImageColor', RGBA(27, 31, 45, 255),
+								}),
+								PlaceObj('XTemplateFunc', {
+									'comment', "XButton is weird about propagating clicks from within it",
+									'name', "OnMouseButtonDown(self, pos, button)",
+									'func', function (self, pos, button)
+										local node = self:ResolveId("node")
+										return node:OnPress()
+									end,
+								}),
+								}),
+							PlaceObj('XTemplateTemplate', {
+								'__template', "MercContractWarningIcon",
+								'OnPress', function (self, gamepad)
+									--OpenAIMAndSelectMerc(self.context.session_id)
+								end,
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idOffline",
+								'HAlign', "center",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'DrawOnTop', true,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "DescriptionTextRed",
+								'Translate', true,
+								'Text', T(398888569315, --[[ModItemXTemplate PDASatelliteMercAIMRebels Text]] "OFFLINE"),
+								'TextHAlign', "center",
+								'TextVAlign', "center",
+							}),
+							}),
+						PlaceObj('XTemplateWindow', {
+							'Id', "idBottomSection",
+							'Margins', box(5, 0, 5, 0),
+							'Dock', "bottom",
+							'MinHeight', 30,
+							'MaxHeight', 30,
+							'LayoutMethod', "HList",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Id', "idOnlineStatusIcon",
+								'Margins', box(4, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'UseClipBox', false,
+								'FoldWhenHidden', true,
+								'Image', "UI/PDA/snype_on",
+								'ImageScale', point(800, 800),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idName",
+								'Margins', box(2, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "PDAMercNameCard",
+								'Translate', true,
+								'Text', T(907687892874, --[[ModItemXTemplate PDASatelliteMercAIMRebels Text]] "<Nick>"),
+								'TextVAlign', "bottom",
+							}),
+							}),
+						}),
 					}),
 			}),
 			PlaceObj('ModItemXTemplate', {
@@ -10014,6 +11921,1601 @@ return {
 						'TextStyle', "HUDHeaderBigger",
 						'Translate', true,
 						'Text', T(903420700407, --[[ModItemXTemplate PDAStartButtonRebels Text]] "COMMAND"),
+						'TextHAlign', "center",
+						'TextVAlign', "center",
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "OnSetRollover(self, rollover)",
+						'func', function (self, rollover)
+							self.idIcon:SetColumn(rollover and 2 or 1)
+							XButton.OnSetRollover(self, rollover)
+						end,
+					}),
+					}),
+			}),
+			}),
+		PlaceObj('ModItemFolder', {
+			'name', "Army",
+			'NameColor', RGBA(200, 178, 141, 255),
+		}, {
+			PlaceObj('ModItemXTemplate', {
+				group = "Zulu PDA",
+				id = "PDABrowserLandingArmy",
+				PlaceObj('XTemplateWindow', {
+					'__class', "XDialog",
+					'Id', "idBrowserContent",
+				}, {
+					PlaceObj('XTemplateFunc', {
+						'name', "Open",
+						'func', function (self, ...)
+							XDialog.Open(self, ...)
+							-- close all browser tabs except for landing
+							for k, v in pairs(PDABrowserTabState) do
+								UndockBrowserTab(k)
+							end
+							DockBrowserTab("landing")
+							AddPageToBrowserHistory("landing")
+							ObjModified("pda browser tabs")
+						end,
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "OnDelete",
+						'func', function (self, ...)
+							-- restore browser tabs to default defined in AIMHiringScreen.lua
+							UndockBrowserTab("landing")
+							DockBrowserTab("aim")
+							if not g_TestCombat then DockBrowserTab("imp") end
+							ObjModified("pda browser tabs")
+							XDialog.OnDelete(self, ...)
+						end,
+					}),
+					PlaceObj('XTemplateWindow', {
+						'comment', "bkg frame",
+						'__class', "XImage",
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_background_army.png",
+						'ImageFit', "stretch",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "VirtualCursorManager",
+						'Reason', "Langing",
+						'ActionType', false,
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Dock', "box",
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'comment', "main",
+							'HAlign', "center",
+							'VAlign', "center",
+							'LayoutMethod', "VList",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Image', "Mod/Agencies/Images/ui_logo_army.png",
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "main txt",
+								'__class', "XText",
+								'Margins', box(0, 55, 0, 0),
+								'MaxWidth', 1150,
+								'TextStyle', "PDALandingText",
+								'Translate', true,
+								'Text', T(892176523324, --[[ModItemXTemplate PDABrowserLandingArmy Text]] "Foreign Legion Wing"),
+								'TextHAlign', "center",
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "button",
+								'__class', "XToolBarList",
+								'Id', "idToolBar",
+								'Margins', box(0, 30, 0, 0),
+								'HAlign', "center",
+								'Background', RGBA(255, 255, 255, 0),
+								'Toolbar', "ActionBar",
+								'Show', "text",
+								'ButtonTemplate', "PDALandingPageButton",
+							}),
+							}),
+						}),
+					PlaceObj('XTemplateAction', {
+						'ActionId', "idContinue",
+						'ActionName', T(512641050997, --[[ModItemXTemplate PDABrowserLandingArmy ActionName]] "Continue"),
+						'ActionToolbar', "ActionBar",
+						'ActionShortcut', "C",
+						'ActionShortcut2', "Enter",
+						'ActionGamepad', "ButtonA",
+						'OnAction', function (self, host, source, ...)
+							TutorialHintsState.LandingPageShown = true
+							if source == "imp" then
+								host:SetMode("imp")
+							else
+								host:SetMode("aim")
+							end
+						end,
+					}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "XDialog",
+				group = "Zulu PDA",
+				id = "PDAAIMBrowserArmy",
+				PlaceObj('XTemplateWindow', {
+					'comment', "content",
+					'__class', "PDAAIMBrowser",
+					'Margins', box(50, 0, 50, 0),
+					'LayoutMethod', "VList",
+					'MouseCursor', "UI/Cursors/Pda_Cursor.tga",
+					'HostInParent', true,
+					'FocusOnOpen', "",
+				}, {
+					PlaceObj('XTemplateFunc', {
+						'name', "Open",
+						'func', function (self, ...)
+							PDAAIMBrowser.Open(self,...)
+							AddPageToBrowserHistory("aim", nil)
+						end,
+					}),
+					PlaceObj('XTemplateFunc', {
+						'name', "Done(self, ...)",
+						'func', function (self, ...)
+							PDAAIMBrowser.Done(self,...)
+						end,
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__condition', function (parent, context) return not netInGame and not gv_SatelliteView end,
+						'__class', "PDACampaignPausingDlg",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'comment', "bkg frame",
+						'__class', "XImage",
+						'Margins', box(-50, -1, -50, 0),
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_background_army.png",
+						'ImageFit', "stretch",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Margins', box(5, 25, 0, 20),
+						'Dock', "box",
+						'Background', RGBA(149, 120, 87, 103),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'Dock', "top",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'comment', "filters",
+								'__context', function (parent, context) return GetAIMScreenFilters() end,
+								'Id', "idFilters",
+								'MinHeight', 44,
+								'MaxHeight', 44,
+								'LayoutMethod', "HList",
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'comment', "bg",
+									'__class', "XFrame",
+									'Dock', "box",
+									'Image', "Mod/Agencies/Images/ui_os_header_army.png",
+									'FrameBox', box(3, 5, 3, 5),
+								}),
+								PlaceObj('XTemplateForEach', {
+									'__context', function (parent, context, item, i, n) return item end,
+									'run_after', function (child, context, item, i, n, last)
+										child:SetGridX(i)
+										child:SetIcon("UI/Icons/hf_" .. item.nameString)
+										rawset(child, "lastIndex", i == last)
+									end,
+								}, {
+									PlaceObj('XTemplateWindow', {
+										'__class', "XTextButton",
+										'Padding', box(10, 0, 10, 8),
+										'MinWidth', 170,
+										'LayoutMethod', "Box",
+										'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+										'FXMouseIn', "buttonRollover",
+										'FXPress', "AIMCategoryMercsClick",
+										'FXPressDisabled', "TabButtonDisabled",
+										'FocusedBorderColor', RGBA(132, 0, 0, 255),
+										'DisabledBorderColor', RGBA(80, 0, 0, 255),
+										'DisabledBackground', RGBA(255, 255, 255, 255),
+										'OnPress', function (self, gamepad)
+											if self.context.premium and PremiumPopupLogic() then return end
+											
+											local dlg = GetDialog(self)
+											dlg:SetFilter(self.context.id)
+										end,
+										'Image', "Mod/Agencies/Images/ui_os_header_rebels.png",
+										'FrameBox', box(3, 5, 3, 5),
+										'SqueezeX', true,
+										'SqueezeY', true,
+										'TextStyle', "ConflictName",
+										'Translate', true,
+										'Text', T(116049170068, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "<name>"),
+										'UseXTextControl', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'Id', "idCenteredContainer",
+											'HAlign', "center",
+											'VAlign', "center",
+											'LayoutMethod', "HList",
+											'LayoutHSpacing', 5,
+										}),
+										PlaceObj('XTemplateCode', {
+											'run', function (self, parent, context)
+												local centeredContainer = parent.idCenteredContainer
+												parent.idIcon:SetParent(centeredContainer)
+												parent.idLabel:SetParent(centeredContainer)
+											end,
+										}),
+										PlaceObj('XTemplateFunc', {
+											'name', "SetSelected(self, selected)",
+											'func', function (self, selected)
+												local enable = selected and "" or "_disabled"
+												local img = "Mod/Agencies/Images/ui_os_header_army" .. enable
+												
+												self:SetImage(img)
+												rawset(self, "selected", selected)
+												
+												local paddings = selected and box(0, -3, 0 ,0) or empty_box
+												self:SetMargins(paddings)
+											end,
+										}),
+										PlaceObj('XTemplateFunc', {
+											'name', "SetEnabled(self, enabled)",
+											'func', function (self, enabled)
+												self.idIcon:SetDesaturation(enabled and 0 or 255)
+												self.idLabel:SetEnabled(enabled)
+												XTextButton.SetEnabled(self, enabled)
+											end,
+										}),
+										PlaceObj('XTemplateWindow', {
+											'__context', function (parent, context) return gv_Squads end,
+											'__condition', function (parent, context) return parent.context.nameString == "hired" end,
+											'__class', "XContextWindow",
+											'OnContextUpdate', function (self, context, ...)
+												self.parent:OnContextUpdate(self.parent.context)
+											end,
+										}),
+										}),
+									}),
+								PlaceObj('XTemplateWindow', {
+									'comment', "gamepad hint",
+									'__context', function (parent, context) return "GamepadUIStyleChanged" end,
+									'__class', "XText",
+									'Margins', box(10, 0, 0, 0),
+									'HAlign', "right",
+									'VAlign', "top",
+									'ContextUpdateOnOpen', true,
+									'OnContextUpdate', function (self, context, ...)
+										self:SetVisible(GetUIStyleGamepad())
+										XText.OnContextUpdate(self, context, ...)
+									end,
+									'Translate', true,
+									'Text', T(544830257790, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "<LB> <RB> - Change category"),
+								}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Margins', box(0, 0, 15, 0),
+								'HAlign', "right",
+								'VAlign', "center",
+								'Image', "UI/PDA/HazOS",
+							}),
+							}),
+						PlaceObj('XTemplateWindow', {
+							'comment', "content",
+							'Dock', "box",
+							'LayoutMethod', "HPanel",
+						}, {
+							PlaceObj('XTemplateCode', {
+								'run', function (self, parent, context)
+									parent.LayoutMethod = "AimBrowserCustom"
+								end,
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "bg",
+								'__class', "XFrame",
+								'Dock', "box",
+								'Transparency', 255,
+								'FrameBox', box(3, 3, 3, 3),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "left part - list",
+								'Id', "idLeft",
+								'Margins', box(0, 0, 30, 0),
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'Margins', box(20, 20, 0, 0),
+									'HAlign', "left",
+								}, {
+									PlaceObj('XTemplateWindow', nil, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "bg",
+											'__class', "XFrame",
+											'Dock', "box",
+											'Image', "Mod/Agencies/Images/ui_os_header_army.png",
+											'FrameBox', box(3, 3, 3, 3),
+										}),
+										PlaceObj('XTemplateWindow', {
+											'Margins', box(50, 0, 50, 7),
+											'Dock', "bottom",
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'comment', "vertical sep",
+												'__class', "XFrame",
+												'Margins', box(0, 5, 0, 0),
+												'Dock', "top",
+												'VAlign', "top",
+												'Image', "UI/PDA/separate_line_vertical",
+												'FrameBox', box(3, 3, 3, 3),
+												'SqueezeY', false,
+											}),
+											PlaceObj('XTemplateTemplate', {
+												'__template', "PDAAIMBrowserBanner",
+											}),
+											PlaceObj('XTemplateWindow', {
+												'Margins', box(0, 5, 0, 0),
+												'Dock', "right",
+												'VAlign', "center",
+												'LayoutMethod', "HList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'VAlign', "center",
+													'TextStyle', "PDAAIMMoneyDisplayLabel",
+													'Translate', true,
+													'Text', T(937443953658, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "Budget"),
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__context', function (parent, context) return Game end,
+													'__class', "PDAMoneyText",
+													'Margins', box(30, 0, 0, 0),
+													'VAlign', "center",
+													'TextStyle', "PDAAIMMoneyDisplay",
+													'OnContextUpdate', function (self, context, ...)
+														self:SetMoneyAmount(Game.Money)
+													end,
+													'Translate', true,
+												}),
+												}),
+											}),
+										PlaceObj('XTemplateWindow', {
+											'__class', "SnappingScrollArea",
+											'Id', "idMercList",
+											'Margins', box(40, 0, 40, 0),
+											'Padding', box(2, 0, 2, 0),
+											'HAlign', "left",
+											'MinWidth', 630,
+											'GridStretchX', false,
+											'LayoutMethod', "HWrap",
+											'LayoutHSpacing', 40,
+											'LayoutVSpacing', 20,
+											'UniformColumnWidth', true,
+											'UniformRowHeight', true,
+											'VScroll', "idMercScroll",
+											'ShowPartialItems', true,
+											'LeftThumbScroll', false,
+											'KeepSelectionOnRespawn', true,
+										}, {
+											PlaceObj('XTemplateForEach', {
+												'__context', function (parent, context, item, i, n) return item end,
+											}, {
+												PlaceObj('XTemplateTemplate', {
+													'__template', "PDASatelliteMercAIMArmy",
+													'HAlign', "left",
+												}),
+												}),
+											PlaceObj('XTemplateFunc', {
+												'name', "OnShortcut(self, shortcut, source, ...)",
+												'func', function (self, shortcut, source, ...)
+													--if GetMouseViaGamepadCtrl() then return end
+													
+													if shortcut == "RightThumbClick" then
+														self:SetInitialSelection()
+														return "break"
+													end
+													
+													return SnappingScrollArea.OnShortcut(self, shortcut, source, ...)
+												end,
+											}),
+											PlaceObj('XTemplateFunc', {
+												'name', "OnSelection(self, _, selection)",
+												'func', function (self, _, selection)
+													selection = selection and selection[1]
+													if not selection then return end
+													
+													local selectedMercWnd = self[selection]
+													if not selectedMercWnd then return end
+													
+													local browser = self:ResolveId("node")
+													browser:SetSelectedMerc(selectedMercWnd.context.session_id)
+												end,
+											}),
+											}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'__class', "MessengerScrollbar",
+										'Id', "idMercScroll",
+										'Dock', "right",
+										'FoldWhenHidden', false,
+										'Target', "idMercList",
+										'SnapToItems', true,
+										'AutoHide', true,
+									}),
+									}),
+								PlaceObj('XTemplateWindow', {
+									'Dock', "bottom",
+									'MinWidth', 550,
+								}, {
+									PlaceObj('XTemplateTemplate', {
+										'__condition', function (parent, context) return not (InitialConflictNotStarted() and not gv_AIMBrowserEverClosed) end,
+										'__template', "PDAStartButtonArmy",
+										'Margins', box(20, 0, 0, 0),
+										'VAlign', "center",
+									}),
+									}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'comment', "right - selected merc info, rest of space",
+								'Id', "idRight",
+							}, {
+								PlaceObj('XTemplateFunc', {
+									'comment', "take whole space even when insides dont",
+									'name', "Measure(self, max_width, max_height)",
+									'func', function (self, max_width, max_height)
+										local width, height = XWindow.Measure(self, max_width, max_height)
+										return max_width, max_height
+									end,
+								}),
+								PlaceObj('XTemplateWindow', {
+									'__class', "XContentTemplate",
+									'Id', "idMercData",
+									'Margins', box(0, 20, 20, 10),
+									'LayoutMethod', "VList",
+								}, {
+									PlaceObj('XTemplateFunc', {
+										'name', "RespawnContent(self)",
+										'func', function (self)
+											XContentTemplate.RespawnContent(self)
+											local context = self.context
+											if not context then return end
+											
+											local hireStatus = context.HireStatus
+											local func = HireStatusToUITextMap[hireStatus]
+											assert(func)
+											func(context, self.idInfoContainer)
+											
+											local kia = hireStatus == "Dead"
+											local mia = hireStatus == "MIA"
+											
+											self.idPortrait:SetImage(context.Portrait)
+											self.idPortrait:SetDesaturation((mia or kia) and 255 or 0)
+											self.idPortrait:SetTransparency(kia and 25 or 0)
+											self.idDead:SetVisible(kia)
+											
+											local dlg = GetDialog(self)
+											self.idPerksAndInventory:SetVisible(not dlg.show_bio)
+											self.idBio:SetVisible(dlg.show_bio)
+											local bioText = self.idBioContent.idBioText
+											local iconAppend = T(381811065044, "<valign top><image UI/PDA/Event/T_Event_TextIcon 1500><valign bottom>")
+											if context.Affiliation ~= "AIM" and not context.Bio then
+												bioText:SetText(iconAppend .. T(448145280145, "Warning! This merc is not a member of A.I.M. We are not liable for any damages, loss of limbs, accidental atrocities, or unexpected war crimes that may be caused by using unlicensed mercs. \n\n Caution! Use at your own risk!"))
+											else
+												bioText:SetText(iconAppend .. T(606873920225, "<Bio>"))
+											end
+											
+											local specName = Presets.MercSpecializations.Default
+											specName = specName[context.Specialization]
+											specName = specName and specName.name
+											self.idClassName:SetVisible(not not specName)
+											self.idClassName:SetText(specName or Untranslated("placeholder"))
+											self.idClassIcon:SetImage(GetMercSpecIcon(context))
+										end,
+									}),
+									PlaceObj('XTemplateWindow', {
+										'__class', "XFrame",
+										'Dock', "box",
+										'Image', "Mod/Agencies/Images/ui_os_header_army.png",
+										'FrameBox', box(3, 3, 3, 3),
+									}),
+									PlaceObj('XTemplateWindow', {
+										'Padding', box(20, 20, 20, 5),
+										'Dock', "top",
+										'LayoutMethod', "VPanel",
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "portrait holder",
+											'Dock', "left",
+											'HAlign', "left",
+											'VAlign', "top",
+											'MinWidth', 185,
+											'MinHeight', 215,
+											'MaxWidth', 185,
+											'MaxHeight', 215,
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'__class', "XFrame",
+												'IdNode', false,
+												'Padding', box(2, 2, 2, 2),
+												'HAlign', "left",
+												'VAlign', "top",
+												'Image', "UI/PDA/os_background_2",
+												'FrameBox', box(3, 3, 3, 3),
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XImage",
+													'Image', "Mod/Agencies/Images/ui_background_army.png",
+													'ImageFit', "stretch",
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XImage",
+													'Id', "idPortrait",
+													'Clip', "parent & self",
+													'ImageFit', "height",
+													'ImageRect', box(36, 0, 264, 251),
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XImage",
+													'Id', "idDead",
+													'HAlign', "right",
+													'VAlign', "top",
+													'Image', "UI/Hud/death_ribbon",
+												}),
+												}),
+											}),
+										PlaceObj('XTemplateWindow', {
+											'Margins', box(20, 0, 0, 0),
+											'Dock', "box",
+											'LayoutMethod', "VList",
+										}, {
+											PlaceObj('XTemplateWindow', nil, {
+												PlaceObj('XTemplateWindow', {
+													'Id', "idLevelBox",
+													'Dock', "right",
+													'VAlign', "center",
+													'LayoutMethod', "VList",
+													'LayoutVSpacing', -12,
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XText",
+														'Margins', box(0, -13, 0, 0),
+														'HAlign', "center",
+														'TextStyle', "Hiring_MercLevel",
+														'Translate', true,
+														'Text', T(341796000675, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "<MercLevel()>"),
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XText",
+														'HAlign', "center",
+														'TextStyle', "PDASMLevelTxt",
+														'Translate', true,
+														'Text', T(531978245203, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "Level"),
+													}),
+													}),
+												PlaceObj('XTemplateWindow', {
+													'comment', "name and class",
+													'HAlign', "left",
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XImage",
+														'Id', "idClassIcon",
+														'Margins', box(0, 0, 10, 0),
+														'Dock', "left",
+														'HAlign', "center",
+														'VAlign', "center",
+														'MinWidth', 40,
+														'MinHeight', 40,
+														'MaxWidth', 40,
+														'MaxHeight', 40,
+														'ImageFit', "stretch",
+														'ImageColor', RGBA(195, 189, 172, 255),
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XContextWindow",
+														'Margins', box(0, -10, 0, 0),
+														'VAlign', "center",
+														'LayoutMethod', "VList",
+														'LayoutVSpacing', -8,
+													}, {
+														PlaceObj('XTemplateWindow', {
+															'comment', "name",
+															'__class', "AutoFitText",
+															'TextStyle', "MercName",
+															'Translate', true,
+															'Text', T(274917700712, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "<Name> <MercFlagImage()>"),
+															'TextVAlign', "bottom",
+															'ImageScale', 1000,
+															'SafeSpace', 70,
+														}),
+														PlaceObj('XTemplateWindow', {
+															'__class', "XText",
+															'Id', "idClassName",
+															'TextStyle', "MercSubTitle",
+															'Translate', true,
+														}),
+														}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "vertical sep",
+												'__class', "XFrame",
+												'Margins', box(0, 5, 0, 13),
+												'VAlign', "top",
+												'Image', "UI/PDA/separate_line_vertical",
+												'FrameBox', box(3, 3, 3, 3),
+												'SqueezeY', false,
+											}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "stats",
+												'__context', function (parent, context) return MercStatsItems(context) end,
+												'__class', "XContextWindow",
+												'IdNode', true,
+												'LayoutMethod', "Grid",
+												'LayoutVSpacing', -1,
+												'UniformRowHeight', true,
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XFrame",
+													'Id', "idLineSep",
+													'Margins', box(4, 5, 4, 5),
+													'HAlign', "center",
+													'GridX', 2,
+													'GridStretchX', false,
+													'Image', "UI/PDA/separate_line",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeX', false,
+												}),
+												PlaceObj('XTemplateForEach', {
+													'run_after', function (child, context, item, i, n, last)
+														local columnSize = MulDivRound(#context, 1, 2)
+														local column = ((i - 1) / columnSize) + 1
+														if column == 2 then
+															column = 3 -- Skip one
+														end
+														
+														child.parent.idLineSep:SetGridHeight(columnSize)
+														
+														local row = ((i - 1) % columnSize) + 1
+														child:SetGridY(row)
+														child:SetGridX(column)
+														child:SetContext(item)
+														
+														child.idName:SetText(item.name)
+														child.idValue:SetText(item.value)
+														
+														local preset = Presets.MercStat.Default[item.id]
+														if not preset then return end
+														child.idIcon:SetImage(preset.Icon)
+														
+														if column == 1 then
+														--	child:SetMargins(box(0, 0, 20, 0))
+														end
+													end,
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XContextWindow",
+														'RolloverTemplate', "RolloverGeneric",
+														'RolloverAnchor', "center-top",
+														'RolloverText', T(433711662967, --[[ModItemXTemplate PDAAIMBrowserArmy RolloverText]] "<help>"),
+														'RolloverOffset', box(0, 0, 0, 5),
+														'RolloverTitle', T(717337014571, --[[ModItemXTemplate PDAAIMBrowserArmy RolloverTitle]] "<name>"),
+														'IdNode', true,
+													}, {
+														PlaceObj('XTemplateWindow', {
+															'__class', "XContextImage",
+															'Id', "idIcon",
+															'Margins', box(0, 0, 8, 0),
+															'Dock', "left",
+															'HAlign', "left",
+															'VAlign', "center",
+															'ImageScale', point(350, 350),
+															'ImageColor', RGBA(130, 128, 120, 128),
+														}),
+														PlaceObj('XTemplateWindow', {
+															'__class', "XText",
+															'Id', "idName",
+															'HAlign', "left",
+															'VAlign', "center",
+															'TextStyle', "MercStatName",
+															'Translate', true,
+														}),
+														PlaceObj('XTemplateWindow', {
+															'__class', "XText",
+															'Id', "idValue",
+															'Dock', "right",
+															'HAlign', "right",
+															'VAlign', "center",
+															'TextStyle', "MercStatValue",
+														}),
+														PlaceObj('XTemplateFunc', {
+															'name', "OnSetRollover(self, rollover)",
+															'func', function (self, rollover)
+																if rollover then PlayFX("buttonRollover", "start") end
+																self.idName:SetTextStyle(rollover and "MercStatNameRollover" or "MercStatName")
+															end,
+														}),
+														}),
+													}),
+												}),
+											}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'__condition', function (parent, context) return context end,
+										'__class', "XContextWindow",
+										'Id', "idMedicalAndPriceFooter",
+										'Margins', box(20, 0, 20, 0),
+										'Dock', "bottom",
+										'LayoutMethod', "VList",
+										'FoldWhenHidden', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "vertical sep",
+											'__class', "XFrame",
+											'Margins', box(0, 1, 0, 0),
+											'VAlign', "top",
+											'Image', "UI/PDA/separate_line_vertical",
+											'FrameBox', box(3, 3, 3, 3),
+											'SqueezeY', false,
+										}),
+										PlaceObj('XTemplateWindow', {
+											'Id', "idInfoContainer",
+											'IdNode', true,
+											'LayoutMethod', "Grid",
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'Id', "idTitleContainer",
+												'Margins', box(0, 0, 10, 0),
+												'Dock', "left",
+												'HAlign', "left",
+												'LayoutMethod', "HList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Id', "idName",
+													'Margins', box(0, 10, 10, 10),
+													'MinWidth', 120,
+													'TextStyle', "Hiring_Bio_Header",
+													'Translate', true,
+													'Text', T(406502636291, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] " "),
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XFrame",
+													'Id', "idLineSep",
+													'Margins', box(4, 10, 4, 10),
+													'HAlign', "center",
+													'Image', "UI/PDA/separate_line",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeX', false,
+												}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "XContextWindow",
+												'Id', "idText",
+												'IdNode', true,
+												'Visible', false,
+												'FoldWhenHidden', true,
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'RolloverTemplate', "RolloverGeneric",
+													'RolloverAnchor', "center-top",
+													'RolloverOffset', box(0, 0, 60, 10),
+													'Id', "idValue",
+													'HAlign', "right",
+													'VAlign', "center",
+													'TextStyle', "PDAMercPrice",
+													'Translate', true,
+													'TextVAlign', "center",
+												}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "XContextWindow",
+												'Id', "idPrice1W",
+												'IdNode', true,
+												'FoldWhenHidden', true,
+												'ContextUpdateOnOpen', true,
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'RolloverTemplate', "RolloverGeneric",
+													'RolloverAnchor', "center-top",
+													'RolloverText', T(670162055506, --[[ModItemXTemplate PDAAIMBrowserArmy RolloverText]] "<MercPriceBioPageRollover()>"),
+													'RolloverOffset', box(0, 0, 60, 10),
+													'RolloverTitle', T(853153982991, --[[ModItemXTemplate PDAAIMBrowserArmy RolloverTitle]] "Weekly Cost"),
+													'Id', "idValue",
+													'HAlign', "right",
+													'VAlign', "center",
+													'TextStyle', "PDAMercPrice",
+													'Translate', true,
+													'Text', T(460746102603, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "<MercPriceBioPage(7, true)>"),
+													'TextVAlign', "center",
+												}),
+												}),
+											}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'__condition', function (parent, context) return context end,
+										'__class', "XContextWindow",
+										'Id', "idPerksAndInventory",
+										'Padding', box(20, 0, 20, 5),
+										'Dock', "box",
+										'Visible', false,
+										'FoldWhenHidden', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "vertical sep",
+											'__class', "XFrame",
+											'Margins', box(0, 0, 0, 5),
+											'VAlign', "top",
+											'Image', "UI/PDA/separate_line_vertical",
+											'FrameBox', box(3, 3, 3, 3),
+											'SqueezeY', false,
+										}),
+										PlaceObj('XTemplateWindow', {
+											'__class', "XScrollArea",
+											'Id', "idPerkAndInventoryContent",
+											'Margins', box(0, 4, 0, 5),
+											'LayoutMethod', "VList",
+											'VScroll', "idLoadoutScroll",
+										}, {
+											PlaceObj('XTemplateWindow', {
+												'__class', "XText",
+												'Margins', box(0, 7, 0, 1),
+												'HAlign', "left",
+												'VAlign', "top",
+												'TextStyle', "Hiring_Bio_Header",
+												'Translate', true,
+												'Text', T(126952461735, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "Perks"),
+												'TextVAlign', "center",
+											}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "perks",
+												'LayoutMethod', "HWrap",
+												'LayoutHSpacing', 10,
+												'LayoutVSpacing', 10,
+											}, {
+												PlaceObj('XTemplateForEach', {
+													'array', function (parent, context) return context:GetPerks(nil, "sort") end,
+													'run_after', function (child, context, item, i, n, last)
+														child:SetPerkId(item.class)
+													end,
+												}, {
+													PlaceObj('XTemplateTemplate', {
+														'__template', "PDAPerk",
+													}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "equipment",
+												'LayoutMethod', "VList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'comment', "vertical sep",
+													'__class', "XFrame",
+													'Margins', box(0, 5, 0, 7),
+													'VAlign', "top",
+													'Image', "UI/PDA/separate_line_vertical",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeY', false,
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Margins', box(0, 0, 0, 4),
+													'HAlign', "left",
+													'VAlign', "center",
+													'TextStyle', "Hiring_Bio_Header",
+													'Translate', true,
+													'Text', T(337328955460, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "Equipment"),
+													'TextVAlign', "center",
+												}),
+												PlaceObj('XTemplateWindow', {
+													'LayoutMethod', "HWrap",
+													'LayoutHSpacing', 10,
+													'LayoutVSpacing', 10,
+												}, {
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idHead",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Head",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idTorso",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Torso",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idLegs",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Legs",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idWeaponA",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Handheld A",
+														'HideWhenEmpty', true,
+													}),
+													PlaceObj('XTemplateWindow', {
+														'__class', "XInventoryItemEmbed",
+														'Id', "idWeaponB",
+														'HAlign', "left",
+														'VAlign', "top",
+														'LayoutMethod', "HList",
+														'FoldWhenHidden', true,
+														'BorderColor', RGBA(60, 63, 68, 255),
+														'Background', RGBA(42, 45, 54, 120),
+														'slot', "Handheld B",
+														'HideWhenEmpty', true,
+													}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'comment', "backpack",
+												'LayoutMethod', "VList",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'comment', "vertical sep",
+													'__class', "XFrame",
+													'Margins', box(0, 5, 0, 7),
+													'VAlign', "top",
+													'Image', "UI/PDA/separate_line_vertical",
+													'FrameBox', box(3, 3, 3, 3),
+													'SqueezeY', false,
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Margins', box(0, 0, 0, 4),
+													'HAlign', "left",
+													'VAlign', "center",
+													'TextStyle', "Hiring_Bio_Header",
+													'Translate', true,
+													'Text', T(299231498998, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "Backpack"),
+													'TextVAlign', "center",
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "XInventoryItemEmbed",
+													'HAlign', "left",
+													'VAlign', "top",
+													'LayoutMethod', "HWrap",
+													'LayoutHSpacing', 10,
+													'LayoutVSpacing', 10,
+													'BorderColor', RGBA(60, 63, 68, 255),
+													'Background', RGBA(42, 45, 54, 120),
+													'slot', "Inventory",
+													'HideWhenEmpty', true,
+												}, {
+													PlaceObj('XTemplateFunc', {
+														'name', "SetVisible(self, visible)",
+														'func', function (self, visible)
+															XInventoryItemEmbed.SetVisible(self, visible)
+															self.parent:SetVisible(visible)
+														end,
+													}),
+													}),
+												}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "MessengerScrollbar",
+												'Id', "idLoadoutScroll",
+												'Margins', box(20, 3, 3, 3),
+												'Dock', "right",
+												'FoldWhenHidden', false,
+												'Target', "node",
+												'SnapToItems', true,
+												'AutoHide', true,
+											}),
+											}),
+										PlaceObj('XTemplateWindow', {
+											'IdNode', true,
+										}),
+										}),
+									PlaceObj('XTemplateWindow', {
+										'Id', "idBio",
+										'Padding', box(20, 0, 20, 5),
+										'Dock', "box",
+										'FoldWhenHidden', true,
+									}, {
+										PlaceObj('XTemplateWindow', {
+											'comment', "vertical sep",
+											'__class', "XFrame",
+											'Margins', box(0, 0, 0, 5),
+											'VAlign', "top",
+											'Image', "UI/PDA/separate_line_vertical",
+											'FrameBox', box(3, 3, 3, 3),
+											'SqueezeY', false,
+										}),
+										PlaceObj('XTemplateWindow', nil, {
+											PlaceObj('XTemplateWindow', {
+												'__class', "XText",
+												'Margins', box(0, 10, 0, 10),
+												'OnLayoutComplete', function (self)
+													if self.context and self.context.Title then 
+														self:SetText(T{442425729284, "Bio - <Title>", self.context})
+													else
+														self:SetText(T(661110761557, "Bio"))
+													end
+												end,
+												'TextStyle', "Hiring_Bio_Header",
+												'Translate', true,
+												'Text', T(636218735791, --[[ModItemXTemplate PDAAIMBrowserArmy Text]] "BIO - <Title>"),
+											}),
+											PlaceObj('XTemplateWindow', {
+												'__class', "XScrollArea",
+												'Id', "idBioContent",
+												'Margins', box(0, 50, 0, 15),
+												'VScroll', "idBioScroll",
+											}, {
+												PlaceObj('XTemplateWindow', {
+													'__class', "XText",
+													'Id', "idBioText",
+													'HAlign', "left",
+													'TextStyle', "Hiring_MercBio",
+													'Translate', true,
+												}),
+												PlaceObj('XTemplateWindow', {
+													'__class', "MessengerScrollbar",
+													'Id', "idBioScroll",
+													'Margins', box(20, 3, 3, 3),
+													'Dock', "right",
+													'FoldWhenHidden', false,
+													'Target', "node",
+													'SnapToItems', true,
+													'AutoHide', true,
+												}),
+												}),
+											}),
+										}),
+									}),
+								PlaceObj('XTemplateWindow', {
+									'Margins', box(20, 0, 20, 10),
+									'Dock', "bottom",
+									'MinHeight', 36,
+									'MaxHeight', 36,
+								}, {
+									PlaceObj('XTemplateWindow', {
+										'__class', "XToolBarList",
+										'Id', "idToolBar",
+										'HAlign', "right",
+										'ScaleModifier', point(900, 900),
+										'LayoutHSpacing', 18,
+										'Background', RGBA(255, 255, 255, 0),
+										'Toolbar', "ActionBar",
+										'Show', "text",
+										'ButtonTemplate', "PDACommonButton",
+									}, {
+										PlaceObj('XTemplateFunc', {
+											'name', "RebuildActions(self, ...)",
+											'func', function (self, ...)
+												XToolBarList.RebuildActions(self, ...)
+												if not gv_InitialHiringDone then
+													self.idPDACloseOrBackTab:SetText(T(476547188462, "Start"))
+												end
+												
+												local dismissButton = self.ididDismiss
+												if dismissButton then
+													dismissButton.GetRolloverAnchor = function()
+														return "center-top"
+													end
+													dismissButton.GetRolloverDisabledText = empty_func
+													dismissButton.GetRolloverText = function()
+														if dismissButton:GetEnabled() then return false end
+														if not gv_SatelliteView then return false end
+														return T(175457184875, "You can't dismiss mercs during an ongoing conflict.")
+													end
+												end
+												
+												local contactButton = self.ididContact
+												if contactButton then
+													local selectedMerc = self:ResolveId("node").selected_merc
+												
+													contactButton.GetRolloverAnchor = function()
+														return "center-top"
+													end
+													contactButton.GetRolloverDisabledText = empty_func
+													contactButton.GetRolloverText = function()
+														if not selectedMerc then return false end
+														local canContact, disableText = MercCanContact(gv_UnitData[selectedMerc])
+														return disableText
+													end
+												end
+											end,
+										}),
+										}),
+									}),
+								}),
+							}),
+						}),
+					PlaceObj('XTemplateWindow', nil, {
+						PlaceObj('XTemplateAction', {
+							'RolloverTemplate', "RolloverGeneric",
+							'RolloverOffset', box(0, 0, 0, 8),
+							'ActionId', "idContact",
+							'ActionName', T(220495804068, --[[ModItemXTemplate PDAAIMBrowserArmy ActionName]] "Contact"),
+							'ActionToolbar', "ActionBar",
+							'ActionGamepad', "ButtonX",
+							'ActionButtonTemplate', "PDACommonButtonBlueSnype",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local id = content.selected_merc
+								if not id then return "disabled" end
+								
+								local enabled = MercCanContact(gv_UnitData[id])
+								if not enabled then return "hidden" end
+								if enabled == "disabled" then
+									return "disabled"
+								end
+								
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local mercId = content.selected_merc
+								StartMercChat(mercId)
+							end,
+							'FXPress', "none",
+						}),
+						PlaceObj('XTemplateAction', {
+							'RolloverTemplate', "RolloverGeneric",
+							'RolloverOffset', box(0, 0, 0, 8),
+							'ActionId', "idDismiss",
+							'ActionName', T(184044938513, --[[ModItemXTemplate PDAAIMBrowserArmy ActionName]] "Dismiss"),
+							'ActionToolbar', "ActionBar",
+							'ActionButtonTemplate', "PDACommonButtonBlueSnype",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local id = content.selected_merc
+								if not id then return "hidden" end
+								local merc = gv_UnitData[id]
+								if merc.HireStatus ~= "Hired" then return "hidden" end
+								if not merc.HiredUntil then return "hidden" end
+								
+								local remainingTime = merc.HiredUntil - Game.CampaignTime
+								local daysLeft = remainingTime / const.Scale.day
+								if daysLeft <= 1 then return "hidden" end
+								
+								if g_Combat then return "disabled" end
+								
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								local mercId = content.selected_merc
+								DismissMerc(mercId)
+							end,
+							'FXPress', "none",
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idSeeBio",
+							'ActionName', T(982450330285, --[[ModItemXTemplate PDAAIMBrowserArmy ActionName]] "See Bio"),
+							'ActionToolbar', "ActionBar",
+							'ActionShortcut', "S",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								return content.show_bio and "hidden" or "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								content.show_bio = true
+								AIMBrowserSection = "bio"
+								ObjModified(gv_UnitData[content.selected_merc])
+								content.idToolBar:RebuildActions(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idHideBio",
+							'ActionName', T(280375492351, --[[ModItemXTemplate PDAAIMBrowserArmy ActionName]] "Loadout"),
+							'ActionToolbar', "ActionBar",
+							'ActionShortcut', "S",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								return content.show_bio and "enabled" or "hidden"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								
+								content.show_bio = false
+								AIMBrowserSection = "loadout"
+								ObjModified(gv_UnitData[content.selected_merc])
+								content.idToolBar:RebuildActions(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idRegenerateAttire",
+							'ActionName', T(512051407484, --[[ModItemXTemplate PDAAIMBrowserArmy ActionName]] "Redress"),
+							'ActionToolbar', "ActionBar",
+							'ActionState', function (self, host)
+								return AgenciesGetRedressButtonState(host)
+							end,
+							'OnAction', function (self, host, source, ...)
+								AgenciesRedressButtonAction(host)
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idScrollUp",
+							'ActionGamepad', "RightThumbUp",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") or not content.idMercData then return end
+								
+								local scroll = false
+								if content.show_bio then
+									scroll = content.idMercData:ResolveId("idBioContent")
+								else
+									scroll = content.idMercData:ResolveId("idPerkAndInventoryContent")
+								end
+								if not scroll then return end
+								
+								scroll:ScrollUp()
+							end,
+						}),
+						PlaceObj('XTemplateAction', {
+							'ActionId', "idScrollDown",
+							'ActionGamepad', "RightThumbDown",
+							'ActionState', function (self, host)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") then return end
+								return "enabled"
+							end,
+							'OnAction', function (self, host, source, ...)
+								local content = host.idContent
+								if not IsKindOf(content, "PDABrowser") then return end
+								content = content.idBrowserContent
+								if not IsKindOf(content, "PDAAIMBrowser") or not content.idMercData then return end
+								
+								local scroll = false
+								if content.show_bio then
+									scroll = content.idMercData:ResolveId("idBioContent")
+								else
+									scroll = content.idMercData:ResolveId("idPerkAndInventoryContent")
+								end
+								if not scroll then return end
+								
+								scroll:ScrollDown()
+							end,
+						}),
+						PlaceObj('XTemplateTemplate', {
+							'__template', "PDAGenericCloseAction",
+						}),
+						}),
+					PlaceObj('XTemplateWindow', {
+						'comment', "aim premium observer",
+						'__context', function (parent, context) return "AIMPremium" end,
+						'__class', "XContextWindow",
+						'OnContextUpdate', function (self, context, ...)
+							local node = self:ResolveId("node")
+							node.idMercList:RespawnContent()
+						end,
+					}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "PDASatelliteAIMMercClass",
+				group = "Zulu Satellite UI",
+				id = "PDASatelliteMercAIMArmy",
+				PlaceObj('XTemplateWindow', {
+					'__class', "PDASatelliteAIMMercClass",
+					'MinWidth', 125,
+					'MinHeight', 190,
+					'MaxWidth', 125,
+					'MaxHeight', 190,
+					'LayoutMethod', "VList",
+					'UseClipBox', false,
+					'BorderColor', RGBA(255, 255, 255, 0),
+					'Background', RGBA(255, 255, 255, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'ChildrenHandleMouse', true,
+					'FocusedBorderColor', RGBA(255, 255, 255, 0),
+					'FocusedBackground', RGBA(255, 255, 255, 0),
+					'DisabledBorderColor', RGBA(255, 255, 255, 0),
+					'RolloverBackground', RGBA(255, 255, 255, 0),
+					'PressedBackground', RGBA(255, 255, 255, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XTextWithStyleBasedOnSize",
+						'Id', "idPrice",
+						'Dock', "bottom",
+						'HAlign', "center",
+						'VAlign', "bottom",
+						'MinHeight', 45,
+						'MaxHeight', 45,
+						'Translate', true,
+						'TextStyleSmall', "PDAIMPAnswer",
+					}),
+					PlaceObj('XTemplateWindow', {
+						'Id', "idContent",
+						'Margins', box(2, 28, 2, 0),
+						'Dock', "box",
+						'Background', RGBA(230, 222, 203, 255),
+						'BackgroundRectGlowSize', 1,
+						'BackgroundRectGlowColor', RGBA(230, 222, 203, 255),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'__class', "XFrame",
+							'Id', "idSelectedRounding",
+							'Dock', "box",
+							'Image', "UI/PDA/os_portrait_selection",
+							'FrameBox', box(5, 5, 5, 5),
+						}),
+						PlaceObj('XTemplateWindow', {
+							'__class', "XImage",
+							'Id', "idPortraitBG",
+							'IdNode', false,
+							'Margins', box(5, 5, 5, 0),
+							'Image', "Mod/Agencies/Images/ui_background_army.png",
+							'ImageFit', "stretch",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'UIEffectModifierId', "Default",
+								'Id', "idPortrait",
+								'IdNode', false,
+								'ZOrder', 2,
+								'Margins', box(0, -20, 0, 0),
+								'ImageFit', "height",
+								'ImageRect', box(36, 0, 264, 246),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'Id', "idExpensive",
+								'ZOrder', 3,
+								'HAlign', "left",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'Visible', false,
+								'Background', RGBA(191, 67, 77, 255),
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XText",
+									'HAlign', "center",
+									'VAlign', "center",
+									'Clip', false,
+									'UseClipBox', false,
+									'HandleMouse', false,
+									'ChildrenHandleMouse', false,
+									'TextStyle', "MoneyText",
+									'Translate', true,
+									'Text', T(157960779175, --[[ModItemXTemplate PDASatelliteMercAIMArmy Text]] "$"),
+									'TextVAlign', "center",
+								}),
+								}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XSquareWindow",
+								'RolloverTemplate', "RolloverGeneric",
+								'RolloverAnchor', "right",
+								'RolloverOffset', box(10, 0, 0, 0),
+								'Id', "idClassIconBg",
+								'ZOrder', 3,
+								'HAlign', "right",
+								'VAlign', "bottom",
+								'MinWidth', 28,
+								'MinHeight', 28,
+								'MaxWidth', 28,
+								'MaxHeight', 28,
+								'HandleMouse', true,
+							}, {
+								PlaceObj('XTemplateWindow', {
+									'__class', "XImage",
+									'Id', "idClassIcon",
+									'HAlign', "center",
+									'VAlign', "center",
+									'MinWidth', 20,
+									'MinHeight', 20,
+									'MaxWidth', 20,
+									'MaxHeight', 20,
+									'ImageFit', "stretch",
+									'ImageColor', RGBA(27, 31, 45, 255),
+								}),
+								PlaceObj('XTemplateFunc', {
+									'comment', "XButton is weird about propagating clicks from within it",
+									'name', "OnMouseButtonDown(self, pos, button)",
+									'func', function (self, pos, button)
+										local node = self:ResolveId("node")
+										return node:OnPress()
+									end,
+								}),
+								}),
+							PlaceObj('XTemplateTemplate', {
+								'__template', "MercContractWarningIcon",
+								'OnPress', function (self, gamepad)
+									--OpenAIMAndSelectMerc(self.context.session_id)
+								end,
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idOffline",
+								'HAlign', "center",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'DrawOnTop', true,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "DescriptionTextRed",
+								'Translate', true,
+								'Text', T(319989297308, --[[ModItemXTemplate PDASatelliteMercAIMArmy Text]] "OFFLINE"),
+								'TextHAlign', "center",
+								'TextVAlign', "center",
+							}),
+							}),
+						PlaceObj('XTemplateWindow', {
+							'Id', "idBottomSection",
+							'Margins', box(5, 0, 5, 0),
+							'Dock', "bottom",
+							'MinHeight', 30,
+							'MaxHeight', 30,
+							'LayoutMethod', "HList",
+						}, {
+							PlaceObj('XTemplateWindow', {
+								'__class', "XImage",
+								'Id', "idOnlineStatusIcon",
+								'Margins', box(4, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'UseClipBox', false,
+								'FoldWhenHidden', true,
+								'Image', "UI/PDA/snype_on",
+								'ImageScale', point(800, 800),
+							}),
+							PlaceObj('XTemplateWindow', {
+								'__class', "XText",
+								'Id', "idName",
+								'Margins', box(2, 0, 0, 0),
+								'HAlign', "left",
+								'VAlign', "center",
+								'Clip', false,
+								'UseClipBox', false,
+								'HandleMouse', false,
+								'ChildrenHandleMouse', false,
+								'TextStyle', "PDAMercNameCard",
+								'Translate', true,
+								'Text', T(150347519039, --[[ModItemXTemplate PDASatelliteMercAIMArmy Text]] "<Nick>"),
+								'TextVAlign', "bottom",
+							}),
+							}),
+						}),
+					}),
+			}),
+			PlaceObj('ModItemXTemplate', {
+				__is_kind_of = "GenericHUDButtonFrame",
+				group = "Zulu",
+				id = "PDAStartButtonArmy",
+				PlaceObj('XTemplateWindow', {
+					'__class', "XButton",
+					'Id', "idStartButton",
+					'Margins', box(45, 0, 0, 15),
+					'HAlign', "left",
+					'VAlign', "top",
+					'MinWidth', 203,
+					'MinHeight', 44,
+					'MaxHeight', 44,
+					'Background', RGBA(0, 0, 0, 0),
+					'MouseCursor', "UI/Cursors/Pda_Hand.tga",
+					'FXMouseIn', "buttonRollover",
+					'FXPressDisabled', "IactDisabled",
+					'FocusedBackground', RGBA(0, 0, 0, 0),
+					'OnPress', function (self, gamepad)
+						
+						local dlg = GetDialog("PDADialog")
+						local ctxMenu = XTemplateSpawn("StartButtonContextMenu", dlg.idDisplayPopupHost, dlg)
+						ctxMenu:SetZOrder(999)
+						ctxMenu:SetAnchor(self.box)
+						ctxMenu:Open()
+						self.desktop:SetModalWindow(ctxMenu)
+					end,
+					'RolloverBackground', RGBA(0, 0, 0, 0),
+					'PressedBackground', RGBA(0, 0, 0, 0),
+				}, {
+					PlaceObj('XTemplateWindow', {
+						'__class', "XFrame",
+						'Dock', "box",
+						'Image', "Mod/Agencies/Images/ui_os_header_army.png",
+						'FrameBox', box(5, 5, 5, 5),
+					}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "XImage",
+						'Id', "idIcon",
+						'Margins', box(10, 0, 5, 0),
+						'Dock', "left",
+						'VAlign', "center",
+						'Image', "UI/Hud/pda",
+						'Columns', 2,
+						'ImageScale', point(800, 800),
+					}, {
+						PlaceObj('XTemplateWindow', {
+							'comment', "controller hint",
+							'__context', function (parent, context) return "GamepadUIStyleChanged" end,
+							'__class', "XText",
+							'Margins', box(-5, 0, 0, -5),
+							'HAlign', "left",
+							'VAlign', "bottom",
+							'ScaleModifier', point(700, 700),
+							'TextStyle', "HUDHeaderBig",
+							'ContextUpdateOnOpen', true,
+							'OnContextUpdate', function (self, context, ...)
+								self:SetVisible(GetUIStyleGamepad())
+								XText.OnContextUpdate(self, context, ...)
+							end,
+							'Translate', true,
+							'Text', T(974417795737, --[[ModItemXTemplate PDAStartButtonArmy Text]] "<ButtonY>"),
+						}),
+						}),
+					PlaceObj('XTemplateWindow', {
+						'__class', "XText",
+						'Id', "idLargeText",
+						'Margins', box(0, 0, 5, 0),
+						'HAlign', "center",
+						'VAlign', "center",
+						'TextStyle', "HUDHeaderBigger",
+						'Translate', true,
+						'Text', T(190737674463, --[[ModItemXTemplate PDAStartButtonArmy Text]] "COMMAND"),
 						'TextHAlign', "center",
 						'TextVAlign', "center",
 					}),
