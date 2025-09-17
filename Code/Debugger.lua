@@ -3,6 +3,63 @@
 --- @author Soundwave2142
 --- ===================================================================================================================
 
+function AgenciesDebugAppearance(reloadOptions)
+    Game["AgenciesPersistentIds"] = {}
+    Game["AgenciesAppearances"] = {}
+
+    if reloadOptions then
+        AgenciesAppearanceOptions:ReloadOptions()
+    end
+
+    ReloadUnitsAppearance()
+end
+
+function AgenciesLocalStorageClear()
+    CurrentModStorageTable = {}
+    WriteModPersistentStorageTable()
+end
+
+function AgenciesLocalStorageDebug(key)
+    local storage = CurrentModStorageTable or {}
+    print(key and storage[key] or storage)
+end
+
+function AgenciesTeleport(sector)
+    local squad = gv_Squads[g_CurrentSquad]
+
+    SetSatelliteSquadCurrentSector(squad, sector, true, true)
+    OpenSatelliteView()
+
+    local dlg = GetDialog("InGameInterface")
+
+    if dlg then
+        dlg:CreateThread("agencies-teleport", function()
+            WaitMsg("OpenSatelliteView")
+            UIEnterSector(sector)
+        end)
+    end
+end
+
+function AgenciesShutUpDebugger()
+    local storage = CurrentModStorageTable or {}
+    storage["Debugger"] = false
+
+    WriteModPersistentStorageTable()
+end
+
+function AgenciesStartDebugger()
+    local storage = CurrentModStorageTable or {}
+    storage["Debugger"] = true
+
+    WriteModPersistentStorageTable()
+end
+
+local storage = CurrentModStorageTable or {}
+
+if storage["Debugger"] == false then
+    return
+end
+
 function OnMsg.AgenciesApplyAgency(previousAgency, newAgency)
     print("Agencies: Switching agency", previousAgency, "to", newAgency)
 end
@@ -51,25 +108,4 @@ function OnMsg.AgenciesCanApplyUI(parent, template, reasonsNotTo)
     end
 
     print("Agencies: Checking if can apply UI changes of template", template, "Reasons not: ", reasonsNotTo)
-end
-
-function AgenciesDebugAppearance(reloadOptions)
-    Game["AgenciesPersistentIds"] = {}
-    Game["AgenciesAppearances"] = {}
-
-    if reloadOptions then
-        AgenciesAppearanceOptions:ReloadOptions()
-    end
-
-    ReloadUnitsAppearance()
-end
-
-function AgenciesLocalStorageClear()
-    CurrentModStorageTable = {}
-    WriteModPersistentStorageTable()
-end
-
-function AgenciesLocalStorageDebug(key)
-    local storage = CurrentModStorageTable or {}
-    print(key and storage[key] or storage)
 end

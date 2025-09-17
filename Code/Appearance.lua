@@ -284,6 +284,14 @@ end
 --- @param unit table
 --- @return string id of generated preset
 function AgenciesAppearanceHandler:GenerateId(unit)
+    if not Game[AGENCIES_PERSISTED_IDS] then
+        Game[AGENCIES_PERSISTED_IDS] = {}
+    end
+
+    if not Game[AGENCIES_PERSISTED_IDS][unit.id] then
+        Game[AGENCIES_PERSISTED_IDS][unit.id] = GenerateAgencyPersistentId()
+    end
+
     return table.concat({
         unit.id, '_',
         AgenciesAppearanceOptions.OptionsLoadedForAgency, '_',
@@ -383,14 +391,6 @@ function ChooseUnitAppearance(merc_id, handle)
 
     if not Game or not InGame or not unit then
         return basePreset
-    end
-
-    if not Game[AGENCIES_PERSISTED_IDS] then
-        Game[AGENCIES_PERSISTED_IDS] = {}
-    end
-
-    if not Game[AGENCIES_PERSISTED_IDS][unit.id] then
-        Game[AGENCIES_PERSISTED_IDS][unit.id] = GenerateAgencyPersistentId()
     end
 
     return AgenciesAppearanceHandler:GeneratePreset(unit, basePreset)
@@ -514,6 +514,7 @@ function ApplyAgencyPresetsInMainMenu()
             local defaultPreset = pickedParts.NativePreset and AppearancePresets[pickedParts.NativePreset] or nil
 
             if not AppearancePresets[presetId] then
+                AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
                 AgenciesAppearanceHandler:PlacePreset(presetId, pickedParts, defaultPreset)
             end
 

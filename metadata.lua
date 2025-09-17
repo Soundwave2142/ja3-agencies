@@ -1,5 +1,12 @@
 return PlaceObj('ModDef', {
 	'title', "Agencies",
+	'description', "The Agencies mod allows the player to roleplay as different agencies and factions that are available in the world of Jagged Alliance 3 by altering the appearance of the mercenaries and game UI.\nAvailable agencies and factions are specifically M.E.R.C., Adonis Corporation, Grand Chien Militia, Maquis Rebels, and Grand Chien Army.",
+	'image', "Mod/Agencies/Images/preview.png",
+	'external_links', {
+		"https://steamcommunity.com/id/Soundwave2142/myworkshopfiles/",
+		"https://github.com/Soundwave2142/ja3-agencies",
+	},
+	'last_changes', "Initial version upload of the mod. For details about core mechanics in the base version, navigate to https://github.com/Soundwave2142/ja3-agencies/blob/master/CHANGELOG.md",
 	'dependencies', {
 		PlaceObj('ModDependency', {
 			'id', "JA3_CommonLib",
@@ -11,7 +18,7 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 351,
+	'version', 158,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -20,16 +27,14 @@ return PlaceObj('ModDef', {
 		"Code/Appearance.lua",
 		"Code/UI.lua",
 		"Code/Debugger.lua",
-		"UnitData/DummyTESTAGENCIES.lua",
-		"UnitData/DummyTESTAGENCIES2.lua",
 	},
 	'default_options', {
 		AgencyChoice = "Default",
 		AgencyEnableThemedUI = true,
 	},
 	'has_data', true,
-	'saved', 1757782437,
-	'code_hash', -1582918825765722374,
+	'saved', 1758097197,
+	'code_hash', -6340324685321710707,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
@@ -351,27 +356,8 @@ return PlaceObj('ModDef', {
 			'Id', "PDAStartButtonArmy",
 			'ClassDisplayName', "UI Template (XTemplate)",
 		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "UnitDataCompositeDef",
-			'Id', "DummyTESTAGENCIES",
-			'ClassDisplayName', "Unit",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "UnitDataCompositeDef",
-			'Id', "DummyTESTAGENCIES2",
-			'ClassDisplayName', "Unit",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "AppearancePreset",
-			'Id', "NewAppearancePreset",
-			'ClassDisplayName', "Appearance preset",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "AppearancePreset",
-			'Id', "NewAppearancePreset2",
-			'ClassDisplayName', "Appearance preset",
-		}),
 	},
+	'steam_id', "3569651988",
 	'TagGameSettings', true,
 	'TagMercs', true,
 	'TagOther', true,
