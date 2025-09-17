@@ -1,0 +1,367 @@
+return PlaceObj('ModDef', {
+	'title', "Agencies",
+	'description', "The Agencies mod allows the player to roleplay as different agencies and factions that are available in the world of Jagged Alliance 3 by altering the appearance of the mercenaries and game UI.\nAvailable agencies and factions are specifically M.E.R.C., Adonis Corporation, Grand Chien Militia, Maquis Rebels, and Grand Chien Army.",
+	'image', "Mod/Agencies/Images/preview.png",
+	'external_links', {
+		"https://steamcommunity.com/id/Soundwave2142/myworkshopfiles/",
+		"https://github.com/Soundwave2142/ja3-agencies",
+	},
+	'last_changes', "Initial version upload of the mod. For details about core mechanics in the base version, navigate to https://github.com/Soundwave2142/ja3-agencies/blob/master/CHANGELOG.md",
+	'dependencies', {
+		PlaceObj('ModDependency', {
+			'id', "JA3_CommonLib",
+			'title', "JA3_CommonLib",
+			'version_major', 1,
+			'version_minor', 5,
+		}),
+	},
+	'id', "Agencies",
+	'author', "Soundwave2142",
+	'version_major', 1,
+	'version', 158,
+	'lua_revision', 233360,
+	'saved_with_revision', 366685,
+	'code', {
+		"Code/Definitions.lua",
+		"Code/Common.lua",
+		"Code/Appearance.lua",
+		"Code/UI.lua",
+		"Code/Debugger.lua",
+	},
+	'default_options', {
+		AgencyChoice = "Default",
+		AgencyEnableThemedUI = true,
+	},
+	'has_data', true,
+	'saved', 1758097197,
+	'code_hash', -6340324685321710707,
+	'affected_resources', {
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Merc",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Adonis",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Militia",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Rebels",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "Agency",
+			'Id', "Army",
+			'ClassDisplayName', "Agency",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralExplosives",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "GeneralMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "Merc",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisExplosives",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "AdonisMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaExplosive",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "MilitiaMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsExplosive",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "RebelsMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "Army",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyAllRounder",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyDoctor",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyExplosives",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyLeader",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyMarksmen",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AgencyAttirePool",
+			'Id', "ArmyMechanic",
+			'ClassDisplayName', "Agency Attire Pool",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesApplyAgency",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesIsEnabled",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesIsBonusEnabled",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesAppearanceOptionsLoaded",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesAppearanceCanApplyToUnit",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesAppearanceCanApplyInMainMenu",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "MsgDef",
+			'Id', "AgenciesCanApplyUI",
+			'ClassDisplayName', "Message definition",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMMerc",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonAdonis",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonMilitia",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingRebels",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserRebels",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMRebels",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonRebels",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDABrowserLandingArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAAIMBrowserArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDASatelliteMercAIMArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "XTemplate",
+			'Id', "PDAStartButtonArmy",
+			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+	},
+	'steam_id', "3569651988",
+	'TagGameSettings', true,
+	'TagMercs', true,
+	'TagOther', true,
+	'TagQuest&Campaigns', true,
+	'TagUI', true,
+	'TagVisuals&Graphics', true,
+})
