@@ -8,7 +8,7 @@ return {
 			'DisplayName', "Agency",
 			'Help', "Choose your <em>Agency</em>!<newline><newline>Agencies come with their own attire for mercs to wear and their own little bonuses to your gameplay.<newline><newline>Agencies can be switch at any point in any menu and you do not need to start a new game!",
 			'OnApply', function (self, value)
-				ApplyAgency(value)
+				ApplyAgencyFromMenu(value)
 			end,
 			'DefaultValue', "Default",
 			'ChoiceList', {
@@ -13530,4 +13530,8 @@ return {
 			}),
 			}),
 		}),
+	PlaceObj('ModItemAppearancePreset', {
+		group = "Mercs",
+		id = "NewAppearancePreset",
+	}),
 }

@@ -7,3 +7,6 @@
 
 #### 1.20
 - More UI Changes.
+
+### 1.30
+- Faction Bonuses

@@ -1,11 +1,18 @@
 --- ===================================================================================================================
---- File that holds event triggers and funcitons purely for debugging.
+--- File that holds event triggers and functions purely for debugging.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
 function AgenciesDebugAppearance(reloadOptions)
-    Game["AgenciesPersistentIds"] = {}
-    Game["AgenciesAppearances"] = {}
+    local units = GetAllPlayerUnitsOnMap()
+
+    for _, unit in ipairs(units) do
+        local unitData = gv_UnitData[unit.unitdatadef_id]
+
+        if unitData then
+            unitData:ClearAgencyInfo()
+        end
+    end
 
     if reloadOptions then
         AgenciesAppearanceOptions:ReloadOptions()

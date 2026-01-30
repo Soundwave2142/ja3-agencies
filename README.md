@@ -27,11 +27,14 @@ This feature can be switched off.
 Changes described below are NOT a detailed changelog but are only meant to highlight the evolution of the mod. 
 For detailed changes, please navigate to CHANGELOG.md.
 
-| Date       | Version | Description                                                                                                                                         |
-|------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| 17.09.2025 | 1.00    | Initial version upload of the mod. For details about core mechanics in the base version, navigate to CHANGELOG.md                                   |
+| Date       | Version | Description                                                                                                       |
+|------------|---------|-------------------------------------------------------------------------------------------------------------------|
+| 23.09.2025 | 1.10    | Multiplayer Support has been added.                                                                               |
+| 17.09.2025 | 1.00    | Initial version upload of the mod. For details about core mechanics in the base version, navigate to CHANGELOG.md |
 
 ![Compatibility](https://imgur.com/I11Wukc.png)
+__MULTIPLAYER is supported and will sync Agency and appearances between host and a client.__
+
 The mod is largely compatible with all modded mercs, the exception being mercenaries with darker skin colors. 
 As there's no way to tell the skin color of the character, white color for body parts that contain skin will be applied.
 However, the authors of the modded mercs can implement, if desired, a minor code compatibility to specify the skin color that Agencies mod attire generation should use.
@@ -40,7 +43,6 @@ As for mods that change vanilla merc presets, they should also work fine. But mo
 Additionally, the mod may be incompatible with any mods that heavily edit the PDA Browser UI.
 In case of using such mods, it is recommended to turn off Themed UI in the Agency mod options.
 
-___MULTIPLAYER___ has not been tested; use it at your own risk (official support will come at a later date)!
 It is ___HIGHLY RECOMMENDED___ to restart the game after mod activation or deactivation.
 
 For steam players, you can download the mod from its [steam page](https://github.com/Soundwave2142/ja3-final-stand/releases).
@@ -48,5 +50,5 @@ For steam players, you can download the mod from its [steam page](https://github
 To submit a bug report, proceed to the "Bugs and Issues" Steam discussion thread on this page.
 
 [![Subscribe to my workshop](https://imgur.com/xw8IAWg.png)](https://steamcommunity.com/id/Soundwave2142/myworkshopfiles/)
-[![Final Stand](https://imgur.com/xw8IAWg.png)](https://steamcommunity.com/sharedfiles/filedetails/?id=3495365172)
+[![Final Stand](https://imgur.com/hbLfB2x.png)](https://steamcommunity.com/sharedfiles/filedetails/?id=3495365172)
 [![Echoes of a Cold War Collection](https://imgur.com/83F8XoD.png)](https://steamcommunity.com/workshop/filedetails/?id=3448312533)

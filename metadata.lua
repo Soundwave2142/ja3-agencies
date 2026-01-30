@@ -6,7 +6,7 @@ return PlaceObj('ModDef', {
 		"https://steamcommunity.com/id/Soundwave2142/myworkshopfiles/",
 		"https://github.com/Soundwave2142/ja3-agencies",
 	},
-	'last_changes', "Initial version upload of the mod. For details about core mechanics in the base version, navigate to https://github.com/Soundwave2142/ja3-agencies/blob/master/CHANGELOG.md",
+	'last_changes', "Multiplayer Support",
 	'dependencies', {
 		PlaceObj('ModDependency', {
 			'id', "JA3_CommonLib",
@@ -18,7 +18,8 @@ return PlaceObj('ModDef', {
 	'id', "Agencies",
 	'author', "Soundwave2142",
 	'version_major', 1,
-	'version', 158,
+	'version_minor', 10,
+	'version', 198,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -33,8 +34,8 @@ return PlaceObj('ModDef', {
 		AgencyEnableThemedUI = true,
 	},
 	'has_data', true,
-	'saved', 1758097197,
-	'code_hash', -6340324685321710707,
+	'saved', 1769774500,
+	'code_hash', 2843474759255659129,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
@@ -355,6 +356,11 @@ return PlaceObj('ModDef', {
 			'Class', "XTemplate",
 			'Id', "PDAStartButtonArmy",
 			'ClassDisplayName', "UI Template (XTemplate)",
+		}),
+		PlaceObj('ModResourcePreset', {
+			'Class', "AppearancePreset",
+			'Id', "NewAppearancePreset",
+			'ClassDisplayName', "Appearance preset",
 		}),
 	},
 	'steam_id', "3569651988",

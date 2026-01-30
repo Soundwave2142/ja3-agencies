@@ -124,7 +124,93 @@ function OnMsg.AgenciesApplyAgency(previousAgency, newAgency)
 end
 
 --- ===================================================================================================================
---- SECTION 2 | Non template, but UI related overrides and compatibility changes.
+--- Section 3 | UI related appearance function.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+--- Checks if unit is on the map (in team) and view is not SatView.
+--- @param host
+--- @return string
+function AgenciesGetRedressButtonState(host)
+    if not IsAgenciesEnabled() then
+        return "hidden"
+    end
+
+    local content = host.idContent
+
+    if not IsKindOf(content, "PDABrowser") then
+        return "hidden"
+    end
+
+    content = content.idBrowserContent
+
+    if not IsKindOf(content, "PDAAIMBrowser") then
+        return "hidden"
+    end
+
+    local mercId = content.selected_merc
+    local team = table.find_value(g_Teams, "control", "UI")
+
+    for _, unit in ipairs(team.units) do
+        if mercId == unit.session_id then
+            if gv_SatelliteView then
+                return "disabled"
+            end
+
+            if not unit:IsLocalPlayerControlled() then
+                return "disabled"
+            end
+
+            return "enabled"
+        end
+    end
+
+    return "hidden"
+end
+
+--- Removes current preset from Game object, regenerates persistent id and reloads unit appearance.
+--- @param host
+function AgenciesRedressButtonAction(host)
+    local content = host.idContent
+
+    if not IsKindOf(content, "PDABrowser") then
+        return
+    end
+
+    content = content.idBrowserContent
+
+    if not IsKindOf(content, "PDAAIMBrowser") then
+        return
+    end
+
+    local unitId = content.selected_merc
+
+    if not unitId then
+        return
+    end
+
+    FireNetSyncEventOnHost("AgenciesRedressUnitSync", unitId)
+end
+
+function NetSyncEvents.AgenciesRedressUnitSync(unitId)
+    local unitData = gv_UnitData[unitId]
+
+    if not unitData then
+        return
+    end
+
+    unitData:ClearCurrentPreset()
+
+    local unit = g_Units[unitId]
+
+    if unit then
+        ReloadUnitsAppearance({ unit })
+    end
+end
+
+--- ===================================================================================================================
+--- SECTION 4 | Non template, but UI related overrides and compatibility changes.
+--- @author Soundwave2142
 --- ===================================================================================================================
 
 local BasePDAUrl = TFormat.PDAUrl

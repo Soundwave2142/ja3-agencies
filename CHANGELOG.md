@@ -1,5 +1,14 @@
 # Agencies Changelog
 
+# 2.00 - 01.30.2026
+
+### Description
+Reworked code-base for better integration into the game and support of multiplayer.
+
+### Detailed Changes
+- Reword code-base: cleaner functionality approach with various improvements.
+- Added support for multiplayer / coop.
+
 # 1.00 - 17.09.2025
 
 ### Description

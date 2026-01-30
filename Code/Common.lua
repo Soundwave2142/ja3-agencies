@@ -7,69 +7,145 @@ local pairs = pairs
 local ipairs = ipairs
 local empty_table = empty_table
 
-AGENCIES_MOD_ID = "Agencies"
-AGENCIES_OPTION = "AgencyChoice"
+local AGENCIES_MOD_ID = "Agencies"
+local AGENCIES_OPTION = "AgencyChoice"
 
-AGENCIES_DEFAULT = "Default"
-AGENCIES_DEFAULT_LABEL = "A.I.M."
+local AGENCIES_DEFAULT = "Default"
+local AGENCIES_DEFAULT_LABEL = "A.I.M."
+local AGENCIES_AGENCY_STORAGE_KEY = "Agency"
 
-AGENCIES_AGENCY_STORAGE_KEY = "Agency"
+GameVar("gv_Agency", false)
 
 --- ===================================================================================================================
 --- Section 2 | Game start, initial functions.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
---- @param option string
---- @return (string|boolean)
-function GetAgencyOption(option)
-    local mod = Mods[AGENCIES_MOD_ID]
-    local options = mod.options or empty_table
-
-    return options[option]
-end
-
---- When mods done loading,  calls for ApplyAgency to ensure current agency is applied to game.
+--- Makes sure correct agency is applied when game finished loading or mods were changed.
 function OnMsg.ModsReloaded()
-    ApplyAgency()
+    -- wait for a sync event from host instead
+    if netInGame and not NetIsHost() then
+        return
+    end
+
+    if Game then
+        CleanPresets(Game.id)
+    end
+
+    ApplyAgency(GetCurrentAgency(true))
 end
 
---- When mod options are applied, calls for ApplyAgency to ensure correct agency is applied.
---- This function can be redundant if OnApply from CommonLib to be used.
---- @param modId string
---function OnMsg.ApplyModOptions(modId)
---    if modId ~= AGENCIES_MOD_ID then
---        return
---    end
---
---    local mod = Mods[modId]
---    local options = mod.options or empty_table
---
---    for _, item in ipairs(mod:GetOptionItems()) do
---        local value = options[item.name]
---
---        if item.name == AGENCIES_OPTION then
---            ApplyAgency(value)
---        end
---    end
---end
+--- Makes sure correct agency is applied when new game is started.
+--- @param game table
+function OnMsg.NewGame(game)
+    if GameState.loading_savegame then
+        return
+    end
+
+    print('new game vasya', gv_Agency, Game and Game.id)
+    -- wait for a sync event from host instead
+    if netInGame and not NetIsHost() then
+        return
+    end
+
+    CleanPresets(Game.id)
+    ApplyAgency(GetCurrentAgency(true), true)
+end
+
+--- Makes sure correct agency is applied when game is loaded.
+function OnMsg.ZuluGameLoaded()
+    print('zulu game loaded', gv_Agency, Game and Game.id)
+    -- wait for a sync event from host instead
+    if netInGame and not NetIsHost() then
+        return
+    end
+
+    CleanPresets(Game.id)
+    ApplyAgency(GetCurrentAgency(true), true)
+end
+
+function GetAgencyPresets()
+    local presets = {}
+
+    for presetId, preset in pairs(AppearancePresets) do
+        if preset:ResolveValue("IsAgencyPreset") then
+            presets[#presets + 1] = preset
+        end
+    end
+
+    return presets
+end
+
+function CleanPresets(gameId)
+    local cleared = 0
+    local agencyPresets = GetAgencyPresets()
+
+    print('Agencies: detecting presets: ', #agencyPresets)
+
+    for _, preset in pairs(agencyPresets) do
+        local generatedFromId = preset:ResolveValue("GeneratedFromTheGameId")
+
+        print('comparing, ', gameId, generatedFromId)
+        if generatedFromId ~= gameId then
+            DoneObject(AppearancePresets[preset.id])
+            AppearancePresets[preset.id] = nil
+
+            cleared = cleared + 1
+        end
+    end
+
+    print('Agencies: cleared amount of presets: ', cleared)
+end
+
+--- Triggered when user manually changes the Agency in menu
+--- @param agency string
+function ApplyAgencyFromMenu(agency)
+    -- clients cannot change agency
+    if netInGame and not NetIsHost() then
+        return
+    end
+
+    ApplyAgency(agency)
+end
 
 --- Triggers AgenciesApplyAgency to ensure current agency is applied to game and writes it to storage if needed.
 --- @param agency string
-function ApplyAgency(agency)
+--- @param doNoWriteToStorage boolean
+function ApplyAgency(agency, doNoWriteToStorage)
     if not agency then
-        agency = GetCurrentAgency()
+        agency = GetCurrentAgency(true)
     end
 
     local storage = CurrentModStorageTable or {}
     local storageAgency = storage[AGENCIES_AGENCY_STORAGE_KEY]
 
-    if not storageAgency or storageAgency ~= agency then
+    if not doNoWriteToStorage and (not storageAgency or storageAgency ~= agency) then
         storage[AGENCIES_AGENCY_STORAGE_KEY] = agency
         WriteModPersistentStorageTable()
     end
 
+    NetSyncEvent("AgenciesApplyAgencySync", storageAgency, agency)
+end
+
+function NetSyncEvents.AgenciesApplyAgencySync(storageAgency, agency)
+    gv_Agency = agency
+
     Msg("AgenciesApplyAgency", storageAgency, agency)
+end
+
+--- Provides current agency id.
+--- @return string
+function GetCurrentAgency(fromStorage)
+    local gameAgency = gv_Agency or AGENCIES_DEFAULT
+
+    if not gameAgency or fromStorage then
+        local storage = CurrentModStorageTable or {}
+        local storageAgency = storage[AGENCIES_AGENCY_STORAGE_KEY] or AGENCIES_DEFAULT
+
+        return storageAgency
+    end
+
+    return gameAgency
 end
 
 --- Checks if agencies functionality should be enabled in general.
@@ -94,14 +170,6 @@ function IsAgency(agency)
     return GetCurrentAgency() == agency
 end
 
---- Provides current agency id.
---- @return string
-function GetCurrentAgency()
-    local storage = CurrentModStorageTable or {}
-
-    return storage[AGENCIES_AGENCY_STORAGE_KEY] or AGENCIES_DEFAULT
-end
-
 --- @param value string
 --- @param agency string
 --- @return (table|string|number|boolean|nil)
@@ -117,6 +185,15 @@ function GetCurrentAgencyValue(value, agency)
     end
 
     return agencyObject:ResolveValue(value)
+end
+
+--- @param option string
+--- @return (string|boolean)
+function GetAgencyOption(option)
+    local mod = Mods[AGENCIES_MOD_ID]
+    local options = mod.options or empty_table
+
+    return options[option]
 end
 
 --- Checks if agencies functionality should be enabled in general.
@@ -175,10 +252,6 @@ function GetAgencies(clearList)
 
     AGENCIES_LIST = agenciesSorted
     return agenciesSorted;
-end
-
-function GenerateAgencyPersistentId()
-    return random_encode64(48)
 end
 
 --- ===================================================================================================================
