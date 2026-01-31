@@ -17,9 +17,8 @@ return PlaceObj('ModDef', {
 	},
 	'id', "Agencies",
 	'author', "Soundwave2142",
-	'version_major', 1,
-	'version_minor', 10,
-	'version', 198,
+	'version_major', 2,
+	'version', 201,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -34,8 +33,8 @@ return PlaceObj('ModDef', {
 		AgencyEnableThemedUI = true,
 	},
 	'has_data', true,
-	'saved', 1769774500,
-	'code_hash', 2843474759255659129,
+	'saved', 1769864347,
+	'code_hash', -4992266204790604509,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",
@@ -356,11 +355,6 @@ return PlaceObj('ModDef', {
 			'Class', "XTemplate",
 			'Id', "PDAStartButtonArmy",
 			'ClassDisplayName', "UI Template (XTemplate)",
-		}),
-		PlaceObj('ModResourcePreset', {
-			'Class', "AppearancePreset",
-			'Id', "NewAppearancePreset",
-			'ClassDisplayName', "Appearance preset",
 		}),
 	},
 	'steam_id', "3569651988",

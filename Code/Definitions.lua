@@ -32,7 +32,7 @@ function GetAgencyAttirePoolItems(part, gender)
 end
 
 --- ===================================================================================================================
---- Section 2 | Agency Preset and related in-preset pickers.
+--- Section 2 | Agency Presets and their related functionality, plus related in-preset pickers.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
@@ -261,6 +261,15 @@ DefineClass.AgencyAttirePool = {
             help = "Will limit this attire pool to particular Merc Tier"
         },
         {
+            category = "Limits",
+            id = "Condition",
+            name = "Condition",
+            editor = "expression",
+            params = "",
+            default = function() return true end
+        },
+        -- Group - Head
+        {
             category = "Attire - Head",
             id = "Hat",
             name = "Hats",
@@ -349,13 +358,14 @@ DefineClass.AgencyAttirePool = {
 --- @param unitTier string
 --- @return boolean
 function AgencyAttirePool:IsPoolAllowed(unitSpecialization, unitTier)
-    local allowedSpecialization = self:ResolveValue('Specialization')
-    local allowedTier = self:ResolveValue('Tier')
+    local allowedSpecialization = self:ResolveValue("Specialization")
+    local allowedTier = self:ResolveValue("Tier")
+    local allowedCondition = self:ResolveValue("Condition")
 
     local allowedBySpecialization = allowedSpecialization == '' or allowedSpecialization == unitSpecialization
     local allowedByTier = allowedTier == '' or allowedTier == unitTier
 
-    return allowedBySpecialization and allowedByTier
+    return allowedBySpecialization and allowedByTier and allowedCondition()
 end
 
 --- @param unit UnitDataCompositeDef
@@ -409,6 +419,14 @@ DefineClass.AgencyAttirePoolItem = {
             editor = "combo",
             default = "",
             items = function(self) return { "", "Male", "Female" } end
+        },
+        {
+            category = "Limits",
+            id = "Condition",
+            name = "Condition",
+            editor = "expression",
+            params = "",
+            default = function() return true end
         }
     },
 
@@ -429,8 +447,11 @@ end
 --- @return boolean
 function AgencyAttirePoolItem:IsItemAllowed(gender)
     local allowedGender = self:ResolveValue("Gender")
+    local allowedCondition = self:ResolveValue("Condition")
 
-    return allowedGender == '' or allowedGender == gender
+    local allowedByGender = allowedGender == '' or allowedGender == gender
+
+    return allowedByGender and allowedCondition()
 end
 
 --- @param unit table
@@ -469,6 +490,11 @@ function AgencyAttirePoolItem:ResolveColor(allParts)
     allParts[partName .. "Color"] = pickedColorSet
 end
 
+--- Not all pieces have equal color mask, this allows using the same color across multiple pieces,
+--- but alter it's by certain percentage to achieve closer result. Used both by skin and cloth colors.
+--- @param colors table
+--- @param deviation number
+--- @param colorProperties table
 function AgencyAttirePoolItem:ApplyColorDeviation(colors, deviation, colorProperties)
     colorProperties = colorProperties or { "EditableColor1", "EditableColor2", "EditableColor3" }
 
@@ -794,6 +820,7 @@ DefineClass.AgencyAttirePoolHead = {
     __generated_by_class = "ClassDef",
 }
 
+--- @return string
 function AgencyAttirePoolHead:GetPartName()
     return "Head"
 end
@@ -819,6 +846,7 @@ DefineClass.AgencyAttirePoolBody = {
     __generated_by_class = "ClassDef",
 }
 
+--- @return string
 function AgencyAttirePoolBody:GetPartName()
     return "Body"
 end
@@ -844,6 +872,7 @@ DefineClass.AgencyAttirePoolShirt = {
     __generated_by_class = "ClassDef",
 }
 
+--- @return string
 function AgencyAttirePoolShirt:GetPartName()
     return "Shirt"
 end
@@ -926,6 +955,7 @@ DefineClass.AgencyAttirePoolPants = {
     __generated_by_class = "ClassDef",
 }
 
+--- @return string
 function AgencyAttirePoolPants:GetPartName()
     return "Pants"
 end
@@ -968,11 +998,34 @@ function AgencyAttirePoolHip:ResolvePickedItem(unit, allParts)
 end
 
 --- ===================================================================================================================
---- Section 3 | Agency classes used outside the editor.
+--- Section 3 | Base game classes extension.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
+--- Expands UnitBase with AgencyAppearanceObject parent to include agency related properties and methods.
 AppendClass.UnitBase = {
+    __parents = { "AgencyAppearanceObject" }
+}
+
+--- Returns id a UnitBase object, checks for child class, expanded due to common use.
+--- @returns string
+function UnitBase:GetCurrentId()
+    local id
+
+    if IsKindOf(self, "Unit") then
+        id = self.unitdatadef_id
+    elseif IsKindOf(self, "UnitData") then
+        id = self.class
+    elseif IsKindOf(self, "UnitDataCompositeDef") then
+        return self.id
+    end
+
+    assert(id, 'Cannot extract id from unit!')
+    return id
+end
+
+--- Expands with properties for Agency-generated preset identification.
+AppendClass.AppearancePreset = {
     properties = {
         {
             id = "IsAgencyPreset",
@@ -987,27 +1040,21 @@ AppendClass.UnitBase = {
             editor = "text",
             default = false,
             no_edit = true
+        },
+        {
+            id = "GeneratedFromAppearanceId",
+            name = "Generated From Appearance Id",
+            editor = "text",
+            default = false,
+            no_edit = true
         }
     }
 }
 
-AppendClass.UnitBase = {
-    __parents = { "AgencyAppearanceObject" }
-}
-
-function UnitBase:GetCurrentId()
-    local id
-
-    if IsKindOf(self, "Unit") then
-        id = self.unitdatadef_id
-    elseif IsKindOf(self, "UnitData") then
-        id = self.class
-    end
-
-    assert(id, 'Cannot extract id from unit!')
-    return id
-end
-
+--- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--- Responsible for UnitBase preset generation.
+--- @class AgencyAppearanceObject
+--- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgencyAppearanceObject = {
     __parents = { "PropertyObject", "InitDone" },
 
@@ -1016,10 +1063,13 @@ DefineClass.AgencyAppearanceObject = {
     }
 }
 
+--- Required for saving to work.
 function AgencyAppearanceObject:Init()
     self.AgencyAppearances = {}
 end
 
+--- Calculates and returns preset id of the Agency appearance for object.
+--- @return string
 function AgencyAppearanceObject:GetAgencyAppearancePresetId()
     AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
 
@@ -1028,14 +1078,17 @@ function AgencyAppearanceObject:GetAgencyAppearancePresetId()
     })
 end
 
+--- @param unit UnitDataCompositeDef
+--- @param defaultPresetId string
 --- @param presetId string
 function AgencyAppearanceObject:EnsureAgencyAppearance(unit, defaultPresetId, presetId)
-    local appearances = self.AgencyAppearances
+    local appearance = self.AgencyAppearances[presetId]
 
-    if not appearances[presetId] then
+    if not appearance then
         self:GenerateAgencyAppearance(unit, defaultPresetId, presetId)
+        -- PlaceAgencyPreset() called after in sync event.
     else
-        self:PlaceAgencyAppearanceAsPreset(presetId, appearances[presetId])
+        PlaceAgencyPreset(presetId, defaultPresetId, appearance.parts or {}, appearance.partsId or false)
     end
 end
 
@@ -1043,27 +1096,37 @@ end
 --- @param defaultPresetId string
 --- @param presetId string
 function AgencyAppearanceObject:GenerateAgencyAppearance(unit, defaultPresetId, presetId)
-    local pickedParts = {}
-    local buildOrder = {
-        "Body", "Shirt", "Armor", "Chest", -- upper part
-        "Head", "Hat", "Hat2",             -- head
-        "Pants", "Hip"                     -- lower part
-    }
-
-    for _, partName in ipairs(buildOrder) do
-        AgenciesAppearanceOptions:GetFromAllPools(partName, unit, pickedParts)
-    end
-
+    local pickedParts = AgenciesAppearanceOptions:GetPickedPartsFromAllOptions(unit)
     self:PrepareAgencyAppearanceDataForSync(pickedParts)
 
     local appearance = {
         presetParent = defaultPresetId,
-        parts = pickedParts
+        parts = pickedParts,
+        partsId = random_encode64(48)
     }
-
     NetSyncEvent("AgenciesUnitDataAppearanceSync", unit.id, presetId, appearance)
 end
 
+--- Colors cannot be serialized by Sync functionality, this is a workaround for that.
+--- It turns colors into tables and puts them in separate table.
+--- @param pickedParts table
+function AgencyAppearanceObject:PrepareAgencyAppearanceDataForSync(pickedParts)
+    pickedParts.Colors = {}
+
+    for key, value in pairs(pickedParts) do
+        if IsKindOf(value, "ColorizationPropSet") then
+            pickedParts.Colors[key] = value:GetColorsAsTable()
+
+            DoneObject(value)
+            pickedParts[key] = nil
+        end
+    end
+end
+
+--- Syncs appearance between all game participants, this entire process is only triggered by host.
+--- @param unitId string
+--- @param presetId string
+--- @param appearance table
 function NetSyncEvents.AgenciesUnitDataAppearanceSync(unitId, presetId, appearance)
     local unitData = gv_UnitData[unitId]
 
@@ -1082,7 +1145,7 @@ function NetSyncEvents.AgenciesUnitDataAppearanceSync(unitId, presetId, appearan
         AppearancePresets[presetId] = nil
     end
 
-    unitData:PlaceAgencyAppearanceAsPreset(presetId, appearance)
+    PlaceAgencyPreset(presetId, appearance.presetParent, appearance.parts, appearance.partsId)
 
     local unit = g_Units[unitId]
 
@@ -1091,73 +1154,26 @@ function NetSyncEvents.AgenciesUnitDataAppearanceSync(unitId, presetId, appearan
     end
 end
 
-function AgencyAppearanceObject:PrepareAgencyAppearanceDataForSync(appearanceParts)
-    appearanceParts.Colors = {}
-
-    for key, value in pairs(appearanceParts) do
-        if IsKindOf(value, "ColorizationPropSet") then
-            appearanceParts.Colors[key] = value:GetColorsAsTable()
-
-            DoneObject(value)
-            appearanceParts[key] = nil
-        end
-    end
-end
-
-function AgencyAppearanceObject:ProcessAgencyAppearanceDataForSync(appearanceParts)
-    for key, value in pairs(appearanceParts.Colors) do
+--- Colors cannot be serialized by Sync functionality, this is a workaround for that.
+--- Turns previously turned table colors back into ColorizationPropSet object.
+--- @param pickedParts table
+function AgencyAppearanceObject:ProcessAgencyAppearanceDataForSync(pickedParts)
+    for key, value in pairs(pickedParts.Colors) do
+        -- for reasons unknown to me, table cannot be processed by PlaceObj, we need flat array
         local valueFlat = {}
 
         for valueKey, valueValue in pairs(value) do
-            -- Use #flat + 1 to efficiently append to the end of the array
             valueFlat[#valueFlat + 1] = valueKey
             valueFlat[#valueFlat + 1] = valueValue
         end
 
-        appearanceParts[key] = PlaceObj('ColorizationPropSet', valueFlat)
+        pickedParts[key] = PlaceObj('ColorizationPropSet', valueFlat)
     end
 
-    appearanceParts.Colors = nil
+    pickedParts.Colors = nil
 end
 
-function AgencyAppearanceObject:PlaceAgencyAppearanceAsPreset(presetId, appearance)
-    if AppearancePresets[presetId] then
-        return
-    end
-
-    local preset = table_copy(appearance.parts)
-
-    preset.id = presetId
-    preset.group = "Mercs"
-
-    preset.IsAgencyPreset = true
-    preset.GeneratedFromTheGameId = Game and Game.id or false
-
-    AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
-
-    local isDefaultPartAllowed = function(part)
-        if part == "Hat" or part == "Hat2" then
-            return AgenciesAppearanceOptions.AppendDefaultHats
-        end
-
-        return true
-    end
-
-    -- iterate over original preset and place items from it
-    -- include item only if in new preset there's no mention of it (aka not false, but nil)
-    local presetParent = appearance.presetParent and AppearancePresets[appearance.presetParent]
-
-    if presetParent then
-        for partName, defaultPart in pairs(presetParent) do
-            if isDefaultPartAllowed(partName) and preset[partName] == nil then
-                preset[partName] = defaultPart
-            end
-        end
-    end
-
-    PlaceObj('AppearancePreset', preset)
-end
-
+--- Removes current Agency preset from data and memory.
 function AgencyAppearanceObject:ClearCurrentPreset()
     local currentPreset = self:GetAgencyAppearancePresetId()
 

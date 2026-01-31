@@ -13530,8 +13530,4 @@ return {
 			}),
 			}),
 		}),
-	PlaceObj('ModItemAppearancePreset', {
-		group = "Mercs",
-		id = "NewAppearancePreset",
-	}),
 }

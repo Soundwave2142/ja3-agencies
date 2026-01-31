@@ -17,7 +17,7 @@ local AGENCIES_AGENCY_STORAGE_KEY = "Agency"
 GameVar("gv_Agency", false)
 
 --- ===================================================================================================================
---- Section 2 | Game start, initial functions.
+--- Section 2 | Game start, initial / common functions.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
@@ -29,7 +29,7 @@ function OnMsg.ModsReloaded()
     end
 
     if Game then
-        CleanPresets(Game.id)
+        CleanAgencyPresets(Game.id)
     end
 
     ApplyAgency(GetCurrentAgency(true))
@@ -42,59 +42,24 @@ function OnMsg.NewGame(game)
         return
     end
 
-    print('new game vasya', gv_Agency, Game and Game.id)
     -- wait for a sync event from host instead
     if netInGame and not NetIsHost() then
         return
     end
 
-    CleanPresets(Game.id)
+    CleanAgencyPresets(Game.id)
     ApplyAgency(GetCurrentAgency(true), true)
 end
 
 --- Makes sure correct agency is applied when game is loaded.
 function OnMsg.ZuluGameLoaded()
-    print('zulu game loaded', gv_Agency, Game and Game.id)
     -- wait for a sync event from host instead
     if netInGame and not NetIsHost() then
         return
     end
 
-    CleanPresets(Game.id)
+    CleanAgencyPresets(Game.id)
     ApplyAgency(GetCurrentAgency(true), true)
-end
-
-function GetAgencyPresets()
-    local presets = {}
-
-    for presetId, preset in pairs(AppearancePresets) do
-        if preset:ResolveValue("IsAgencyPreset") then
-            presets[#presets + 1] = preset
-        end
-    end
-
-    return presets
-end
-
-function CleanPresets(gameId)
-    local cleared = 0
-    local agencyPresets = GetAgencyPresets()
-
-    print('Agencies: detecting presets: ', #agencyPresets)
-
-    for _, preset in pairs(agencyPresets) do
-        local generatedFromId = preset:ResolveValue("GeneratedFromTheGameId")
-
-        print('comparing, ', gameId, generatedFromId)
-        if generatedFromId ~= gameId then
-            DoneObject(AppearancePresets[preset.id])
-            AppearancePresets[preset.id] = nil
-
-            cleared = cleared + 1
-        end
-    end
-
-    print('Agencies: cleared amount of presets: ', cleared)
 end
 
 --- Triggered when user manually changes the Agency in menu
@@ -127,6 +92,9 @@ function ApplyAgency(agency, doNoWriteToStorage)
     NetSyncEvent("AgenciesApplyAgencySync", storageAgency, agency)
 end
 
+--- Syncs agency between all game participants, triggered by ApplyAgency.
+--- @param storageAgency string
+--- @param agency string
 function NetSyncEvents.AgenciesApplyAgencySync(storageAgency, agency)
     gv_Agency = agency
 

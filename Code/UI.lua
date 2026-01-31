@@ -11,11 +11,7 @@ local PlaceObj = PlaceObj
 local UIFindControl = UIFindControl
 local GetCurrentAgencyValue = GetCurrentAgencyValue
 
---- ===================================================================================================================
---- Section 2 | First load actions.
---- @author Soundwave2142
---- ===================================================================================================================
-
+--- @return table
 local function GetReasonsNotToEnableAgenciesUI(template)
     local reasonsNotTo = {}
     local options = CurrentModOptions or empty_table
@@ -35,9 +31,14 @@ local function GetReasonsNotToEnableAgenciesUI(template)
     return reasonsNotTo
 end
 
+--- @param parent XTemplate
+--- @param mode string
+--- @param agencyTemplateValue string
+--- @param baseTemplateName string
 local function AgencyGeneralTemplateSwitcher(parent, mode, agencyTemplateValue, baseTemplateName)
     local template = GetCurrentAgencyValue(agencyTemplateValue)
     local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(template)
+
     Msg("AgenciesCanApplyUI", parent, template, reasonsNotTo)
 
     if next(reasonsNotTo) ~= nil then
@@ -73,6 +74,38 @@ local function AgencyLandingTemplateSwitcher(self, parent, context)
     )
 end
 
+--- ===================================================================================================================
+--- Section 2 | First load actions.
+--- @author Soundwave2142
+--- ===================================================================================================================
+
+if FirstLoad then
+    local templatesInserted = false
+
+    --- Inserts all template switchers into game templates, template switchers are responsible for dynamically
+    --- modifying __template property and therefore dynamically render different Ui depending on Agency.
+    function OnMsg.ModsReloaded()
+        if not templatesInserted then
+            InsertAgencyTemplateSwitcher("PDABrowser", "PDAAIMBrowser", AgencyBrowserTemplateSwitcher)
+            InsertAgencyTemplateSwitcher("PDABrowser", "PDABrowserLanding", AgencyLandingTemplateSwitcher)
+            InsertAgencyAppearanceButton("PDAAIMBrowser")
+
+            templatesInserted = true
+        end
+    end
+end
+
+--- When new agency applied, trigger new welcome page, new UI will be handled by switchers.
+function OnMsg.AgenciesApplyAgency(previousAgency, newAgency)
+    if previousAgency ~= newAgency and TutorialHintsState then
+        TutorialHintsState.LandingPageShown = false
+    end
+end
+
+--- Inserts switcher into template that will dynamically switch UI depending on Agency.
+--- @param template string
+--- @param template string
+--- @param runFunction function
 function InsertAgencyTemplateSwitcher(template, replacingTemplate, runFunction)
     local match = { __template = replacingTemplate }
     local element, elementParent, elementIndex = UIFindControl(template, match)
@@ -84,6 +117,8 @@ function InsertAgencyTemplateSwitcher(template, replacingTemplate, runFunction)
     table.insert(elementParent, 1, PlaceObj('XTemplateCode', { 'run', runFunction }))
 end
 
+--- Inserts "Redress" button to PDA Browser in merc section.
+--- @param template string
 function InsertAgencyAppearanceButton(template)
     local match = { ActionId = "idHideBio" }
     local element, elementParent, elementIndex = UIFindControl(template, match)
@@ -103,32 +138,13 @@ function InsertAgencyAppearanceButton(template)
     table.insert(elementParent, elementIndex + 1, action)
 end
 
-if FirstLoad then
-    local templatesInserted = false
-
-    function OnMsg.ModsReloaded()
-        if not templatesInserted then
-            InsertAgencyTemplateSwitcher("PDABrowser", "PDAAIMBrowser", AgencyBrowserTemplateSwitcher)
-            InsertAgencyTemplateSwitcher("PDABrowser", "PDABrowserLanding", AgencyLandingTemplateSwitcher)
-            InsertAgencyAppearanceButton("PDAAIMBrowser")
-
-            templatesInserted = true
-        end
-    end
-end
-
-function OnMsg.AgenciesApplyAgency(previousAgency, newAgency)
-    if previousAgency ~= newAgency and TutorialHintsState then
-        TutorialHintsState.LandingPageShown = false
-    end
-end
-
 --- ===================================================================================================================
 --- Section 3 | UI related appearance function.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
---- Checks if unit is on the map (in team) and view is not SatView.
+--- Provides a state for Redress button in UI based on multiple conditions,
+--- redress only allowed for unit that is owned by player and when unit is physically on the map.
 --- @param host
 --- @return string
 function AgenciesGetRedressButtonState(host)
@@ -168,7 +184,7 @@ function AgenciesGetRedressButtonState(host)
     return "hidden"
 end
 
---- Removes current preset from Game object, regenerates persistent id and reloads unit appearance.
+--- Removes current preset of Agency merc and triggers reload
 --- @param host
 function AgenciesRedressButtonAction(host)
     local content = host.idContent
@@ -192,6 +208,8 @@ function AgenciesRedressButtonAction(host)
     FireNetSyncEventOnHost("AgenciesRedressUnitSync", unitId)
 end
 
+--- Triggers remove of Agency preset for all game participants.
+--- @param unitId string
 function NetSyncEvents.AgenciesRedressUnitSync(unitId)
     local unitData = gv_UnitData[unitId]
 
@@ -270,7 +288,7 @@ TFormat.PDAUrl = function(...)
     return Untranslated(agencyUrl)
 end
 
---- Applies agency data to tabs.
+--- Applies agency data to tabs when AgenciesApplyAgency (new agency applied) or ZuluGameLoaded.
 function ApplyAgencyTabData()
     local urlName = GetCurrentAgencyValue("BrowserUrlName")
     local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(true)

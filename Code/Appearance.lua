@@ -16,11 +16,128 @@ local PlaceObj = PlaceObj
 local AGENCIES_APPEARANCES_STORAGE_KEY = "LastAppearances"
 
 --- ===================================================================================================================
---- Section 2 | Overrides and event listeners for appearance appliers.
+--- Section 2 | General functions for appearance presets manipulation.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
+--- @param presetId string
+--- @param presetParentId string
+--- @param parts table
+--- @param partsId string
+function PlaceAgencyPreset(presetId, presetParentId, parts, partsId)
+    local currentPreset = AppearancePresets[presetId]
+
+    -- ensure that AppearancePreset that exists in memory was generated from the same set of parts
+    if currentPreset and currentPreset:ResolveValue("GeneratedFromAppearanceId") == partsId then
+        return
+    elseif currentPreset then
+        DoneObject(AppearancePresets[presetId])
+        AppearancePresets[presetId] = nil
+    end
+
+    local preset = table_copy(parts)
+
+    preset.id = presetId
+    preset.group = "Mercs"
+
+    preset.IsAgencyPreset = true
+    preset.GeneratedFromTheGameId = Game and Game.id or false
+    preset.GeneratedFromAppearanceId = partsId or false
+
+    AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
+
+    local isDefaultPartAllowed = function(part)
+        if part == "Hat" or part == "Hat2" then
+            return AgenciesAppearanceOptions.AppendDefaultHats
+        end
+
+        return true
+    end
+
+    -- iterate over original preset and place items from it
+    -- include item only if in new preset there's no mention of it (aka not false, but nil)
+    local presetParent = presetParentId and AppearancePresets[presetParentId]
+
+    if presetParent then
+        for partName, defaultPart in pairs(presetParent) do
+            if isDefaultPartAllowed(partName) and preset[partName] == nil then
+                preset[partName] = defaultPart
+            end
+        end
+    end
+
+    PlaceObj('AppearancePreset', preset)
+end
+
+--- Cleans placed agency appearance presets if they don't match provided gameId,
+--- this is required in cases where different game / campaign is loaded.
+--- @param gameId string
+function CleanAgencyPresets(gameId)
+    for presetId, preset in pairs(GetAgencyPresets()) do
+        local generatedFromId = preset:ResolveValue("GeneratedFromTheGameId")
+
+        if generatedFromId ~= gameId then
+            DoneObject(AppearancePresets[presetId])
+            AppearancePresets[presetId] = nil
+        end
+    end
+end
+
+--- Returns AppearancePresets but only those that were created by Agency code.
+--- @return table of AppearancePresets
+function GetAgencyPresets()
+    local presets = {}
+
+    for presetId, preset in pairs(AppearancePresets) do
+        if preset:ResolveValue("IsAgencyPreset") then
+            presets[presetId] = preset
+        end
+    end
+
+    return presets
+end
+
+--- Iterates units, pausing their appearance and forcing them to re-choose their appearance preset.
+--- @param units table
+function ReloadUnitsAppearance(units)
+    units = units or GetAllPlayerUnitsOnMap()
+
+    if #units < 1 then
+        return
+    end
+
+    for _, unit in ipairs(units) do
+        ReloadUnitAppearance(unit)
+    end
+end
+
+--- Reloads appearance preset of a particular unit.
+--- @param unit Unit
+function ReloadUnitAppearance(unit)
+    unit:StopAnimMomentHook()
+    local anim = unit:GetStateText()
+    local phase = unit:GetAnimPhase()
+
+    unit:ApplyAppearance(ChooseUnitAppearance(unit.unitdatadef_id, unit.handle), true)
+    unit:SetStateText(anim, const.eKeepComponentTargets)
+    unit:SetAnimPhase(1, phase)
+    unit:StartAnimMomentHook()
+    unit:UpdateModifiedAnim()
+    unit:UpdateMoveAnim()
+end
+
+--- Triggered when Agency is changed in game, reloads appearance.
+function OnMsg.AgenciesApplyAgency()
+    if not InGame then
+        return
+    end
+
+    ReloadUnitsAppearance()
+    SaveCurrentSquadPresets()
+end
+
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--- Responsible for providing pools, options and other for preset generation
 --- @class AgenciesAppearanceOptions
 --- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
 DefineClass.AgenciesAppearanceOptions = {
@@ -76,6 +193,11 @@ DefineClass.AgenciesAppearanceOptions = {
         Pools = {},
         RollChances = {},
         AppendDefaultHats = true,
+        BuildOrder = {
+            "Body", "Shirt", "Armor", "Chest", -- upper part
+            "Head", "Hat", "Hat2",             -- head
+            "Pants", "Hip"                     -- lower part
+        }
     },
     OptionsLoaded = false,
     OptionsLoadedForAgency = false
@@ -135,13 +257,26 @@ function AgenciesAppearanceOptions:HasPools()
     return self.Pools and #self.Pools > 0
 end
 
+--- Compiles parts for given unit from possible options.
+--- @param unit UnitDataCompositeDef
+--- @return table
+function AgenciesAppearanceOptions:GetPickedPartsFromAllOptions(unit)
+    local pickedParts = {}
+
+    for _, partName in ipairs(self.BuildOrder) do
+        self:GetPartFromAllPools(partName, unit, pickedParts)
+    end
+
+    return pickedParts
+end
+
 --- Gets a particular part of the preset and it's color (e.g. Armor, Body etc) from all available pools.
 --- Returns picked part (AgencyAttirePoolItem) and populates pickedParts with proper keys.
 --- @param partName string part name in the both appearance and attire pool, like "Hat'. These have to match.
 --- @param unit UnitDataCompositeDef
 --- @param pickedParts table table containing parts and to which part and related fields will be appended.
 --- @return (AgencyAttirePoolItem|nil)
-function AgenciesAppearanceOptions:GetFromAllPools(partName, unit, pickedParts)
+function AgenciesAppearanceOptions:GetPartFromAllPools(partName, unit, pickedParts)
     if not self:ShouldPickPart(unit.id, partName) then
         return nil
     end
@@ -222,83 +357,6 @@ function AgenciesAppearanceOptions:GetBodyColor(unitId)
     return bodyColor
 end
 
---- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
---- @class AgenciesAppearanceHandler
---- ++++++++++++++++++++++++++++++++++++++++++++++++++++++
-DefineClass.AgenciesAppearanceHandler = {}
-
---- Generated (or takes from Game) parts for preset and inserts into the game.
---- @param unit UnitDataCompositeDef
---- @param defaultPresetId string
---- @return string id of generated preset
-function AgenciesAppearanceHandler:GeneratePreset(unit, defaultPresetId)
-    AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
-
-    if not self:CanBeGeneratedForUnit(unit) then
-        return defaultPresetId
-    end
-
-    local unitData = gv_UnitData[unit.id]
-    local presetId = unitData:GetAgencyAppearancePresetId()
-
-    if not presetId then
-        return defaultPresetId
-    end
-
-    if AppearancePresets[presetId] then
-        return presetId
-    end
-
-    unitData:EnsureAgencyAppearance(unit, defaultPresetId, presetId)
-    return AppearancePresets[presetId] and presetId or defaultPresetId
-end
-
---- Performs basic required checks for blocking appearance.
---- @return table
-local function GetReasonsNotToApplyAppearance()
-    local reasonsNotTo = {}
-
-    if not IsAgenciesEnabled() then
-        reasonsNotTo['agencies are disabled'] = true
-    end
-
-    if not AgenciesAppearanceOptions:HasPools() then
-        reasonsNotTo['agency has no pools'] = true
-    end
-
-    return reasonsNotTo
-end
-
---- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
---- @param unit UnitDataCompositeDef
-function AgenciesAppearanceHandler:CanBeGeneratedForUnit(unit)
-    if not unit or not IsMerc(unit) or not unit:ResolveValue("gender") then
-        return false
-    end
-
-    if not gv_UnitData[unit.id] then
-        return false
-    end
-
-    local reasonsNotTo = GetReasonsNotToApplyAppearance()
-    Msg("AgenciesAppearanceCanApplyToUnit", unit, self, reasonsNotTo)
-
-    return next(reasonsNotTo) == nil
-end
-
-function OnMsg.AgenciesAppearanceCanApplyToUnit(unit, AgenciesAppearanceHandler, reasonsNotTo)
-    if netInGame and not NetIsHost() then
-        local unitData = gv_UnitData[unit.id]
-
-        local presetId = unitData:GetAgencyAppearancePresetId()
-        local savedAppearances = unitData:ResolveValue("AgencyAppearances")
-
-        if not savedAppearances[presetId] then
-            reasonsNotTo['net game unit has no preset saved parts'] = true
-        end
-    end
-end
-
 --- ===================================================================================================================
 --- Section 3 | Overrides and event listeners for appearance appliers DURING GAME.
 --- @author Soundwave2142
@@ -331,52 +389,87 @@ function ChooseUnitAppearance(merc_id, handle)
         return basePreset
     end
 
-    return AgenciesAppearanceHandler:GeneratePreset(unit, basePreset)
+    return GenerateAgencyPreset(unit, basePreset)
 end
 
---- Iterates units, pausing their appearance and forcing them to re-choose their appearance preset.
---- @param units table
-function ReloadUnitsAppearance(units)
-    units = units or GetAllPlayerUnitsOnMap()
+--- Returns either agency preset or default preset, depending if agency preset could be created.
+--- @param unit UnitDataCompositeDef
+--- @param defaultPresetId string
+function GenerateAgencyPreset(unit, defaultPresetId)
+    AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
 
-    if #units < 1 then
-        return
+    if not CanAgencyPresetBeGeneratedForUnit(unit) then
+        return defaultPresetId
     end
 
-    for _, unit in ipairs(units) do
-        ReloadUnitAppearance(unit)
+    local unitData = gv_UnitData[unit.id]
+    local presetId = unitData:GetAgencyAppearancePresetId()
+
+    if not presetId then
+        return defaultPresetId
     end
+
+    unitData:EnsureAgencyAppearance(unit, defaultPresetId, presetId)
+    return AppearancePresets[presetId] and presetId or defaultPresetId
 end
 
-function ReloadUnitAppearance(unit)
-    unit:StopAnimMomentHook()
-    local anim = unit:GetStateText()
-    local phase = unit:GetAnimPhase()
+--- Performs basic required checks for blocking appearance.
+--- @return table
+local function GetReasonsNotToApplyAgencyAppearance()
+    local reasonsNotTo = {}
 
-    unit:ApplyAppearance(ChooseUnitAppearance(unit.unitdatadef_id, unit.handle), true)
-    unit:SetStateText(anim, const.eKeepComponentTargets)
-    unit:SetAnimPhase(1, phase)
-    unit:StartAnimMomentHook()
-    unit:UpdateModifiedAnim()
-    unit:UpdateMoveAnim()
-end
-
---- Triggered when Agency is changed in game, reloads appearance.
-function OnMsg.AgenciesApplyAgency()
-    if not InGame then
-        return
+    if not IsAgenciesEnabled() then
+        reasonsNotTo['agencies are disabled'] = true
     end
 
-    ReloadUnitsAppearance()
-    SaveCurrentSquadPresets()
+    if not AgenciesAppearanceOptions:HasPools() then
+        reasonsNotTo['agency has no pools'] = true
+    end
+
+    return reasonsNotTo
+end
+
+--- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
+--- @param unit UnitDataCompositeDef
+function CanAgencyPresetBeGeneratedForUnit(unit)
+    if not unit or not IsMerc(unit) or not unit:ResolveValue("gender") then
+        return false
+    end
+
+    if not gv_UnitData[unit.id] then
+        return false
+    end
+
+    local reasonsNotTo = GetReasonsNotToApplyAgencyAppearance()
+    Msg("AgenciesAppearanceCanApplyToUnit", unit, reasonsNotTo)
+
+    return next(reasonsNotTo) == nil
+end
+
+--- Additional check that if user is in the game as client, we don't want it generating new preset,
+--- only using and applying existing (that will eventually be passed by sync event).
+--- @param unit UnitDataCompositeDef
+--- @param reasonsNotTo table
+function OnMsg.AgenciesAppearanceCanApplyToUnit(unit, reasonsNotTo)
+    if netInGame and not NetIsHost() then
+        local unitData = gv_UnitData[unit.id]
+
+        local presetId = unitData:GetAgencyAppearancePresetId()
+        local savedAppearances = unitData:ResolveValue("AgencyAppearances")
+
+        if not savedAppearances[presetId] then
+            reasonsNotTo['net game unit has no preset saved parts'] = true
+        end
+    end
 end
 
 --- ===================================================================================================================
---- Section 4 | Overrides and event listeners for appearance appliers DURING MAIN MENU.
+--- Section 4 | Overrides and event listeners for appearance appliers DURING and FOR MAIN MENU.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
---- Saves current units in a team to the mod local storage to be used in Main Menu.
+--- Saves current units in a team to the mod local storage to be used in Main Menu,
+--- triggered by EnterSector event (definition below).
 function SaveCurrentSquadPresets()
     local team = table_find_value(g_Teams, "control", "UI")
     local storage = CurrentModStorageTable or {}
@@ -389,11 +482,17 @@ function SaveCurrentSquadPresets()
     local newPresets = table_imap(
         team.units,
         function(merc)
-            local appearancePreset = merc:ResolveValue("Appearance")
-            local appearancePresetGameId = Game and Game.id or false
+            local appearancePresetId = merc:ResolveValue("Appearance")
+            local appearancePreset = AppearancePresets[appearancePresetId]
+
+            if not appearancePreset:ResolveValue("IsAgencyPreset") then
+                return appearancePresetId
+            end
 
             return table.concat({
-                appearancePreset, '_', appearancePresetGameId
+                appearancePresetId, "_",
+                appearancePreset:ResolveValue("GeneratedFromTheGameId") or "NA", "_",
+                appearancePreset:ResolveValue("GeneratedFromAppearanceId") or "NA"
             })
         end
     )
@@ -409,7 +508,9 @@ function SaveCurrentSquadPresets()
             end
 
             return table.concat({
-                preset.id, '_', preset.gameId
+                preset.id, "_",
+                preset.gameId or "NA", "_",
+                preset.partsId or "NA"
             })
         end
     )
@@ -431,23 +532,22 @@ function SaveCurrentSquadPresets()
                 return nil
             end
 
-            local appearancePreset = merc:ResolveValue("Appearance")
-            local appearancePresetGameId = Game and Game.id or false
+            local appearancePresetId = merc:ResolveValue("Appearance")
+            local appearancePreset = AppearancePresets[appearancePresetId]
             local storedAppearances = mercUnitData:ResolveValue('AgencyAppearances')
 
-            -- if preset is not in stored agency presets, return it as string,
-            -- it is most likely native preset from the base game
-            if not storedAppearances[appearancePreset] then
-                return appearancePreset
+            if not appearancePreset:ResolveValue("IsAgencyPreset") or not storedAppearances[appearancePresetId] then
+                return appearancePresetId
             end
 
-            local storedAppearance = storedAppearances[appearancePreset]
+            local storedAppearance = storedAppearances[appearancePresetId]
 
             return {
-                id = appearancePreset,
+                id = appearancePresetId,
                 native = storedAppearance.presetParent,
-                gameId = appearancePresetGameId,
-                parts = storedAppearance.parts
+                gameId = appearancePreset:ResolveValue("GeneratedFromTheGameId"),
+                parts = storedAppearance.parts,
+                partsId = appearancePreset:ResolveValue("GeneratedFromAppearanceId")
             }
         end
     )
@@ -458,15 +558,8 @@ end
 
 OnMsg.EnterSector = SaveCurrentSquadPresets
 
---- Checks whatever it's possible to apply presets to Main Menu by making a message call.
-function CanApplyAgencyPresetsInMainMenu()
-    local reasonsNotTo = {}
-    Msg("AgenciesAppearanceCanApplyInMainMenu", reasonsNotTo)
-
-    return not InGame and next(reasonsNotTo) == nil
-end
-
---- Iterates each dummy unit on the map and applies preset from last game (if any saved).
+--- Iterates each dummy unit on the map and applies preset from last game (if any saved),
+--- triggered by PreGameMenuOpen event (definition below).
 function ApplyAgencyPresetsInMainMenu()
     if not CanApplyAgencyPresetsInMainMenu() then
         return
@@ -479,20 +572,15 @@ function ApplyAgencyPresetsInMainMenu()
         return
     end
 
-    for key, savedPickedParts in ipairs(lastSavedPresets) do
+    for key, savedParts in ipairs(lastSavedPresets) do
         -- some presets can be saved in table format, such as dynamic agency presets,
         -- other presets can be just default in-game defined.
 
-        if type(savedPickedParts) == "table" then
-            local appearance = {
-                presetParent = savedPickedParts.native,
-                parts = savedPickedParts.parts
-            }
-
-            AgencyAppearanceObject:PlaceAgencyAppearanceAsPreset(savedPickedParts.id, appearance)
-            lastSavedPresets[key] = savedPickedParts.id
-        elseif type(savedPickedParts) == "string" and AppearancePresets[savedPickedParts] then
-            lastSavedPresets[key] = savedPickedParts
+        if type(savedParts) == "table" then
+            PlaceAgencyPreset(savedParts.id, savedParts.native, savedParts.parts, savedParts.partsId)
+            lastSavedPresets[key] = savedParts.id
+        elseif type(savedParts) == "string" and AppearancePresets[savedParts] then
+            lastSavedPresets[key] = savedParts
         else
             lastSavedPresets[key] = nil
         end
@@ -518,3 +606,11 @@ function ApplyAgencyPresetsInMainMenu()
 end
 
 OnMsg.PreGameMenuOpen = ApplyAgencyPresetsInMainMenu
+
+--- Checks whatever it's possible to apply presets to Main Menu by making a message call.
+function CanApplyAgencyPresetsInMainMenu()
+    local reasonsNotTo = {}
+    Msg("AgenciesAppearanceCanApplyInMainMenu", reasonsNotTo)
+
+    return not InGame and next(reasonsNotTo) == nil
+end

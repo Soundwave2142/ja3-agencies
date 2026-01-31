@@ -2,11 +2,6 @@
 
 ---
 ## TO DO:
-#### 1.10
-- Multiplayer Support.
 
-#### 1.20
-- More UI Changes.
-
-### 1.30
+### 2.10
 - Faction Bonuses

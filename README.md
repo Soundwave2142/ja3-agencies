@@ -4,6 +4,7 @@ Available agencies and factions are specifically __M.E.R.C., Adonis Corporation,
 
 ![Features](https://imgur.com/gI2u60l.png)
 __Agency-Themed Attire__ - when a merc is deployed, they will wear new attire generated randomly from faction-appropriate pieces and colors.
+That attire persists throughout the saves of an individual campaign.
 
 Agency can be switched at any time in mod options: Menu -> Options -> Mod -> Agencies -> Agency.
 Select "A.I.M." in the list if you want to essentially turn off the mod's features.
@@ -15,11 +16,12 @@ UI changes include the hiring page and its related texts, such as URLs and page 
 
 This feature can be toggled on and off at any time in mod options: Menu -> Options -> Mod -> Agencies -> Enable Themed UI.
 
+__Multiplayer Support__ - Enjoy the mod in your plaything with friends, agency and attire is constant between all clients.
+
 ![Roadmap](https://imgur.com/odgfxXd.png)
 The roadmap represents a set of concepts and improvements that are planned to be added in later updates. 
 This list is not final and will change and expand.
 
-- __Multiplayer Support__ - Completely necessary for seamless integration with the game. Currently being developed.
 - __Faction Bonuses__ - In order to spice up gameplay and give some personality to factions, a set of bonuses will be introduced to each.
 This feature can be switched off.
 
@@ -29,11 +31,11 @@ For detailed changes, please navigate to CHANGELOG.md.
 
 | Date       | Version | Description                                                                                                       |
 |------------|---------|-------------------------------------------------------------------------------------------------------------------|
-| 23.09.2025 | 1.10    | Multiplayer Support has been added.                                                                               |
+| 01.02.2026 | 2.00    | Code-base reworked. Multiplayer Support has been added.                                                           |
 | 17.09.2025 | 1.00    | Initial version upload of the mod. For details about core mechanics in the base version, navigate to CHANGELOG.md |
 
 ![Compatibility](https://imgur.com/I11Wukc.png)
-__MULTIPLAYER is supported and will sync Agency and appearances between host and a client.__
+__MULTIPLAYER is supported and will sync Agency and appearances between host and clients.__
 
 The mod is largely compatible with all modded mercs, the exception being mercenaries with darker skin colors. 
 As there's no way to tell the skin color of the character, white color for body parts that contain skin will be applied.
@@ -41,7 +43,7 @@ However, the authors of the modded mercs can implement, if desired, a minor code
 
 As for mods that change vanilla merc presets, they should also work fine. But mods that use Lua scripts to alter appearance may conflict and cause issues.
 Additionally, the mod may be incompatible with any mods that heavily edit the PDA Browser UI.
-In case of using such mods, it is recommended to turn off Themed UI in the Agency mod options.
+In case of problem with such mods, turn off Themed UI in the Agency mod options.
 
 It is ___HIGHLY RECOMMENDED___ to restart the game after mod activation or deactivation.
 
