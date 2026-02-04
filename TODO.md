@@ -5,3 +5,6 @@
 
 ### 2.10
 - Faction Bonuses
+
+### 2.20
+- More UI modifications (Quest Log, so on)

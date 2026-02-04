@@ -3,12 +3,15 @@
 --- @author Soundwave2142
 --- ===================================================================================================================
 
-local table = table
 local ipairs = ipairs
+local next = next
+local table_insert = table.insert
+local table_find_value = table.find_value
 local string_starts_with = string.starts_with
 local empty_table = empty_table
 local PlaceObj = PlaceObj
 local UIFindControl = UIFindControl
+local IsKindOf = IsKindOf
 local GetCurrentAgencyValue = GetCurrentAgencyValue
 
 --- @return table
@@ -114,7 +117,7 @@ function InsertAgencyTemplateSwitcher(template, replacingTemplate, runFunction)
         return
     end
 
-    table.insert(elementParent, 1, PlaceObj('XTemplateCode', { 'run', runFunction }))
+    table_insert(elementParent, 1, PlaceObj('XTemplateCode', { 'run', runFunction }))
 end
 
 --- Inserts "Redress" button to PDA Browser in merc section.
@@ -135,7 +138,7 @@ function InsertAgencyAppearanceButton(template)
         'OnAction', function(self, host, source, ...) return AgenciesRedressButtonAction(host) end,
     })
 
-    table.insert(elementParent, elementIndex + 1, action)
+    table_insert(elementParent, elementIndex + 1, action)
 end
 
 --- ===================================================================================================================
@@ -165,7 +168,7 @@ function AgenciesGetRedressButtonState(host)
     end
 
     local mercId = content.selected_merc
-    local team = table.find_value(g_Teams, "control", "UI")
+    local team = table_find_value(g_Teams, "control", "UI")
 
     for _, unit in ipairs(team.units) do
         if mercId == unit.session_id then
@@ -205,29 +208,28 @@ function AgenciesRedressButtonAction(host)
         return
     end
 
-    FireNetSyncEventOnHost("AgenciesRedressUnitSync", unitId)
+    NetSyncEvent("AgenciesRedressSync", unitId)
 end
 
---- Triggers remove of Agency preset for all game participants.
---- @param unitId string
-function NetSyncEvents.AgenciesRedressUnitSync(unitId)
+--- @param unitId
+function NetSyncEvents.AgenciesRedressSync(unitId)
     local unitData = gv_UnitData[unitId]
 
     if not unitData then
         return
     end
 
-    unitData:ClearCurrentPreset()
+    unitData:ClearCurrentAgencyPreset()
 
-    local unit = g_Units[unitId]
+    local mapUnit = g_Units[unitId]
 
-    if unit then
-        ReloadUnitsAppearance({ unit })
+    if mapUnit then
+        ReloadUnitsAppearance({ mapUnit })
     end
 end
 
 --- ===================================================================================================================
---- SECTION 4 | Non template, but UI related overrides and compatibility changes.
+--- Section 4 | Non template, but UI related overrides and compatibility changes.
 --- @author Soundwave2142
 --- ===================================================================================================================
 

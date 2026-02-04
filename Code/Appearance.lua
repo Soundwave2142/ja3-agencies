@@ -3,17 +3,20 @@
 --- @author Soundwave2142
 --- ===================================================================================================================
 
+local table_insert = table.insert
 local table_copy = table.copy
 local table_sort = table.sort
+local table_find = table.find
 local table_equal_values = table.equal_values
 local table_imap = table.imap
 local table_find_value = table.find_value
+local table_concat = table.concat
 local next = next
 local pairs = pairs
 local ipairs = ipairs
-local PlaceObj = PlaceObj
+local type = type
 
-local AGENCIES_APPEARANCES_STORAGE_KEY = "LastAppearances"
+local APPEARANCES_STORAGE_KEY = "LastAppearances"
 
 --- ===================================================================================================================
 --- Section 2 | General functions for appearance presets manipulation.
@@ -24,7 +27,8 @@ local AGENCIES_APPEARANCES_STORAGE_KEY = "LastAppearances"
 --- @param presetParentId string
 --- @param parts table
 --- @param partsId string
-function PlaceAgencyPreset(presetId, presetParentId, parts, partsId)
+--- @param gameId string
+function PlaceAgencyPreset(presetId, presetParentId, parts, partsId, gameId)
     local currentPreset = AppearancePresets[presetId]
 
     -- ensure that AppearancePreset that exists in memory was generated from the same set of parts
@@ -41,11 +45,12 @@ function PlaceAgencyPreset(presetId, presetParentId, parts, partsId)
     preset.group = "Mercs"
 
     preset.IsAgencyPreset = true
-    preset.GeneratedFromTheGameId = Game and Game.id or false
+    preset.GeneratedFromTheGameId = gameId or (Game and Game.id or false)
     preset.GeneratedFromAppearanceId = partsId or false
 
     AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
 
+    local presetParent = presetParentId and AppearancePresets[presetParentId]
     local isDefaultPartAllowed = function(part)
         if part == "Hat" or part == "Hat2" then
             return AgenciesAppearanceOptions.AppendDefaultHats
@@ -56,8 +61,6 @@ function PlaceAgencyPreset(presetId, presetParentId, parts, partsId)
 
     -- iterate over original preset and place items from it
     -- include item only if in new preset there's no mention of it (aka not false, but nil)
-    local presetParent = presetParentId and AppearancePresets[presetParentId]
-
     if presetParent then
         for partName, defaultPart in pairs(presetParent) do
             if isDefaultPartAllowed(partName) and preset[partName] == nil then
@@ -292,7 +295,7 @@ function AgenciesAppearanceOptions:GetPartFromAllPools(partName, unit, pickedPar
 
             for _, item in pairs(poolItems) do
                 if item:IsItemAllowedForUnit(unit) then
-                    table.insert(items, item)
+                    table_insert(items, item)
                 end
             end
         end
@@ -302,7 +305,10 @@ function AgenciesAppearanceOptions:GetPartFromAllPools(partName, unit, pickedPar
         return nil
     end
 
-    local pickedItem = items[math.random(#items)]:Clone()
+    local randName = "AgencyItem" .. partName .. "For" .. unit.id
+    local pickedItemIndex = InteractionRand(#items, randName) + 1
+
+    local pickedItem = items[pickedItemIndex]:Clone()
     pickedItem:ResolvePickedItem(unit, pickedParts)
 
     return pickedItem
@@ -335,7 +341,7 @@ function AgenciesAppearanceOptions:ShouldPickPart(unitId, partName)
         return true
     end
 
-    local randName = "ShouldPickPart" .. partName .. "For" .. unitId
+    local randName = "AgencyPickRoll" .. partName .. "For" .. unitId
     return InteractionRand(100, randName) <= chanceToRoll
 end
 
@@ -346,7 +352,7 @@ function AgenciesAppearanceOptions:GetBodyColor(unitId)
     local bodyColor = self.BodyColors.Default.Color
 
     for _, colorSet in pairs(self.BodyColors) do
-        if table.find(colorSet.Units, unitId) then
+        if table_find(colorSet.Units, unitId) then
             bodyColor = colorSet.Color
         end
     end
@@ -378,9 +384,10 @@ end
 
 local BaseChooseUnitAppearance = ChooseUnitAppearance
 
---- Overriden in order to allow AgenciesAppearanceHandler to handle appearance of a merc.
+--- Overriden in order to allow AgencyAppearanceObject to handle appearance of a merc.
 --- @param merc_id string
 --- @param handle table(?)
+--- @return string
 function ChooseUnitAppearance(merc_id, handle)
     local unit = UnitDataDefs[merc_id]
     local basePreset = BaseChooseUnitAppearance(merc_id, handle)
@@ -395,6 +402,7 @@ end
 --- Returns either agency preset or default preset, depending if agency preset could be created.
 --- @param unit UnitDataCompositeDef
 --- @param defaultPresetId string
+--- @return string
 function GenerateAgencyPreset(unit, defaultPresetId)
     AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
 
@@ -431,6 +439,7 @@ end
 
 --- Checks whatever Preset can be applied to unit. Currently only Mercs are supported.
 --- @param unit UnitDataCompositeDef
+--- @return boolean
 function CanAgencyPresetBeGeneratedForUnit(unit)
     if not unit or not IsMerc(unit) or not unit:ResolveValue("gender") then
         return false
@@ -446,23 +455,6 @@ function CanAgencyPresetBeGeneratedForUnit(unit)
     return next(reasonsNotTo) == nil
 end
 
---- Additional check that if user is in the game as client, we don't want it generating new preset,
---- only using and applying existing (that will eventually be passed by sync event).
---- @param unit UnitDataCompositeDef
---- @param reasonsNotTo table
-function OnMsg.AgenciesAppearanceCanApplyToUnit(unit, reasonsNotTo)
-    if netInGame and not NetIsHost() then
-        local unitData = gv_UnitData[unit.id]
-
-        local presetId = unitData:GetAgencyAppearancePresetId()
-        local savedAppearances = unitData:ResolveValue("AgencyAppearances")
-
-        if not savedAppearances[presetId] then
-            reasonsNotTo['net game unit has no preset saved parts'] = true
-        end
-    end
-end
-
 --- ===================================================================================================================
 --- Section 4 | Overrides and event listeners for appearance appliers DURING and FOR MAIN MENU.
 --- @author Soundwave2142
@@ -471,8 +463,8 @@ end
 --- Saves current units in a team to the mod local storage to be used in Main Menu,
 --- triggered by EnterSector event (definition below).
 function SaveCurrentSquadPresets()
-    local team = table_find_value(g_Teams, "control", "UI")
     local storage = CurrentModStorageTable or {}
+    local team = table_find_value(g_Teams, "control", "UI")
 
     if not team or not team.units then
         return
@@ -489,7 +481,7 @@ function SaveCurrentSquadPresets()
                 return appearancePresetId
             end
 
-            return table.concat({
+            return table_concat({
                 appearancePresetId, "_",
                 appearancePreset:ResolveValue("GeneratedFromTheGameId") or "NA", "_",
                 appearancePreset:ResolveValue("GeneratedFromAppearanceId") or "NA"
@@ -497,7 +489,7 @@ function SaveCurrentSquadPresets()
         end
     )
     local oldPresets = table_imap(
-        storage[AGENCIES_APPEARANCES_STORAGE_KEY] or {},
+        storage[APPEARANCES_STORAGE_KEY] or {},
         function(preset)
             if type(preset) == "string" then
                 return preset
@@ -507,7 +499,7 @@ function SaveCurrentSquadPresets()
                 return nil
             end
 
-            return table.concat({
+            return table_concat({
                 preset.id, "_",
                 preset.gameId or "NA", "_",
                 preset.partsId or "NA"
@@ -552,7 +544,7 @@ function SaveCurrentSquadPresets()
         end
     )
 
-    storage[AGENCIES_APPEARANCES_STORAGE_KEY] = newPresetsParts
+    storage[APPEARANCES_STORAGE_KEY] = newPresetsParts
     WriteModPersistentStorageTable()
 end
 
@@ -566,21 +558,24 @@ function ApplyAgencyPresetsInMainMenu()
     end
 
     local storage = CurrentModStorageTable or {}
-    local lastSavedPresets = table_copy(storage[AGENCIES_APPEARANCES_STORAGE_KEY] or {})
+    local lastSavedPresets = table_copy(storage[APPEARANCES_STORAGE_KEY] or {})
 
     if not lastSavedPresets or next(lastSavedPresets) == nil then
         return
     end
 
-    for key, savedParts in ipairs(lastSavedPresets) do
+    for key, preset in ipairs(lastSavedPresets) do
         -- some presets can be saved in table format, such as dynamic agency presets,
-        -- other presets can be just default in-game defined.
+        -- other presets can be just default in-game defined. Additionally, validate preset against outdated ones.
+        local isValidPreset = function()
+            return preset.id and preset.native and preset.parts and preset.partsId and preset.gameId
+        end
 
-        if type(savedParts) == "table" then
-            PlaceAgencyPreset(savedParts.id, savedParts.native, savedParts.parts, savedParts.partsId)
-            lastSavedPresets[key] = savedParts.id
-        elseif type(savedParts) == "string" and AppearancePresets[savedParts] then
-            lastSavedPresets[key] = savedParts
+        if type(preset) == "table" and isValidPreset(preset) then
+            PlaceAgencyPreset(preset.id, preset.native, preset.parts, preset.partsId, preset.gameId)
+            lastSavedPresets[key] = preset.id
+        elseif type(preset) == "string" and AppearancePresets[preset] then
+            lastSavedPresets[key] = preset
         else
             lastSavedPresets[key] = nil
         end
@@ -592,6 +587,7 @@ function ApplyAgencyPresetsInMainMenu()
 
     local constant = const.efVisible
     local presetPosition = 0
+
     MapForEach("map", "DummyUnit", function(unit)
         local preset = lastSavedPresets[presetPosition + 1]
 

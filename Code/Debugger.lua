@@ -10,7 +10,7 @@ function AgenciesDebugAppearance(reloadOptions)
         local unitData = gv_UnitData[unit.unitdatadef_id]
 
         if unitData then
-            unitData:ClearAgencyInfo()
+            unitData:ClearCurrentAgencyPreset()
         end
     end
 

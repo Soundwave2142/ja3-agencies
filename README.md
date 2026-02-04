@@ -16,7 +16,7 @@ UI changes include the hiring page and its related texts, such as URLs and page 
 
 This feature can be toggled on and off at any time in mod options: Menu -> Options -> Mod -> Agencies -> Enable Themed UI.
 
-__Multiplayer Support__ - Enjoy the mod in your plaything with friends, agency and attire is constant between all clients.
+__Multiplayer Support__ - Enjoy the mod in your plaything with friends, agency and attire is constant between all clients. Mod is fully desync free!
 
 ![Roadmap](https://imgur.com/odgfxXd.png)
 The roadmap represents a set of concepts and improvements that are planned to be added in later updates. 
@@ -35,7 +35,7 @@ For detailed changes, please navigate to CHANGELOG.md.
 | 17.09.2025 | 1.00    | Initial version upload of the mod. For details about core mechanics in the base version, navigate to CHANGELOG.md |
 
 ![Compatibility](https://imgur.com/I11Wukc.png)
-__MULTIPLAYER is supported and will sync Agency and appearances between host and clients.__
+__MULTIPLAYER is supported! Mod is desync-free and will sync Agency and appearances between host and clients.__ 
 
 The mod is largely compatible with all modded mercs, the exception being mercenaries with darker skin colors. 
 As there's no way to tell the skin color of the character, white color for body parts that contain skin will be applied.

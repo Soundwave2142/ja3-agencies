@@ -3,10 +3,11 @@
 --- @author Soundwave2142
 --- ===================================================================================================================
 
-local table_copy = table.copy
-local table_find = table.find
+local assert = assert
+local ipairs = ipairs
 local table_insert = table.insert
-local PlaceObj = PlaceObj
+local table_find = table.find
+local table_concat = table.concat
 
 --- @param entityClass string
 --- @param skipNone boolean
@@ -32,7 +33,7 @@ function GetAgencyAttirePoolItems(part, gender)
 end
 
 --- ===================================================================================================================
---- Section 2 | Agency Presets and their related functionality, plus related in-preset pickers.
+--- Section 2 | Agency presets and their related functionality, plus related in-preset pickers.
 --- @author Soundwave2142
 --- ===================================================================================================================
 
@@ -265,8 +266,16 @@ DefineClass.AgencyAttirePool = {
             id = "Condition",
             name = "Condition",
             editor = "expression",
-            params = "",
-            default = function() return true end
+            params = "unit",
+            default = function(unit) return true end
+        },
+        {
+            category = "Limits",
+            id = "Level",
+            name = "Level",
+            editor = "number",
+            default = 0,
+            min = 0
         },
         -- Group - Head
         {
@@ -354,24 +363,17 @@ DefineClass.AgencyAttirePool = {
     Documentation = "Creates a attire definition to be used in factions for Agency game-mode.",
 }
 
---- @param unitSpecialization string
---- @param unitTier string
---- @return boolean
-function AgencyAttirePool:IsPoolAllowed(unitSpecialization, unitTier)
-    local allowedSpecialization = self:ResolveValue("Specialization")
-    local allowedTier = self:ResolveValue("Tier")
-    local allowedCondition = self:ResolveValue("Condition")
-
-    local allowedBySpecialization = allowedSpecialization == '' or allowedSpecialization == unitSpecialization
-    local allowedByTier = allowedTier == '' or allowedTier == unitTier
-
-    return allowedBySpecialization and allowedByTier and allowedCondition()
-end
-
 --- @param unit UnitDataCompositeDef
 --- @return boolean
 function AgencyAttirePool:IsPoolAllowedForUnit(unit)
-    return self:IsPoolAllowed(unit:ResolveValue("Specialization"), unit:ResolveValue("Tier"))
+    local allowedSpec = self:ResolveValue("Specialization")
+    local allowedTier = self:ResolveValue("Tier")
+    local allowedCondition = self:ResolveValue("Condition")
+
+    local allowedBySpecialization = allowedSpec == '' or allowedSpec == unit:ResolveValue("Specialization")
+    local allowedByTier = allowedTier == '' or allowedTier == unit:ResolveValue("Tier")
+
+    return allowedBySpecialization and allowedByTier and allowedCondition(unit)
 end
 
 DefineModItemPreset("AgencyAttirePool", { EditorName = "Agency Attire Pool", EditorSubmenu = "Agencies" })
@@ -425,8 +427,16 @@ DefineClass.AgencyAttirePoolItem = {
             id = "Condition",
             name = "Condition",
             editor = "expression",
-            params = "",
-            default = function() return true end
+            params = "unit",
+            default = function(unit) return true end
+        },
+        {
+            category = "Limits",
+            id = "Level",
+            name = "Level",
+            editor = "number",
+            default = 0,
+            min = 0
         }
     },
 
@@ -443,21 +453,17 @@ function AgencyAttirePoolItem:GetPartName()
     assert(false, "GetPartName must be implemented for this item!")
 end
 
---- @param gender string
---- @return boolean
-function AgencyAttirePoolItem:IsItemAllowed(gender)
-    local allowedGender = self:ResolveValue("Gender")
-    local allowedCondition = self:ResolveValue("Condition")
-
-    local allowedByGender = allowedGender == '' or allowedGender == gender
-
-    return allowedByGender and allowedCondition()
-end
-
 --- @param unit table
 --- @return boolean
 function AgencyAttirePoolItem:IsItemAllowedForUnit(unit)
-    return self:IsItemAllowed(unit:ResolveValue("gender"))
+    local allowedGender = self:ResolveValue("Gender")
+    local allowedCondition = self:ResolveValue("Condition")
+    local allowedLevel = self:ResolveValue("Level")
+
+    local allowedByGender = allowedGender == '' or allowedGender == unit:ResolveValue("gender")
+    local allowedByLevel = unit:GetLevel() >= allowedLevel
+
+    return allowedByGender and allowedByLevel and allowedCondition(unit)
 end
 
 --- @param unit UnitDataCompositeDef
@@ -474,13 +480,21 @@ function AgencyAttirePoolItem:ResolveMainPart(allParts)
 end
 
 --- @param allParts table
-function AgencyAttirePoolItem:ResolveColor(allParts)
+function AgencyAttirePoolItem:ResolveColor(allParts, unitId)
     local partName = self:GetPartName()
     local allColors = self:ResolveValue("Colors")
     local defaultColor = AgenciesAppearanceOptions.DefaultItemColors
     local colorDeviation = self:ResolveValue("ColorDeviation")
 
-    local pickedColorSet = #allColors > 0 and allColors[math.random(#allColors)] or defaultColor
+    local pickedColorSet = defaultColor
+
+    if #allColors > 0 then
+        local randName = "AgencyColor" .. partName .. "For" .. unitId
+        local colorIndex = InteractionRand(#allColors, randName) + 1
+
+        pickedColorSet = allColors[colorIndex]
+    end
+
     pickedColorSet = pickedColorSet:Clone()
 
     if colorDeviation and colorDeviation ~= 0 then
@@ -748,7 +762,7 @@ function AgencyAttirePoolHat:ResolvePickedItem(unit, allParts)
     end
 
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveSpot(allParts)
     self:ResolveConflicts(allParts)
 end
@@ -803,7 +817,7 @@ function AgencyAttirePoolHat2:ResolvePickedItem(unit, allParts)
     end
 
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveSpot(allParts)
     self:ResolveConflicts(allParts)
 end
@@ -829,7 +843,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolHead:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveBodyColor(unit.id, allParts)
     self:ResolveConflicts(allParts)
 end
@@ -855,7 +869,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolBody:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveBodyColor(unit.id, allParts)
     self:ResolveConflicts(allParts)
 end
@@ -886,7 +900,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolShirt:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveBodyColor(unit.id, allParts)
     self:ResolveConflicts(allParts)
 end
@@ -911,7 +925,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolArmor:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveConflicts(allParts)
 end
 
@@ -940,7 +954,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolChest:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveSpot(allParts)
 end
 
@@ -964,7 +978,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolPants:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveBodyColor(unit.id, allParts)
 end
 
@@ -993,7 +1007,7 @@ end
 --- @param allParts table
 function AgencyAttirePoolHip:ResolvePickedItem(unit, allParts)
     self:ResolveMainPart(allParts)
-    self:ResolveColor(allParts)
+    self:ResolveColor(allParts, unit.id)
     self:ResolveSpot(allParts)
 end
 
@@ -1073,7 +1087,7 @@ end
 function AgencyAppearanceObject:GetAgencyAppearancePresetId()
     AgenciesAppearanceOptions:EnsureOptionsAreLoaded()
 
-    return table.concat({
+    return table_concat({
         self:GetCurrentId(), '_Agencies_', AgenciesAppearanceOptions.OptionsLoadedForAgency
     })
 end
@@ -1097,48 +1111,17 @@ end
 --- @param presetId string
 function AgencyAppearanceObject:GenerateAgencyAppearance(unit, defaultPresetId, presetId)
     local pickedParts = AgenciesAppearanceOptions:GetPickedPartsFromAllOptions(unit)
-    self:PrepareAgencyAppearanceDataForSync(pickedParts)
 
     local appearance = {
         presetParent = defaultPresetId,
         parts = pickedParts,
-        partsId = random_encode64(48)
+        partsId = InteractionRand(1000000, "AgencyPartsId" .. presetId)
     }
-    NetSyncEvent("AgenciesUnitDataAppearanceSync", unit.id, presetId, appearance)
-end
 
---- Colors cannot be serialized by Sync functionality, this is a workaround for that.
---- It turns colors into tables and puts them in separate table.
---- @param pickedParts table
-function AgencyAppearanceObject:PrepareAgencyAppearanceDataForSync(pickedParts)
-    pickedParts.Colors = {}
+    self.AgencyAppearances[presetId] = appearance
 
-    for key, value in pairs(pickedParts) do
-        if IsKindOf(value, "ColorizationPropSet") then
-            pickedParts.Colors[key] = value:GetColorsAsTable()
-
-            DoneObject(value)
-            pickedParts[key] = nil
-        end
-    end
-end
-
---- Syncs appearance between all game participants, this entire process is only triggered by host.
---- @param unitId string
---- @param presetId string
---- @param appearance table
-function NetSyncEvents.AgenciesUnitDataAppearanceSync(unitId, presetId, appearance)
-    local unitData = gv_UnitData[unitId]
-
-    if not unitData then
-        return
-    end
-
-    unitData:ProcessAgencyAppearanceDataForSync(appearance.parts)
-    unitData.AgencyAppearances[presetId] = appearance
-
-    ObjModified(unitData)
-    ObjModified(unitData.AgencyAppearances)
+    ObjModified(self)
+    ObjModified(self.AgencyAppearances)
 
     if AppearancePresets[presetId] then
         DoneObject(AppearancePresets[presetId])
@@ -1147,34 +1130,15 @@ function NetSyncEvents.AgenciesUnitDataAppearanceSync(unitId, presetId, appearan
 
     PlaceAgencyPreset(presetId, appearance.presetParent, appearance.parts, appearance.partsId)
 
-    local unit = g_Units[unitId]
+    local mapUnit = g_Units[unit.id]
 
-    if unit then
-        ReloadUnitsAppearance({ unit })
+    if mapUnit then
+        ReloadUnitsAppearance({ mapUnit })
     end
-end
-
---- Colors cannot be serialized by Sync functionality, this is a workaround for that.
---- Turns previously turned table colors back into ColorizationPropSet object.
---- @param pickedParts table
-function AgencyAppearanceObject:ProcessAgencyAppearanceDataForSync(pickedParts)
-    for key, value in pairs(pickedParts.Colors) do
-        -- for reasons unknown to me, table cannot be processed by PlaceObj, we need flat array
-        local valueFlat = {}
-
-        for valueKey, valueValue in pairs(value) do
-            valueFlat[#valueFlat + 1] = valueKey
-            valueFlat[#valueFlat + 1] = valueValue
-        end
-
-        pickedParts[key] = PlaceObj('ColorizationPropSet', valueFlat)
-    end
-
-    pickedParts.Colors = nil
 end
 
 --- Removes current Agency preset from data and memory.
-function AgencyAppearanceObject:ClearCurrentPreset()
+function AgencyAppearanceObject:ClearCurrentAgencyPreset()
     local currentPreset = self:GetAgencyAppearancePresetId()
 
     self.AgencyAppearances[currentPreset] = nil

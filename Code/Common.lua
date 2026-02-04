@@ -5,6 +5,9 @@
 
 local pairs = pairs
 local ipairs = ipairs
+local next = next
+local table_insert = table.insert
+local table_stable_sort = table.stable_sort
 local empty_table = empty_table
 
 local AGENCIES_MOD_ID = "Agencies"
@@ -42,23 +45,25 @@ function OnMsg.NewGame(game)
         return
     end
 
+    CleanAgencyPresets(Game.id)
+
     -- wait for a sync event from host instead
     if netInGame and not NetIsHost() then
         return
     end
 
-    CleanAgencyPresets(Game.id)
     ApplyAgency(GetCurrentAgency(true), true)
 end
 
 --- Makes sure correct agency is applied when game is loaded.
 function OnMsg.ZuluGameLoaded()
+    CleanAgencyPresets(Game.id)
+
     -- wait for a sync event from host instead
     if netInGame and not NetIsHost() then
         return
     end
 
-    CleanAgencyPresets(Game.id)
     ApplyAgency(GetCurrentAgency(true), true)
 end
 
@@ -205,10 +210,10 @@ function GetAgencies(clearList)
     local agenciesMeta = {}
 
     for agencyId, agencyObj in pairs(Agencies) do
-        table.insert(agenciesMeta, { SortKey = agencyObj.SortKey or 0, Id = agencyId })
+        table_insert(agenciesMeta, { SortKey = agencyObj.SortKey or 0, Id = agencyId })
     end
 
-    table.stable_sort(agenciesMeta, function(a, b)
+    table_stable_sort(agenciesMeta, function(a, b)
         return (a.SortKey or 0) < (b.SortKey or 0)
     end)
 
@@ -250,7 +255,7 @@ function ModItemOptionChoice:GetOptionMeta(...)
         local agency = Agencies[agencyId]
 
         if agency then
-            table.insert(meta.items, { text = agency.display_name, value = agency.id })
+            table_insert(meta.items, { text = agency.display_name, value = agency.id })
         end
     end
 
