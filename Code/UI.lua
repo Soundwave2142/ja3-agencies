@@ -9,10 +9,6 @@ local table_insert = table.insert
 local table_find_value = table.find_value
 local string_starts_with = string.starts_with
 local empty_table = empty_table
-local PlaceObj = PlaceObj
-local UIFindControl = UIFindControl
-local IsKindOf = IsKindOf
-local GetCurrentAgencyValue = GetCurrentAgencyValue
 
 --- @return table
 local function GetReasonsNotToEnableAgenciesUI(template)
@@ -34,17 +30,24 @@ local function GetReasonsNotToEnableAgenciesUI(template)
     return reasonsNotTo
 end
 
+--- @param template string
+--- @return boolean
+function CanApplyAgencyUI(template)
+    local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(template)
+    Msg("AgenciesCanApplyUI", nil, true, reasonsNotTo)
+
+    return next(reasonsNotTo) == nil
+end
+
 --- @param parent XTemplate
 --- @param mode string
 --- @param agencyTemplateValue string
 --- @param baseTemplateName string
 local function AgencyGeneralTemplateSwitcher(parent, mode, agencyTemplateValue, baseTemplateName)
     local template = GetCurrentAgencyValue(agencyTemplateValue)
-    local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(template)
+    local canApply = CanApplyAgencyUI(template)
 
-    Msg("AgenciesCanApplyUI", parent, template, reasonsNotTo)
-
-    if next(reasonsNotTo) ~= nil then
+    if not canApply then
         template = baseTemplateName
     end
 
@@ -238,10 +241,9 @@ local BasePDAUrl = TFormat.PDAUrl
 --- Override original in order to replace A.I.M. url with whatever agency is current active.
 TFormat.PDAUrl = function(...)
     local result = BasePDAUrl(...)
-    local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(true)
-    Msg("AgenciesCanApplyUI", nil, true, reasonsNotTo)
+    local canApply = CanApplyAgencyUI(true)
 
-    if next(reasonsNotTo) ~= nil then
+    if not canApply then
         return result
     end
 
@@ -293,16 +295,18 @@ end
 --- Applies agency data to tabs when AgenciesApplyAgency (new agency applied) or ZuluGameLoaded.
 function ApplyAgencyTabData()
     local urlName = GetCurrentAgencyValue("BrowserUrlName")
-    local reasonsNotTo = GetReasonsNotToEnableAgenciesUI(true)
-    Msg("AgenciesCanApplyUI", nil, true, reasonsNotTo)
-
-    if next(reasonsNotTo) ~= nil or not urlName then
-        urlName = T(750064110101, "A.I.M. Database")
-    end
+    local canApply = CanApplyAgencyUI(true)
+    local modifiedByMark = 'Agencies'
 
     for _, tab in ipairs(PDABrowserTabData or {}) do
         if tab.id and (tab.id == "aim" or tab.id == "landing") then
-            tab.DisplayName = urlName
+            if canApply and urlName then
+                tab.DisplayName = urlName
+                tab.ModifiedBy = modifiedByMark
+            elseif tab.ModifiedBy and tab.ModifiedBy == modifiedByMark then -- only modify back to default if originally was touched by Agency
+                tab.DisplayName = T(750064110101, "A.I.M. Database")
+                tab.ModifiedBy = nil
+            end
         end
     end
 end

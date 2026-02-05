@@ -11,7 +11,7 @@ Select "A.I.M." in the list if you want to essentially turn off the mod's featur
 
 It is also possible to regenerate attire for any merc in your squad at any point by using the "Redress" button in your PDA browser next to the hiring buttons.
 
-__Agency-Themed PDA Browser__ - Each faction also comes with its own themed PDA browser.
+__Agency-Themed PDA Browser__ - each faction also comes with its own themed PDA browser.
 UI changes include the hiring page and its related texts, such as URLs and page names.
 
 This feature can be toggled on and off at any time in mod options: Menu -> Options -> Mod -> Agencies -> Enable Themed UI.
@@ -31,17 +31,15 @@ For detailed changes, please navigate to CHANGELOG.md.
 
 | Date       | Version | Description                                                                                                       |
 |------------|---------|-------------------------------------------------------------------------------------------------------------------|
-| 01.02.2026 | 2.00    | Code-base reworked. Multiplayer Support has been added.                                                           |
+| 05.02.2026 | 2.00    | Code-base reworked. Multiplayer Support.                                                                          |
 | 17.09.2025 | 1.00    | Initial version upload of the mod. For details about core mechanics in the base version, navigate to CHANGELOG.md |
 
 ![Compatibility](https://imgur.com/I11Wukc.png)
 __MULTIPLAYER is supported! Mod is desync-free and will sync Agency and appearances between host and clients.__ 
 
-The mod is largely compatible with all modded mercs, the exception being mercenaries with darker skin colors. 
-As there's no way to tell the skin color of the character, white color for body parts that contain skin will be applied.
-However, the authors of the modded mercs can implement, if desired, a minor code compatibility to specify the skin color that Agencies mod attire generation should use.
-
-As for mods that change vanilla merc presets, they should also work fine. But mods that use Lua scripts to alter appearance may conflict and cause issues.
+The mod is largely compatible with all modded mercs.
+Mods that change vanilla merc presets should also work fine. 
+But mods that use Lua scripts to alter appearance may conflict and cause issues.
 Additionally, the mod may be incompatible with any mods that heavily edit the PDA Browser UI.
 In case of problem with such mods, turn off Themed UI in the Agency mod options.
 
