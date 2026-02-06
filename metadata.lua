@@ -1,24 +1,24 @@
 return PlaceObj('ModDef', {
 	'title', "Agencies",
-	'description', "The Agencies mod allows the player to roleplay as different agencies and factions that are available in the world of Jagged Alliance 3 by altering the appearance of the mercenaries and game UI.\nAvailable agencies and factions are specifically M.E.R.C., Adonis Corporation, Grand Chien Militia, Maquis Rebels, and Grand Chien Army.",
+	'description', "The Agencies mod allows the player to roleplay as different agencies and factions that are available in the world of Jagged Alliance 3 by altering the appearance of the mercenaries and game UI.\nAvailable agencies and factions are specifically M.E.R.C., Adonis Corporation, Grand Chien Militia, Maquis Rebels, and Grand Chien Army.\nWorks in multiplayer!",
 	'image', "Mod/Agencies/Images/preview.png",
 	'external_links', {
-		"https://steamcommunity.com/id/Soundwave2142/myworkshopfiles/",
+		"https://steamcommunity.com/sharedfiles/filedetails/?id=3569651988",
 		"https://github.com/Soundwave2142/ja3-agencies",
 	},
-	'last_changes', "Initial version upload of the mod. For details about core mechanics in the base version, navigate to https://github.com/Soundwave2142/ja3-agencies/blob/master/CHANGELOG.md",
+	'last_changes', "### Description\nReworked code-base for better integration into the game and support of multiplayer.\n\n### Detailed Changes\n- Reword code-base: cleaner functionality approach with various improvements.\n- Added [b]full multiplayer[/b] support.",
 	'dependencies', {
 		PlaceObj('ModDependency', {
 			'id', "JA3_CommonLib",
 			'title', "JA3_CommonLib",
 			'version_major', 1,
-			'version_minor', 5,
+			'version_minor', 7,
 		}),
 	},
 	'id', "Agencies",
 	'author', "Soundwave2142",
-	'version_major', 1,
-	'version', 158,
+	'version_major', 2,
+	'version', 202,
 	'lua_revision', 233360,
 	'saved_with_revision', 366685,
 	'code', {
@@ -33,8 +33,8 @@ return PlaceObj('ModDef', {
 		AgencyEnableThemedUI = true,
 	},
 	'has_data', true,
-	'saved', 1758097197,
-	'code_hash', -6340324685321710707,
+	'saved', 1770318884,
+	'code_hash', -2205826759855358384,
 	'affected_resources', {
 		PlaceObj('ModResourcePreset', {
 			'Class', "Agency",

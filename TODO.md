@@ -2,8 +2,9 @@
 
 ---
 ## TO DO:
-#### 1.10
-- Multiplayer Support.
 
-#### 1.20
-- More UI Changes.
+### 2.10
+- Faction Bonuses
+
+### 2.20
+- More UI modifications (Quest Log, so on)
